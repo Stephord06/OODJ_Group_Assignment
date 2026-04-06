@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package javagroupwork;
+package manager;
 
 /**
  *
  * @author User
  */
-public class JAVAGROUPWORK {
+public class JavaCourseWork {
 
     /**
      * @param args the command line arguments
