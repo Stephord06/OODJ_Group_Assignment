@@ -48,13 +48,15 @@ public class Login {
     
     public String name;
     public String password;
+    public String role;
     
     // -------------------------------------------------------------------------------------------------
     // Constructor:
-    public void LoginPage(String name, String password)
+    public void LoginPage(String name, String password, String role)
     {
         this.name = name;
         this.password = password;
+        this.role = role;
     }
     
     // -------------------------------------------------------------------------------------------------
