@@ -50,11 +50,11 @@ public class StaffDashboard {
             
             //set border
             topPanel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
-            metricsPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+            metricsPanel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
             appointmentsPanel.setBorder(BorderFactory.createTitledBorder
-        (BorderFactory.createLineBorder(accentCyan, 1), "ALL APPOINTMENTS", 0, 0, null, accentCyan));
+        (BorderFactory.createLineBorder(accentCyan, 1), "ALL APPOINTMENTS", 0, 0, (new Font("Segoe UI", Font.BOLD, 24)), accentCyan));
             technicianPanel.setBorder(BorderFactory.createTitledBorder
-        (BorderFactory.createLineBorder(accentCyan, 1), "TECHNICIAN STATUS", 0, 0, null, accentCyan));
+        (BorderFactory.createLineBorder(accentCyan, 1), "TECHNICIAN STATUS", 0, 0, (new Font("Segoe UI", Font.BOLD, 24)), accentCyan));
            
         
         //frame
@@ -85,8 +85,11 @@ public class StaffDashboard {
             //topPanel
             JLabel lbl1 = new JLabel("Welcome, name");
             lbl1.setForeground(accentCyan);
+            lbl1.setFont(new Font("Segoe UI", Font.BOLD, 20));
+            
             JLabel lbl2 = new JLabel("day, DD-MM-YY —— APU Automotive Service Centre");
             lbl2.setForeground(textSec);
+            lbl2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
                 
                 //add into topPanel
                 topPanel.add(lbl1);
@@ -96,28 +99,51 @@ public class StaffDashboard {
                 //metricsPanel
                 JLabel lbl3 = new JLabel("Total appointments");
                 lbl3.setForeground(textSec);
+                lbl3.setFont(new Font("Segoe UI", Font.BOLD, 16));
+                
                 JLabel lbl4 = new JLabel("Pending Payment");
                 lbl4.setForeground(textSec);
+                lbl4.setFont(new Font("Segoe UI", Font.BOLD, 16));
+                
                 JLabel lbl5 = new JLabel("Total Revenue");
                 lbl5.setForeground(textSec);
+                lbl5.setFont(new Font("Segoe UI", Font.BOLD, 16));
+                
                 JLabel lbl6 = new JLabel("Available technicians");
                 lbl6.setForeground(textSec);
+                lbl6.setFont(new Font("Segoe UI", Font.BOLD, 16));
+                
                 JLabel lbl7 = new JLabel("app-0");
                 lbl7.setForeground(accentCyan);
+                lbl7.setFont(new Font("Segoe UI", Font.BOLD, 22));
+                
                 JLabel lbl8 = new JLabel("pay-0");
                 lbl8.setForeground(accentCyan);
+                lbl8.setFont(new Font("Segoe UI", Font.BOLD, 22));
+                
                 JLabel lbl9 = new JLabel("RM 0");
                 lbl9.setForeground(accentCyan);
+                lbl9.setFont(new Font("Segoe UI", Font.BOLD, 22));
+                
                 JLabel lbl10 = new JLabel("0/0");
                 lbl10.setForeground(accentCyan);
+                lbl10.setFont(new Font("Segoe UI", Font.BOLD, 22));
+                
                 JLabel lbl11 = new JLabel("+0 from last login");
                 lbl11.setForeground(textSec);
+                lbl11.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+                
                 JLabel lbl12 = new JLabel("awaiting collection");
                 lbl12.setForeground(textSec);
+                lbl12.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+                
                 JLabel lbl13 = new JLabel("0 receipts issued");
                 lbl13.setForeground(textSec);
+                lbl13.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+                
                 JLabel lbl14 = new JLabel("0 currently assigned");
                 lbl14.setForeground(textSec);
+                lbl14.setFont(new Font("Segoe UI", Font.PLAIN, 12));
                 
                     //add into metricsPanel
                     metricsPanel.add(lbl3);
