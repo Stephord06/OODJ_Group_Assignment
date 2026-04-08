@@ -46,14 +46,13 @@ public class Login {
     // -------------------------------------------------------------------------------------------------
     // Parameters:
     
-    public String name;
-    public String password;
-    public String role;
+    private String name;
+    private String password;
+    private String role;
     
     // -------------------------------------------------------------------------------------------------
     // Constructor:
-    public void LoginPage(String name, String password, String role)
-    {
+    public Login(String name, String password, String role){
         this.name = name;
         this.password = password;
         this.role = role;
