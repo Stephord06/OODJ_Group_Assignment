@@ -24,7 +24,7 @@ public class Login {
         
         // Set Label
         JLabel label1 = new JLabel("Welcome to XXXX System");
-        JLabel label2 = new JLabel("Username:");
+        JLabel label2 = new JLabel("Staff / Customer ID:");
         JLabel label3 = new JLabel("Password:");
         
         label1.setBounds(30,50,50,100);
