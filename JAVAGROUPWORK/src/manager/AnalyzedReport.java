@@ -10,4 +10,5 @@ package manager;
  */
 public class AnalyzedReport {
     
+    
 }

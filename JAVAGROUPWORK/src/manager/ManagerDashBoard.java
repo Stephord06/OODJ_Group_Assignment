@@ -8,19 +8,25 @@ package manager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ManagerDashBoard {
 
-    private String name;
-    private String password;
+    private static String name;
+    private static String password;
     
 
     public ManagerDashBoard(String name, String password) {
         this.name = name;
         this.password = password;
     }
+    
+    public ManagerDashBoard(){
+        
+    }
 
-    public void Icon() {
+    public void DashBoardUI() {
         // Frame
         JFrame frame = new JFrame("Manager Dash Board");
         frame.setSize(800, 500);
@@ -47,14 +53,22 @@ public class ManagerDashBoard {
         // Button panel with GridLayout 2x2
         JPanel buttonPanel = new JPanel(new GridLayout(2, 2, 10, 10));
         buttonPanel.setPreferredSize(new Dimension(300, 150));
-
+                                                            
         // Add buttons
-        buttonPanel.add(new JButton("Modify Roles"));
-        buttonPanel.add(new JButton("Set Prices"));
-        buttonPanel.add(new JButton("Analyzed Report"));
-        buttonPanel.add(new JButton("View Comment"));
+        
+        JButton modify = new JButton("Modify Roles");
+        buttonPanel.add(modify);
+        
+        JButton SetPrices = new JButton("Set Prices");
+        buttonPanel.add(SetPrices);
+                
+        JButton AnalysisReport = new JButton("Analyzed Report");
+        buttonPanel.add(AnalysisReport);
+        
+        JButton ViewComment = new JButton("View Comment");
+        buttonPanel.add(ViewComment);   
 
-        container.add(buttonPanel);
+        container.add(buttonPanel);                 
 
         // GridBagConstraints to center container in outer panel
         GridBagConstraints c = new GridBagConstraints();
@@ -65,9 +79,42 @@ public class ManagerDashBoard {
 
         // Show frame
         frame.setVisible(true);
+        
+        
+        // event button handler
+        
+         modify.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                    
+                ModifyRoles mr = new ModifyRoles();
+                mr.ModifyRolesUI();
+                }
+            });
+         
+          SetPrices.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                
+                SetPrices sp = new SetPrices();
+                sp.SetPricesUI();
+                }
+            });
+         
+         
     }
 
     public static void main(String[] args) {
-        new ManagerDashBoard("Alice", "pass123").Icon();
+        new ManagerDashBoard("Alice", "pass123").DashBoardUI();
+    }
+    
+    public String getName(){
+        return this.name;
+    }
+    
+    public String getPassword(){
+        return this.password;
     }
 }
