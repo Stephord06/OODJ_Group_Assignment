@@ -8,8 +8,12 @@ package technician;
  *
  * @author wongj
  */
+import GeneralTools.Login;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class TechnicianDashBoard {
     
     // UI Interface Design:
@@ -41,6 +45,60 @@ public class TechnicianDashBoard {
         UpdateAppointment.setBounds(20,250,350,30);
         LogOut.setBounds(20,290,350,30);
                 
+        
+        // Set the Action Events for JButtons
+        ViewProfile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dash.setVisible(false);
+                Profile vf = new Profile();
+                vf.Profile();
+            }
+        });
+        
+        EditProfile.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                dash.setVisible(false);
+                ProfileEdit pe = new ProfileEdit();
+                pe.EditPage();
+            }
+        });
+        
+        CheckAppointment.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                dash.setVisible(false);
+                Appointments ap = new Appointments();
+                ap.AppointList();
+            }
+        });
+        
+        //ProvideFeedbacks.addActionListener(new ActionListener(){
+        //    @Override
+        //    public void actionPerformed(ActionEvent e){
+        //        new ProfileEdit().EditPage(dash);
+        //        dash.setVisible(false);
+        //    }
+        //});
+        
+        //UpdateAppointment.addActionListener(new ActionListener(){
+        //    @Override
+        //    public void actionPerformed(ActionEvent e){
+        //        new ProfileEdit().EditPage(dash);
+        //        dash.setVisible(false);
+        //    }
+        //});
+        
+        LogOut.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                dash.dispose();
+                Login lg = new Login();
+                lg.LoginPage();
+            }
+        });
+        
         // Set Font             
         label1.setFont(new Font("Times New Roman", Font.BOLD, 20));
         ViewProfile.setFont(new Font("Times New Roman", Font.BOLD, 18));
@@ -59,10 +117,15 @@ public class TechnicianDashBoard {
         dash.add(ProvideFeedbacks);
         dash.add(UpdateAppointment);
         dash.add(LogOut);
+        
     }
     
     public static void main(String [] args){
         new TechnicianDashBoard().TechDashBoard();
     }
     // Logic Programming
+    
+    // Methods
+    
+   
 }
