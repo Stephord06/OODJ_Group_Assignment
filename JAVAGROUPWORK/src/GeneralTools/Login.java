@@ -11,6 +11,9 @@ package GeneralTools;
 // Imports:
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class Login {
     
     // UI Interface Design:
@@ -52,6 +55,15 @@ public class Login {
         JButton btn_login = new JButton("Login");
         btn_login.setBounds(375,350,350,30);
         
+        // Action Events
+        // Analyze Users' ID and role, then provide the relevant dashboard for them
+        btn_login.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                
+            }
+        });
+                
         // Panel
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, 300, 600);
