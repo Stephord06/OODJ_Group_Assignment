@@ -56,6 +56,12 @@ public class Profile {
         
         btn_finish.setBounds(100,300,200,50);
         
+        btn_finish.addActionListener(e -> {
+            profile.dispose();
+            TechnicianDashBoard tdb = new TechnicianDashBoard();
+            tdb.TechDashBoard();
+        });
+        
         // JPanel
         JPanel panel = new JPanel();
         panel.setLayout(null);
