@@ -16,7 +16,7 @@ import java.awt.*;
         
 public class ReadAppointment {
     // FileName Needs
-    private static final String filePath = "Appointments.txt";
+    private static final String filePath = "appointments.txt";
     
     // Parameters
     protected String appointID, customerID, customerName, technicianID, 
