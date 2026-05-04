@@ -74,21 +74,23 @@ public class TechnicianDashBoard {
             }
         });
         
-        //ProvideFeedbacks.addActionListener(new ActionListener(){
-        //    @Override
-        //    public void actionPerformed(ActionEvent e){
-        //        new ProfileEdit().EditPage(dash);
-        //        dash.setVisible(false);
-        //    }
-        //});
+        ProvideFeedbacks.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                dash.setVisible(false);
+                Feedbacks fbs = new Feedbacks();
+                
+            }
+        });
         
-        //UpdateAppointment.addActionListener(new ActionListener(){
-        //    @Override
-        //    public void actionPerformed(ActionEvent e){
-        //        new ProfileEdit().EditPage(dash);
-        //        dash.setVisible(false);
-        //    }
-        //});
+        UpdateAppointment.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                dash.setVisible(false);
+                AppointmentTable at = new AppointmentTable();
+                at.AppointRecordTable();
+            }
+        });
         
         LogOut.addActionListener(new ActionListener(){
             @Override
