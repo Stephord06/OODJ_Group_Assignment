@@ -4,6 +4,8 @@ package counterstaff;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.*;
+import javax.swing.table.DefaultTableModel;
 
 public class ManageCustomer extends JFrame {
     
@@ -104,10 +106,29 @@ public class ManageCustomer extends JFrame {
                     searchPanel.add(searchButton);
                     
                 // Table (Show customer info)
-                String[] columns = {"Customer ID", "Name", "Email", "Phone Number"};
-                String[][] data = {};
+                String[] columns = {"Customer ID", "Name", "Contact Number", "Email"};
                 
-                JTable customerTable = new JTable(data, columns);
+                // Load data from customers.txt
+                java.util.List<String> lines = FileManager.readFile("customers.txt");
+                
+                DefaultTableModel tableModel = new DefaultTableModel(columns, 0) {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+                
+                for (int i = 0; i < lines.size(); i++) {
+                    String[] parts = lines.get(i).split("\\|");
+                    tableModel.addRow(new String[] {
+                        parts[0], // Customer ID
+                        parts[1], // Name
+                        parts[2], // Contact No
+                        parts[3]  // Email
+                    });
+                    
+                }
+                
+                JTable customerTable = new JTable(tableModel);
                 customerTable.setFont(new Font("Arial", Font.PLAIN, 14));
                 customerTable.setRowHeight(35);
                 customerTable.setGridColor(new Color(238, 238, 238));
@@ -171,6 +192,30 @@ public class ManageCustomer extends JFrame {
                 new StaffDashboard();
             });
                 
+              //Search button
+              searchButton.addActionListener(e -> {
+                 String query = searchField.getText().toLowerCase();
+                 
+                 // Clear the table
+                 tableModel.setRowCount(0);
+                 
+                 // Reload from file and filter
+                 java.util.List<String> allLines = FileManager.readFile("customers.txt");
+                 for (String line : allLines) {
+                     String[] parts = line.split("\\|");
+                     String id = parts[0].toLowerCase();
+                     String name = parts[1].toLowerCase();
+                     String contact = parts[2].toLowerCase();
+                     String email = parts[3].toLowerCase();
+                     
+                     // Show row if any field matches the query
+                     if (id.contains(query) || name.contains(query) ||
+                         contact.contains(query) || email.contains(query)) {
+                         tableModel.addRow(new String[]{parts[0], parts[1], parts[2], parts[3]});
+                     }
+                 }
+              });
+              
             addButton.addActionListener(e ->{
                 dispose();
                 new AddCustomer();
