@@ -83,11 +83,13 @@ public class ReadAppointment {
                         System.out.println("File Reading Error: line " + line);
                     }
             }
-        }
-        catch (FileNotFoundException e){
+            
+        }catch (FileNotFoundException e){
             System.out.println("The " + filePath + " not found......");
+        } catch(IOException e ){
+            System.out.println("Reading Error: " + e.getMessage());
         } 
-        catch(IO Exception e ){
-        System.out.println("Reading Error: " + e.getMessage());
-        } 
+        
+        return appointmentList;
+    }
 }
