@@ -20,33 +20,27 @@ public class ReadAppointment {
     private static final String filePath = "appointments.txt";
     
     // Parameters
-    protected String appointID, customerID, customerName, technicianID, 
-            technicianName, staffID, staffName, 
+    protected String appointID, customerID, technicianID, staffID, serviceType,
             date, timeStart, timeEnd, 
-            comments, feedback, statusDescription;
-    
-    protected boolean status;
+            comments, feedback, status;
     
     // Constructors
-    public ReadAppointment(String appointID, String customerID, String customerName, 
-            String technicianID, String technicianName, String staffID, 
-            String staffName, String date, String timeStart, String timeEnd, 
-            String comments, String feedback, boolean status, String statusDescription){
+    public ReadAppointment(String appointID, String customerID, 
+            String technicianID, String staffID, String serviceType, 
+            String date, String timeStart, String timeEnd, 
+            String comments, String feedback, String status){
         
         this.appointID = appointID;
         this.customerID = customerID;
-        this.customerName = customerName;
-        this.technicianID = technicianID;
-        this.technicianName = technicianName;
+        this.technicianID = technicianID;     
         this.staffID = staffID;
-        this.staffName = staffName;
+        this.serviceType = serviceType;
         this.date = date;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
         this.comments = comments;
         this.feedback = feedback;
         this.status = status;
-        this.statusDescription = statusDescription;
     }
     
     public List<ReadAppointment> readAppointments(){
@@ -74,10 +68,7 @@ public class ReadAppointment {
                             data[7].trim(),
                             data[8].trim(),
                             data[9].trim(),
-                            data[10].trim(),
-                            data[11].trim(),
-                            Boolean.parseBoolean(data[12].trim()),
-                            data[13].trim()
+                            data[10].trim()
                     );
                     appointmentList.add(appt);
                     
