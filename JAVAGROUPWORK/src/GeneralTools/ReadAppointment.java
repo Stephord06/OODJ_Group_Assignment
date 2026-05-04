@@ -11,6 +11,8 @@ package GeneralTools;
 
 import java.io.*;
 import java.util.*;
+import javax.swing.*;
+import java.awt.*;
         
 public class ReadAppointment {
     // FileName Needs
@@ -46,7 +48,7 @@ public class ReadAppointment {
         this.statusDescription = statusDescription;
     }
     
-    List<ReadAppointment> readAppointments(){
+    public List<ReadAppointment> readAppointments(){
         List<ReadAppointment> appointmentList = new ArrayList<>();
         
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))){
@@ -57,7 +59,7 @@ public class ReadAppointment {
             
                 if (line.trim().isEmpty()) continue;
             
-                String[] data = line.split("|");
+                String[] data = line.split("\\|");
             
                 if (data.length == 14){
                     ReadAppointment appt = new ReadAppointment(
@@ -85,9 +87,22 @@ public class ReadAppointment {
             }
             
         }catch (FileNotFoundException e){
-            System.out.println("The " + filePath + " not found......");
+            JLabel message = new JLabel("The " + filePath + " not found .......");
+            message.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+            JOptionPane.showMessageDialog(
+                null,
+                message,
+                "Appointment Reading Satus",
+                JOptionPane.INFORMATION_MESSAGE);
+            
         } catch(IOException e ){
-            System.out.println("Reading Error: " + e.getMessage());
+            JLabel message1 = new JLabel("Reading Error: " + e.getMessage());
+            message1.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+            JOptionPane.showMessageDialog(
+                null,
+                message1,
+                "Reading Error Message",
+                JOptionPane.INFORMATION_MESSAGE);
         } 
         
         return appointmentList;
