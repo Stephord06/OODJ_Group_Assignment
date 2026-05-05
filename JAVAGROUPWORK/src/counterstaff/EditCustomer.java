@@ -8,7 +8,7 @@ import java.awt.event.*;
 
 public class EditCustomer extends JFrame {
     
-    public EditCustomer() {
+    public EditCustomer(String customerId, String customerName, String customerContact, String customerEmail) {
         setTitle("APU - Automotive Service Centre | Edit Customer");
         setSize(1100, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,7 +68,7 @@ public class EditCustomer extends JFrame {
                 bodyPanel.add(idLabel);
                 bodyPanel.add(Box.createVerticalStrut(6));
 
-                JTextField idField = new JTextField("C001"); //auto shown later
+                JTextField idField = new JTextField(customerId); //auto shown later
                 idField.setFont(new Font("Arial", Font.PLAIN, 15));
                 idField.setBackground(new Color(245, 245, 245));
                 idField.setForeground(Color.GRAY);
@@ -90,7 +90,7 @@ public class EditCustomer extends JFrame {
                 bodyPanel.add(nameLabel);
                 bodyPanel.add(Box.createVerticalStrut(6));
                 
-                JTextField nameField = new JTextField("Lee Han Ming"); //auto shown later
+                JTextField nameField = new JTextField(customerName); //auto shown later
                 nameField.setFont(new Font("Arial", Font.PLAIN, 15));
                 nameField.setForeground(Color.BLACK);
                 nameField.setMaximumSize(new Dimension(550, 35));
@@ -125,7 +125,7 @@ public class EditCustomer extends JFrame {
                 bodyPanel.add(emailLabel);
                 bodyPanel.add(Box.createVerticalStrut(6));
                 
-                JTextField emailField = new JTextField("leeming@gmail.com"); //auto shown later
+                JTextField emailField = new JTextField(customerEmail); 
                 emailField.setFont(new Font("Arial", Font.PLAIN, 15));
                 emailField.setAlignmentX(Component.LEFT_ALIGNMENT);
                 emailField.setForeground(Color.BLACK);
@@ -160,7 +160,7 @@ public class EditCustomer extends JFrame {
                 bodyPanel.add(phoneLabel);
                 bodyPanel.add(Box.createVerticalStrut(6));
                 
-                JTextField phoneField = new JTextField("012-3456789"); //auto shown later
+                JTextField phoneField = new JTextField(customerContact);
                 phoneField.setFont(new Font("Arial", Font.PLAIN, 15));
                 phoneField.setAlignmentX(Component.LEFT_ALIGNMENT);
                 phoneField.setForeground(Color.BLACK);
@@ -221,6 +221,48 @@ public class EditCustomer extends JFrame {
             new ManageCustomer();
         });
         
+        updateButton.addActionListener(e -> {
+            // Get values from fields
+            String newName = nameField.getText().trim();
+            String newEmail = emailField.getText().trim();
+            String newPhone = phoneField.getText().trim();
+            
+            // Input validation
+            if (newName.isEmpty() || newName.equals("Enter full name") ||
+                newEmail.isEmpty() || newEmail.equals("Enter email address") ||
+                newPhone.isEmpty() || newPhone.equals("Enter phone number")) {
+                JOptionPane.showMessageDialog(this, 
+                        "Please fill in all fields!",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            } 
+            
+            // Read all lines from txt
+            java.util.List<String> lines = FileManager.readFile("customers.txt");
+            
+            // Find and update the correct line by Customer ID
+            for (int i = 0; i < lines.size(); i++) {
+                String[] parts = lines.get(i).split("\\|");
+                if (parts[0].equals(customerId)) {
+                    // Keep original password (parts[4])
+                    lines.set(i, customerId + "|" + newName + "|" + newPhone + "|" + newEmail + "|" + parts[4]);
+                    break;
+                }
+            }
+            
+            // Write updated list into txt
+            FileManager.writeFile("customers.txt", lines);
+            
+            JOptionPane.showMessageDialog(this,
+                    "Customer " + customerId + " updated successfully!",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+            
+            dispose();
+            new ManageCustomer();
+        });
+        
         cancelButton.addActionListener(e -> {
             dispose();
             new ManageCustomer();
@@ -231,6 +273,6 @@ public class EditCustomer extends JFrame {
     }
     
     public static void main(String[] args) {
-        new EditCustomer();
+        
     }
 }

@@ -201,17 +201,34 @@ public class ManageCustomer extends JFrame {
                  
                  // Reload from file and filter
                  java.util.List<String> allLines = FileManager.readFile("customers.txt");
-                 for (String line : allLines) {
-                     String[] parts = line.split("\\|");
-                     String id = parts[0].toLowerCase();
-                     String name = parts[1].toLowerCase();
-                     String contact = parts[2].toLowerCase();
-                     String email = parts[3].toLowerCase();
-                     
-                     // Show row if any field matches the query
-                     if (id.contains(query) || name.contains(query) ||
-                         contact.contains(query) || email.contains(query)) {
-                         tableModel.addRow(new String[]{parts[0], parts[1], parts[2], parts[3]});
+                 
+                 // If search field is empty or with a placeholder, reload all
+                 if (query.isEmpty() || query.equals("search by name, email or phone...")) {
+                     for (String line : allLines) {
+                         String[] parts = line.split("\\|");
+                         tableModel.addRow(new String[]{
+                             parts[0], // Customer ID
+                             parts[1], // Name
+                             parts[2], // Contact No
+                             parts[3] // Email
+                         });
+                     }
+                 }
+                 else {
+                     // Filter by query
+                     for (String line : allLines) {
+                         String[] parts = line.split("\\|");
+                         if (parts[0].toLowerCase().contains(query)||
+                             parts[1].toLowerCase().contains(query)||
+                             parts[2].toLowerCase().contains(query)||
+                             parts[3].toLowerCase().contains(query)) {
+                             tableModel.addRow(new String[] {
+                                 parts[0], // Customer ID
+                                 parts[1], // Name
+                                 parts[2], // Contact No
+                                 parts[3] // Email
+                             });
+                         }
                      }
                  }
               });
@@ -222,17 +239,49 @@ public class ManageCustomer extends JFrame {
             });
                 
             editButton.addActionListener(e -> {
+                int selectedRow = customerTable.getSelectedRow();
+                String customerId = (String) tableModel.getValueAt(selectedRow, 0);
+                String customerName = (String) tableModel.getValueAt(selectedRow, 1);
+                String customerContact = (String) tableModel.getValueAt(selectedRow, 2);
+                String customerEmail = (String) tableModel.getValueAt(selectedRow, 3);
+                
                 dispose();
-                new EditCustomer();
+                new EditCustomer(customerId, customerName, customerContact, customerEmail);
             });
                 
             delButton.addActionListener(e -> {
+                int selectedRow = customerTable.getSelectedRow();
+                String customerId = (String) tableModel.getValueAt(selectedRow, 0);
+                String customerName = (String) tableModel.getValueAt(selectedRow, 1);
+                
                 int confirm = JOptionPane.showConfirmDialog(this,
-                    "Are you sure you want to delete this customer?",
+                    "Are you sure you want to delete " + customerName + "?",
                     "Delete Customer",
                     JOptionPane.YES_NO_OPTION);
+                
                 if (confirm == JOptionPane.YES_OPTION) {
-                    // TODO: delete selected row from file
+                    // Read all lines from file
+                    java.util.List<String> deleteLines = FileManager.readFile("customers.txt");
+                    
+                    // Remove the line that matches with the selected row Customer ID
+                    for (int i = 0; i < deleteLines.size(); i ++) {
+                        String[] parts = deleteLines.get(i).split("\\|");
+                        if (parts[0].equals(customerId)) {
+                            deleteLines.remove(i);
+                            break;
+                        }
+                    }
+                    
+                    // Write updated list into txt
+                    FileManager.writeFile("customers.txt", deleteLines);
+                    
+                    // Remove row from table
+                    tableModel.removeRow(selectedRow);
+                    
+                    JOptionPane.showMessageDialog(this, 
+                            customerName + " has been deleted successfully!",
+                            "Deleted",
+                            JOptionPane.INFORMATION_MESSAGE);
                 }
             });
                 

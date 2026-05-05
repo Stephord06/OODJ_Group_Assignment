@@ -332,6 +332,118 @@ public class CreateAppointment extends JFrame{
             new StaffDashboard();
         });
         
+        confirmButton.addActionListener(e -> {
+            // Get selected customer
+            String selectedCustomer = customerList.getSelectedValue();
+            
+            // Get selected service
+            String selectedService = (String) serviceCombo.getSelectedItem();
+            
+            // Get selected date
+            String day = (String) dayCombo.getSelectedItem();
+            String month = (String) monthCombo.getSelectedItem();
+            String year = (String) yearCombo.getSelectedItem();
+            
+            // Get selected time
+            String selectedTime = (String) timeCombo.getSelectedItem();
+            
+            // Get selected technician
+            String selectedTech = (String) techCombo.getSelectedItem();
+            
+            // Input validation
+            if (selectedCustomer == null) {
+                JOptionPane.showMessageDialog(this,
+                        "Please select a customer",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            else if (day.equals("-DD-") || month.equals("-MM-") || year.equals("-YYYY-")) {
+                JOptionPane.showMessageDialog(this,
+                        "Please select a complete date!",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            else if (selectedTime == null || selectedTime.equals("-- Select a time slot --")) {
+                JOptionPane.showMessageDialog(this, 
+                        "Please select a time slot!",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            else if (selectedTech == null || selectedTech.equals("-- Select a time slot first --")) {
+                JOptionPane.showMessageDialog(this, 
+                        "Please select a technician!",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Extract Customer ID from selected customer 
+            String customerId = selectedCustomer.split(" - ")[0];
+            
+            // Extract Technician ID from selected techinician
+            String techId = selectedTech.split(" - ")[0];
+            
+            // Get Staff ID - will get from login later
+            String staffId = "S001";
+            
+            // Calculate end time based on service type
+            String endTime;
+            if (selectedService.equals("Normal Service (1 hour)")) {
+                endTime = calculateEndTime(selectedTime, 1);
+            }
+            else {
+                endTime = calculateEndTime(selectedTime, 3);
+            }
+            
+            // Format date
+                // Convert month to number
+                String[] monthNames = {
+                    "January", "February", "March", "April",
+                    "May", "June", "July", "August", "September",
+                    "October", "November", "December"
+                };
+                
+                String monthNum = month;
+                for (int i = 0; i < monthNames.length; i++) {
+                    if (monthNames[i].equals(month)) {
+                        monthNum = String.format("%02d", i + 1);
+                        break;
+                    }
+                }
+                
+                String date = day + "-" + monthNum + "-" + year;
+                
+            // Auto generate Appointment ID
+            String appointmentId = FileManager.generateNextId("appointments.txt", "A");
+            
+            // Shorten service type for saving
+            String serviceToSave;
+            
+            if (selectedService.equals("Normal Service (1 hour)")) {
+                serviceToSave = "Normal Service";
+            }
+            else {
+                serviceToSave = "Major Service";
+            }
+            
+            // Save all data to appointment.txt
+            String newLine = appointmentId + "|" + customerId + "|" + techId + "|"
+                    + staffId + "|" + serviceToSave + "|" + date + "|" + selectedTime
+                    + "|" + endTime + "|-|-|Pending";
+            FileManager.appendToFile("appointments.txt", newLine);
+            
+            JOptionPane.showMessageDialog(this, 
+                    "Appointment " + appointmentId + " created successfully!",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+            
+            dispose();
+            new StaffDashboard();
+        });
+        
         cancelButton.addActionListener(e -> {
             dispose();
             new StaffDashboard();
@@ -437,6 +549,41 @@ public class CreateAppointment extends JFrame{
                 
         
         setVisible(true);
+    }
+    
+    private String calculateEndTime(String startTime, int hours) {
+        try {
+            String[] parts = startTime.split(" ");
+            String[] timeParts = parts[0].split(":");
+            int hour = Integer.parseInt(timeParts[0]);
+            String period = parts[1]; // AM or PM
+            
+            // Convert into 24 hour
+            if (period.equals("PM") && hour != 12) {
+                hour += 12;
+            }
+            
+            if (period.equals("AM") && hour == 12) {
+                hour = 0;
+            }
+            
+            // Add hours
+            hour += hours;
+            
+            // Convert back to 12 hour
+            String newPeriod = hour >= 12 ? "PM" : "AM";
+            if (hour > 12) {
+                hour -= 12;
+            }
+            else if (hour == 0) {
+                hour = 12;
+            }
+            
+            return String.format("%02d:00 %s", hour, newPeriod);
+        }
+        catch (Exception e) {
+            return "-";
+        }
     }
     
     public static void main(String[] args) {

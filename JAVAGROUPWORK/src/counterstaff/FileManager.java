@@ -45,7 +45,18 @@ public class FileManager {
     // Append a single line to the file
     public static void appendToFile(String filename, String line) {
         try {
+            // Check if file ends with newline
+            java.io.File file = new java.io.File(filename);
+            boolean needsNewLine = false;
+            if(file.length() > 0) {
+                java.io.RandomAccessFile raf = new java.io.RandomAccessFile(file, "r");
+                raf.seek(file.length() - 1);
+                int lastChar = raf.read();
+                raf.close();
+                needsNewLine = (lastChar != '\n');
+            }
             BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true));
+            if (needsNewLine) writer.newLine();
             writer.write(line);
             writer.newLine();
             writer.close();

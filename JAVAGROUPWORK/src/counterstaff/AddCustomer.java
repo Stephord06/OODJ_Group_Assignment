@@ -68,7 +68,7 @@ public class AddCustomer extends JFrame {
                 bodyPanel.add(idLabel);
                 bodyPanel.add(Box.createVerticalStrut(6));
 
-                JTextField idField = new JTextField("C001"); //auto generated later
+                JTextField idField = new JTextField(FileManager.generateNextId("customers.txt", "C"));
                 idField.setFont(new Font("Arial", Font.PLAIN, 15));
                 idField.setBackground(new Color(245, 245, 245));
                 idField.setForeground(Color.GRAY);
@@ -224,6 +224,41 @@ public class AddCustomer extends JFrame {
         cancelButton.addActionListener(e -> {
             dispose();
             new ManageCustomer();
+        });
+        
+        saveButton.addActionListener(e -> {
+            // Get values from fields
+            String name = nameField.getText().trim();
+            String email = emailField.getText().trim();
+            String phone = phoneField.getText().trim();
+            
+            // Input validation
+            if (name.isEmpty() || name.equals("Enter full name") ||
+                email.isEmpty() || email.equals("Enter email address") ||
+                phone.isEmpty() || phone.equals("Enter phone number")) {
+                JOptionPane.showMessageDialog(this, 
+                        "Please fill in all the fields!",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            } 
+            
+            // Auto generate Customer ID
+            String customerId = FileManager.generateNextId("customers.txt", "C");
+            
+            // Save to customers.txt
+            String newLine = customerId + "|" + name + "|" + phone + "|" + email + "|apu123"; // apu123 default password
+            FileManager.appendToFile("customers.txt", newLine);
+            
+            // Update the ID field to show generated ID
+            JOptionPane.showMessageDialog(this,
+                    "Customer " + customerId + " added successfully!",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+            
+            dispose();
+            new ManageCustomer();
+            
         });
         
         
