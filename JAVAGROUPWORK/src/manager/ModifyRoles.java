@@ -6,12 +6,10 @@ package manager;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.BorderFactory; 
-import java.io.File.*;
-import java.nio.file.Paths;
-import java.nio.file.Files;
 import java.io.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,9 +19,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author User
  */
-public class ModifyRoles {
+public class ModifyRoles extends IdGeneretor{
+    
+    private JFrame Frame;
     
     private List<String[]> ViewTableData = new ArrayList<>();
+    
     
     private String updID;
     private String updName;
@@ -31,6 +32,7 @@ public class ModifyRoles {
     private String updEmail;
     private String updPhone;
     
+    private JComboBox rolesBox;
     private int selectedrow = 0;
     private JTable ViewTable;
     private DefaultTableModel model;
@@ -38,42 +40,97 @@ public class ModifyRoles {
     private boolean confirmFile = true ;
     
     
+    
     public ModifyRoles(){
         
     }
     
     public void ModifyRolesUI(){
-        JFrame Frame = new JFrame("ModifyRoles");
-        Frame.setLocationRelativeTo(null);
+        Frame = new JFrame("ModifyRoles");
         Frame.setLayout(new BorderLayout(10,10));
         Frame.setSize(800,500);
         Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Frame.setLocationRelativeTo(null);
         Frame.setVisible(true);
         
         //Search Main Panel
         
-        JPanel SearchBarLabel = new JPanel();
-        SearchBarLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY,2,true));
-        SearchBarLabel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        SearchBarLabel.setSize(20,10);
-        Frame.add(SearchBarLabel, BorderLayout.NORTH);
+        JPanel SearchBarPabel = new JPanel();
+        SearchBarPabel.setBorder(BorderFactory.createLineBorder(Color.GRAY,2,true));
+        SearchBarPabel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        SearchBarPabel.setSize(20,10);
+        Frame.add(SearchBarPabel, BorderLayout.NORTH);
         
         //Search Label
         
         JLabel SearchLabel = new JLabel("Search name/id: ");
         SearchLabel.setPreferredSize(new Dimension(110,25));
-        SearchBarLabel.add(SearchLabel);
+        SearchBarPabel.add(SearchLabel);
         
         //search textfield
         
         JTextField SearchField = new JTextField("Type Name or ID here");
         SearchField.setPreferredSize(new Dimension(200,25));
-        SearchBarLabel.add(SearchField);
+        SearchBarPabel.add(SearchField);
         
-        //search button
+        //search focusListener
+        SearchField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (SearchField.getText().equals("Type Name or ID here")) {
+                    SearchField.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (SearchField.getText().isEmpty()) {
+                    SearchField.setText("Type Name or ID here");
+                }
+            }
+        });
         
-        JButton SearchButton = new JButton("Search");
-        SearchBarLabel.add(SearchButton);
+        //search documentlistener
+        SearchField.getDocument().addDocumentListener(new DocumentListener(){
+           
+            @Override
+            public void insertUpdate(DocumentEvent e){
+               SearchTable(SearchField.getText());
+               
+              
+            }
+            
+            @Override
+            public void removeUpdate(DocumentEvent e){
+               SearchTable(SearchField.getText());
+               
+            }
+            
+            @Override
+            public void changedUpdate(DocumentEvent e){
+                
+            }
+        });
+        
+        //ComboBox of select roles file
+        String[] roles = {"CounterStaff","Manager","Technician","Customer"};
+        
+        rolesBox = new JComboBox(roles);
+        SearchBarPabel.add(rolesBox);
+        
+        // select roles ComboBox actionListener to avoid comboBox switched and data didn't change
+        
+        rolesBox.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.setRowCount(0);
+                ViewTableData.clear();
+                confirmFile = true;
+                selectedrow = 0;
+            }                 
+        });
+            
+        
    
     
         //Big table main panel 
@@ -108,7 +165,6 @@ public class ModifyRoles {
         
         //JTable panel
         JScrollPane sp = new JScrollPane(ViewTable);
-        sp.setPreferredSize(new Dimension(200,300));
         Frame.add(sp, BorderLayout.CENTER);
         
         //four button UI panel
@@ -170,7 +226,7 @@ public class ModifyRoles {
 
                 if (firstcount == 0 ) {
                     
-                    loadfile();
+                    loadfile(returnFile(rolesBox.getSelectedItem().toString()));
                     int secondcount = ViewTable.getRowCount();
                     
                     if(secondcount > 0 ){
@@ -184,7 +240,7 @@ public class ModifyRoles {
                     }
                 } 
                 else {
-                    savefile();
+                    savefile(returnFile(rolesBox.getSelectedItem().toString()));
                     JOptionPane.showMessageDialog(null, "Save Successfully");
                 } 
            }
@@ -216,25 +272,62 @@ public class ModifyRoles {
           
     }
     
+    
+    
+    
+    //search name and id 
+    public void SearchTable(String text){
+        model.setRowCount(0); 
+
+        if (text == null || text.isEmpty()) {
+            for (String[] row : ViewTableData) {
+                model.addRow(row);
+            }
+            return;
+        }
+
+        for (String[] row : ViewTableData) {
+            if (row[0].contains(text) || row[1].contains(text)){
+                model.addRow(row);
+            }
+        }
+    }
+    
+    //Roles comboBox return specific file
+    public String returnFile(String role){
+        if(role == "CounterStaff"){
+            return "CounterStaff.txt";
+        }
+        else if(role == "Manager"){
+            return "Manager.txt";
+        }
+        else if(role == "Technician"){
+            return "Technician.txt";
+        }
+        else{
+            return "Customer.txt";
+        }
+            
+    }
+    
+    
+    
     //load file
     
-    public void loadfile(){
+    public void loadfile(String file){
        try{
-            BufferedReader br = new BufferedReader(new FileReader("rolesInfo.txt")); 
+            BufferedReader br = new BufferedReader(new FileReader(file)); 
             String line;
             
-            if(ViewTableData.isEmpty()){
-                while ((line = br.readLine()) != null){
-                    String[] body = line.split(",");
-                    ViewTableData.add(body); 
-                }
+            ViewTableData.clear();
+            model.setRowCount(0);
+            
+            while ((line = br.readLine()) != null) {
+                String[] body = line.split(",");
+                ViewTableData.add(body);
+                model.addRow(body);
             }
-            
-            String[][] tableData = ViewTableData.toArray(new String[ViewTableData.size()][]);
-            model = new DefaultTableModel(tableData, columns);
-            ViewTable.setModel(model);
             br.close();
-            
         }
         catch(IOException e){
             e.printStackTrace();
@@ -243,9 +336,9 @@ public class ModifyRoles {
     
     //save file 
     
-    public void savefile(){
+    public void savefile(String file){
         try{
-            BufferedWriter bw = new BufferedWriter(new FileWriter("rolesInfo.txt"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             
             for (String[] data : ViewTableData){
                     String body = String.join(",", data);
@@ -263,6 +356,7 @@ public class ModifyRoles {
     public void UpdateBtnFrame(int row){    //similir method like CreateBtnFrame();
         JFrame updbtnframe = new JFrame("Update Form");
         updbtnframe.setLayout(new BorderLayout());
+        updbtnframe.setLocationRelativeTo(Frame);
         updbtnframe.setSize(300, 250);
         
         JPanel updmainpanel = new JPanel();
@@ -340,7 +434,7 @@ public class ModifyRoles {
     
     public void CreateBtnFrame(){
         JFrame crtbtnframe = new JFrame("Infomation Form");
-        crtbtnframe.setLocationRelativeTo(null);
+        crtbtnframe.setLocationRelativeTo(Frame);
         crtbtnframe.setLayout(new BorderLayout());
         crtbtnframe.setSize(300, 250);
 
@@ -377,14 +471,16 @@ public class ModifyRoles {
         JTextField phoneField = new JTextField();
         crtmainpanel.add(phoneField);
 
-
         
-
         //createbtn event
-        createbtn.addActionListener(new ActionListener() {
+        createbtn.addActionListener(new ActionListener() { 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String[] newrow = {"C0123",nameField.getText(),roleField.getText(),emailField.getText(),phoneField.getText()};
+            
+            String file = returnFile(rolesBox.getSelectedItem().toString());
+            String id = IdAutoGenerate(file, ViewTableData.size());
+            
+            String[] newrow = {id,nameField.getText(),roleField.getText(),emailField.getText(),phoneField.getText()};
             ViewTableData.add(newrow);
             model.addRow(newrow);
             }
@@ -392,7 +488,7 @@ public class ModifyRoles {
             // ****** REMEMBER ADD SAVE TO FILE <> LATER WILL BE ADDED
         });
 
-
+        
 
         //backbtn event
         backbtn.addActionListener(new ActionListener() {
@@ -412,8 +508,8 @@ public class ModifyRoles {
     }
     
     
-
-
+    
+    
 
 
 }

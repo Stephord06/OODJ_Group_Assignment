@@ -7,7 +7,6 @@ package manager;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
-import java.text.NumberFormat;
 import java.awt.event.*;
 import java.io.*;
 import java.io.File;
@@ -17,24 +16,28 @@ import java.io.FileNotFoundException;
 
 public class SetPrices {
     
-    private final NumberFormat amountFormat = NumberFormat.getIntegerInstance();
     private JPanel shortpanel;
     private JPanel longpanel;
     private JPanel headerRow1;
     private JPanel headerRow2;
     
-    private JFormattedTextField priceField1;
-    private JFormattedTextField priceField2;
+    
+    private JTextField priceField1;
+    private JTextField priceField2;
     
     private final File file = new File("setPrices.txt");
     
-    private int[] price;
+    private String readshortprice;
+    private String readlongprice;
+    
+    
     
     public void SetPricesUI(){
         JFrame Frame = new JFrame("SetPrices");
         Frame.setSize(800, 500);
         Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Frame.setLayout(new BorderLayout(30,30));
+        Frame.setLocationRelativeTo(null);
         Frame.setVisible(true);
         
         //Label title main panel
@@ -79,7 +82,7 @@ public class SetPrices {
         
         
         //saved icon 
-        headerRow1.add(saved());
+
         
         //price panel 
         JPanel pricepanel1 = new JPanel();
@@ -93,7 +96,7 @@ public class SetPrices {
         pricepanel1.add(priceLabel1);
         
         //short session appointment pricefield
-        priceField1 = new JFormattedTextField(amountFormat);
+        priceField1 = new JTextField();
         priceField1.setPreferredSize(new Dimension(150, 25));
         priceField1.setBorder(BorderFactory.createLineBorder(Color.cyan, 1, true));
         pricepanel1.add(priceField1);
@@ -126,8 +129,7 @@ public class SetPrices {
         
         
         //saved icon for shortpanel
-        headerRow2.add(unsaved());
-        
+
         
         
         //price panel 
@@ -142,26 +144,48 @@ public class SetPrices {
         pricepanel2.add(priceLabel2);
         
         //long session appointment pricefield
-        priceField2 = new JFormattedTextField(amountFormat);
+        priceField2 = new JTextField();
         priceField2.setPreferredSize(new Dimension(150, 25));
         priceField2.setBorder(BorderFactory.createLineBorder(Color.cyan, 1, true));
         pricepanel2.add(priceField2);
         
         //long session and short session textfield event
-        priceField2.getDocument().addDocumentListener(new DocumentListener(){
+        priceField1.getDocument().addDocumentListener(new DocumentListener(){
+            
             @Override
             public void insertUpdate(DocumentEvent e) 
             { 
-                headerRow1.add(unsaved());
-                headerRow2.add(unsaved());
+                    
+                   
             }
             
             
             @Override
             public void removeUpdate(DocumentEvent e) 
             { 
-                headerRow1.add(unsaved());
-                headerRow2.add(unsaved());
+
+                
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) { /* Not used for plain text */ }
+  
+            
+        });
+        
+        priceField2.getDocument().addDocumentListener(new DocumentListener(){
+            
+            @Override
+            public void insertUpdate(DocumentEvent e) 
+            { 
+
+            }
+            
+            
+            @Override
+            public void removeUpdate(DocumentEvent e) 
+            { 
+
+                
             }
             @Override
             public void changedUpdate(DocumentEvent e) { /* Not used for plain text */ }
@@ -209,13 +233,22 @@ public class SetPrices {
             
         });
         
+        backbtn.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Frame.dispose(); // close this window
+            ManagerDashBoard back = new ManagerDashBoard();
+            back.DashBoardUI();
+            }
+        });
+        
     }
     
     public String filewriter(){
         Properties props = new Properties();
 
-        props.setProperty("1hour", String.valueOf(priceField1.getValue()));
-        props.setProperty("3hour", String.valueOf(priceField2.getValue()));
+        props.setProperty("1hour", priceField1.getText());
+        props.setProperty("3hour", priceField2.getText());
         
         try (FileWriter fw = new FileWriter("setPrices.txt")){
 
@@ -234,11 +267,11 @@ public class SetPrices {
         Properties props = new Properties();
         try (FileReader fr = new FileReader("setPrices.txt")){
             props.load(fr); 
-            int shortprice = Integer.parseInt(props.getProperty("1hour")); 
-            int longprice = Integer.parseInt(props.getProperty("3hour"));
+            readshortprice = props.getProperty("1hour"); 
+            readlongprice = props.getProperty("3hour");
              
-            priceField1.setValue(shortprice);
-            priceField2.setValue(longprice);
+            priceField1.setText(readshortprice);
+            priceField2.setText(readlongprice);
             
             return "Load Successful";
         }
@@ -255,8 +288,8 @@ public class SetPrices {
     public JPanel saved(){
         JPanel panel = new JPanel();
         panel.setBackground(new Color(34, 139, 34));
-        panel.setPreferredSize(new Dimension(80, 25));// forest green
-        panel.setBorder(BorderFactory.createLineBorder(new Color(0, 100, 0), 1, true)); // dark green border
+        panel.setPreferredSize(new Dimension(80, 25));
+        panel.setBorder(BorderFactory.createLineBorder(new Color(0, 100, 0), 1, true)); 
 
         JLabel text = new JLabel("Saved");
         text.setFont(new Font("Arial", Font.BOLD, 11));
@@ -269,9 +302,8 @@ public class SetPrices {
     
     public JPanel unsaved(){
         JPanel panel = new JPanel();
-        panel.setBackground(new Color(200, 50, 50));  // soft red
-        panel.setBorder(BorderFactory.createLineBorder(new Color(150, 0, 0), 1, true));  // dark red border        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 4, 0));
-
+        panel.setBackground(new Color(200, 50, 50)); 
+        panel.setBorder(BorderFactory.createLineBorder(new Color(150, 0, 0), 1, true)); 
         JLabel text = new JLabel("Unsaved");
         text.setFont(new Font("Arial", Font.BOLD, 11));
         text.setForeground(Color.WHITE);

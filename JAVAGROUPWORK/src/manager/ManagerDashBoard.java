@@ -6,6 +6,8 @@
 
 package manager;
 
+import GeneralTools.Login;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -29,13 +31,25 @@ public class ManagerDashBoard {
     public void DashBoardUI() {
         // Frame
         JFrame frame = new JFrame("Manager Dash Board");
+        frame.setLayout(new BorderLayout());
         frame.setSize(800, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
 
         // Outer panel with GridBagLayout to center content
         JPanel outer = new JPanel(new GridBagLayout());
-        frame.add(outer);
-
+        frame.add(outer, BorderLayout.CENTER);
+        
+        //Log out button
+        JPanel logOutPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton logOutBtn = new JButton("Log Out");
+        logOutPanel.add(logOutBtn);
+        
+        
+        
+        frame.add(logOutPanel, BorderLayout.NORTH);
+        
+        
         // Container panel to stack label and button panel vertically
         JPanel container = new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
@@ -62,8 +76,8 @@ public class ManagerDashBoard {
         JButton SetPrices = new JButton("Set Prices");
         buttonPanel.add(SetPrices);
                 
-        JButton AnalysisReport = new JButton("Analyzed Report");
-        buttonPanel.add(AnalysisReport);
+        JButton AnalyzedReport = new JButton("Analyzed Report");
+        buttonPanel.add(AnalyzedReport);
         
         JButton ViewComment = new JButton("View Comment");
         buttonPanel.add(ViewComment);   
@@ -72,9 +86,6 @@ public class ManagerDashBoard {
 
         // GridBagConstraints to center container in outer panel
         GridBagConstraints c = new GridBagConstraints();
-        c.gridx = 0;
-        c.gridy = 0;
-        c.anchor = GridBagConstraints.CENTER;
         outer.add(container, c);
 
         // Show frame
@@ -83,26 +94,67 @@ public class ManagerDashBoard {
         
         // event button handler
         
-         modify.addActionListener(new ActionListener() {
+        logOutBtn.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                    
-                ModifyRoles mr = new ModifyRoles();
-                mr.ModifyRolesUI();
-                }
-            });
-         
-          SetPrices.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
+                int result = JOptionPane.showConfirmDialog(null, "Are u sure to log out?","Log Out", JOptionPane.YES_NO_OPTION);
                 
-                SetPrices sp = new SetPrices();
-                sp.SetPricesUI();
+                Login login = new Login();
+                
+                if(result == JOptionPane.YES_OPTION){
+                    frame.dispose();
+                    login.LoginPage();
+                    
                 }
-            });
+                else if(result == JOptionPane.NO_OPTION){
+                    //nothing
+                }
+            }
+        });
+        
+        
+        modify.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               frame.dispose();
+
+               ModifyRoles mr = new ModifyRoles();
+               mr.ModifyRolesUI();
+               }
+           });
+
+        SetPrices.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              frame.dispose();
+
+              SetPrices sp = new SetPrices();
+              sp.SetPricesUI();
+              }
+          });
+
+        AnalyzedReport.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                frame.dispose();
+
+                AnalyzedReport ar = new AnalyzedReport();
+                ar.AnalyzedReportUI();
+            }
+        });
+
+        ViewComment.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                frame.dispose();
+
+                ViewComment vr = new ViewComment();
+                vr.ViewCommentUI();
+            }
+        });
          
+          
+        
          
     }
 
@@ -117,4 +169,9 @@ public class ManagerDashBoard {
     public String getPassword(){
         return this.password;
     }
+    
+    
+    
+    
 }
+
