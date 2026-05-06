@@ -10,6 +10,8 @@ package technician;
  */
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 
 public class AppointmentDetails {
@@ -66,6 +68,16 @@ public class AppointmentDetails {
         panel.setBounds(50,90,500,500);
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         panel.setLayout(null);
+        
+        // Set Button Event
+        btn_finish.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                appointDetails.dispose();
+                Appointments ap = new Appointments();
+                ap.AppointList();
+            }
+        });
         
         // Font Setting
         title.setFont(new Font("Times New Roman", Font.BOLD, 22));

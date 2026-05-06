@@ -10,7 +10,8 @@ package technician;
  */
 import javax.swing.*;
 import java.awt.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Appointments {
     
@@ -40,6 +41,25 @@ public class Appointments {
         
         btn_check.setBounds(25,150,200,30);
         btn_quit.setBounds(265,150,150,30);
+        
+        // Button Action Event
+        btn_check.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                AppointmentDetails apd = new AppointmentDetails();
+                apd.AppointDetails();
+            }
+        });
+        
+        btn_quit.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                frame.dispose();
+                TechnicianDashBoard tdb = new TechnicianDashBoard();
+                tdb.TechDashBoard();
+            }
+        });
         
         // Panel
         JPanel panel = new JPanel();

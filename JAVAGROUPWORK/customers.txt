@@ -1,0 +1,6 @@
+C001|Ahmad Ali|012-3456789|aliii@email.com|password123
+C002|Siti Aisyah|011-2345678|siti@email.com|password456
+C003|Raj Kumar|016-7654321|raj@email.com|password789
+C004|Lee Han Ming|019-2921183|leeming@gmail.com|apu123
+C005|Chow Booh Hwa|011-8883235|chow123@gmail.com|apu123
+C006|Wong Zheng Jun|010-2228888|stephord06@gmail.com|apu123
