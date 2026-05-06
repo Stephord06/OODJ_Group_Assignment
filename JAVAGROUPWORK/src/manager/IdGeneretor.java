@@ -13,7 +13,7 @@ public class IdGeneretor {
     public String IdAutoGenerate(String file, int getRow){
         
         if(file.startsWith("Co")){
-            return "CS" + (getRow + 1);   
+            return "S" + (getRow + 1);   
         }
         else if(file.startsWith("C")){
             return "C" + (getRow + 1);
