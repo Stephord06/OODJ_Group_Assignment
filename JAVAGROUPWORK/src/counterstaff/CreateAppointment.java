@@ -84,7 +84,7 @@ public class CreateAppointment extends JFrame{
                         leftCol.add(appIdLabel);
                         leftCol.add(Box.createVerticalStrut(6));
 
-                        JTextField appIdField = new JTextField("A001"); //auto generated later
+                        JTextField appIdField = new JTextField(FileManager.generateNextId("appointments.txt", "A")); //auto generated 
                         appIdField.setFont(new Font("Arial", Font.PLAIN, 14));
                         appIdField.setBackground(new Color(245, 245, 245));
                         appIdField.setForeground(Color.GRAY);
@@ -117,14 +117,17 @@ public class CreateAppointment extends JFrame{
                         leftCol.add(customerSearchField);
                         leftCol.add(Box.createVerticalStrut(6));
 
-                        //Customer list
+                        //Customer list - load from customers.txt
                         DefaultListModel<String> customerListModel = new DefaultListModel<>();
-                        customerListModel.addElement("C001 - Ahmad Razif"); // will read from txt later
-                        customerListModel.addElement("C002 - Siti Aisyah");
-                        customerListModel.addElement("C003 - Raj Kumar");
-                        customerListModel.addElement("C004 - Lee Han Ming");
-                        customerListModel.addElement("C005 - Chow Booh Hwa");
-                        customerListModel.addElement("C006 - Wong Zheng Jun");
+                        java.util.List<String> customerLines = FileManager.readFile("customers.txt");
+                        final String[] allCustomers = new String[customerLines.size()];
+                        
+                        for (int i = 0; i < customerLines.size(); i++) {
+                            String[] parts = customerLines.get(i).split("\\|");
+                            String entry = parts[0] + " - " + parts[1];
+                            customerListModel.addElement(entry);
+                            allCustomers[i] = entry;
+                        }
 
                         JList<String> customerList = new JList<>(customerListModel);
                         customerList.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -166,17 +169,12 @@ public class CreateAppointment extends JFrame{
                                 // Restore full list if placeholder showing
                                 if(query.equals("Type to search customer...") || query.isEmpty()){
                                     customerListModel.clear();
-                                    customerListModel.addElement("C001 - Ahmad Razif");
-                                    customerListModel.addElement("C002 - Siti Aisyah");
-                                    customerListModel.addElement("C003 - Raj Kumar");
-                                    customerListModel.addElement("C004 - Lee Han Ming");
-                                    customerListModel.addElement("C005 - Chow Booh Hwa");
-                                    customerListModel.addElement("C006 - Wong Zheng Jun");
+                                    for (String c : allCustomers) {
+                                        customerListModel.addElement(c);
+                                    }
                                     return;
                                 }
                                 customerListModel.clear();
-                                String[] allCustomers = {"C001 - Ahmad Razif", "C002 - Siti Aisyah", "C003 - Raj Kumar",
-                                "C004 - Lee Han Ming", "C005 - Chow Booh Hwa", "C006 - Wong Zheng Jun"}; //will read from txt later
                                 for (String c : allCustomers){
                                     if(c.toLowerCase().contains(query.toLowerCase())){
                                         customerListModel.addElement(c);
@@ -535,8 +533,13 @@ public class CreateAppointment extends JFrame{
               String selected = (String) timeCombo.getSelectedItem();
               if (selected != null && !selected.equals("-- Select a time slot --")){
                   techCombo.removeAllItems();
-                  techCombo.addItem("T001 - Ali Hassan"); // Will read from txt later
-                  techCombo.addItem("T002 - Ravi Kumar");
+                  
+                  // Load technicians from technicians.txt
+                  java.util.List<String> techLines = FileManager.readFile("technicians.txt");
+                  for (String techLine : techLines) {
+                      String[] parts = techLine.split("\\|");
+                      techCombo.addItem(parts[0] + " - " + parts[1]);
+                  }
                   techCombo.setEnabled(true);
               }
               else {

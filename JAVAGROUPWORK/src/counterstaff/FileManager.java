@@ -78,4 +78,38 @@ public class FileManager {
         int num = Integer.parseInt(lastId.substring(prefix.length()));
         return String.format("%s%03d", prefix, num + 1);
     }
+    
+    // Get name from txt by ID
+    public static String getNameFromFile(String filename, String id) {
+        java.util.List<String> lines = readFile(filename);
+        for (String line : lines) {
+            String[] parts = line.split("\\|");
+            if (parts[0].equals(id)) {
+                return parts[1];
+            }
+        }
+        return id; // return ID if not found
+    }
+    
+    // Get price from prices.txt
+    public static String getPriceFromFile(String serviceType) {
+        java.util.List<String> lines = readFile("setPrices.txt");
+        for (String line : lines) {
+            if (line.startsWith("#")) {
+                continue;
+            }
+            String[] parts = line.split("=");
+            
+            if (serviceType.equals("Normal Service") && parts[0].equals("1hour")) {
+                double price = Double.parseDouble(parts[1].trim());
+                return String.format("%.2f", price);
+            }
+            
+            else if (serviceType.equals("Major Service") && parts[0].equals("3hour")) {
+                double price = Double.parseDouble(parts[1].trim());
+                return String.format("%.2f", price);
+            }
+        }
+        return "0.00";
+    }
 }

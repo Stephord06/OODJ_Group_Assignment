@@ -82,6 +82,9 @@ public class CollectPayment extends JFrame{
                     JLabel timeValue = new JLabel("-");
                     JLabel totalValue = new JLabel("-");
                     
+                    // Track selected appointment
+                    String[] selectedApp = new String[6]; // Stores the currently clicked appointment
+                    
                     cusValue.setHorizontalAlignment(SwingConstants.RIGHT);
                     serviceValue.setHorizontalAlignment(SwingConstants.RIGHT);
                     techValue.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -110,17 +113,38 @@ public class CollectPayment extends JFrame{
                             appScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
                             leftCol.add(appScroll);
                             
-                            // Sample appointment cards (will load from txt later)
-                            String[][] appointments = {
-                                {"A001", "Ahmad Razif", "24-04-2026", "09:00", "Normal Service", "T001 - Ali Hassan"},
-                                {"A002", "Siti Aisyah", "24-04-2026", "11:00", "Major Service", "T002 - Ravi Kumar"},
-                                {"A003", "Raj Kumar", "25-04-2026", "10:00", "Normal Service", "T001 - Ali Hassan"},
-                                {"A004", "Mohammed Razif", "26-04-2026", "09:00", "Normal Service", "T001 - Ali Hassan"},
-                                {"A005", "Tinah Aisyah", "26-04-2026", "10:00", "Major Service", "T002 - Ravi Kumar"},
-                                {"A006", "Rajah Kumar", "27-04-2026", "09:00", "Normal Service", "T001 - Ali Hassan"}
-                            };
+                            // Load completed appointments from appointment.txt
+                            java.util.List<String> appointmentLines = FileManager.readFile("appointments.txt");
                             
-                            for (String[] app : appointments) {
+                            for (String line : appointmentLines) {
+                                String[] parts = line.split("\\|");
+                                
+                                // Only show completed appointments
+                                if (!parts[10].equals("Completed")) {
+                                    continue;
+                                }
+                                
+                                String appId = parts[0];
+                                String customerId = parts[1];
+                                String techId = parts[2];
+                                String service = parts[4];
+                                String date = parts[5];
+                                String timeStart = parts[6];
+                                
+                                // Look for names using id
+                                String customerName = FileManager.getNameFromFile("customers.txt", customerId);
+                                String techName = FileManager.getNameFromFile("technicians.txt", techId);
+                                
+                                String[] app = {
+                                    appId,
+                                    customerName,
+                                    date,
+                                    timeStart,
+                                    service,
+                                    techId + " - " + techName
+                                };
+                                
+                                // Card
                                 JPanel card = new JPanel();
                                 card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
                                 card.setBackground(Color.WHITE);
@@ -136,7 +160,7 @@ public class CollectPayment extends JFrame{
                                 idLabel.setFont(new Font("Arial", Font.BOLD, 13));
                                 idLabel.setForeground(new Color(218, 87, 0));
                                 
-                                JLabel infoLabel = new JLabel(app[1] + "  |  " + app[2]);
+                                JLabel infoLabel = new JLabel(app[1] + " | " + app[2]);
                                 infoLabel.setFont(new Font("Arial", Font.PLAIN, 13));
                                 infoLabel.setForeground(Color.BLACK);
                                 
@@ -150,44 +174,52 @@ public class CollectPayment extends JFrame{
                                 card.add(Box.createVerticalStrut(3));
                                 card.add(serviceInfoLabel);
                                 
-                                // Hover Effect
+                                // Hover effect
                                 card.addMouseListener(new MouseAdapter(){
-                                    public void mouseEntered(MouseEvent e) {
-                                        card.setBackground(new Color(255, 248, 245));
-                                        card.setBorder(BorderFactory.createCompoundBorder(
-                                                BorderFactory.createLineBorder(new Color(218, 87, 0)),
-                                                BorderFactory.createEmptyBorder(10, 12, 10, 12)
-                                        
-                                        ));
-                                    }
-                                    public void mouseExited(MouseEvent e) {
-                                        card.setBackground(Color.WHITE);
-                                        card.setBorder(BorderFactory.createCompoundBorder(
-                                                BorderFactory.createLineBorder(new Color(220, 220, 220)),
-                                                BorderFactory.createEmptyBorder(10, 12, 10, 12)
-                                        ));
-                                    }
-                                    // Click to load appointment details in the box details
-                                    public void mouseClicked(MouseEvent e) {
-                                        //Update payment details box
-                                        payDetailsLabel.setText("Payment Details — " + app[0]);
-                                        cusValue.setText(app[1]);
-                                        dateValue.setText(app[2]);
-                                        timeValue.setText(app[3]);
-                                        serviceValue.setText(app[4]);
-                                        techValue.setText(app[5]);
-                                        if (app[4].equals("Normal Service")) {
-                                            totalValue.setText("RM 50.00"); // temp - replace with price from txt
-                                        }
-                                        else { 
-                                            totalValue.setText("RM 100.00"); // temp - replace with price from txt
-                                        }
-                                    }
+                                   public void mouseEntered(MouseEvent e) {
+                                       card.setBackground(new Color(255, 248, 245));
+                                       card.setBorder(BorderFactory.createCompoundBorder(
+                                               BorderFactory.createLineBorder(new Color(218, 87, 0)),
+                                               BorderFactory.createEmptyBorder(10, 12, 10, 12)
+                                       ));
+                                   } 
+                                   
+                                   public void mouseExited(MouseEvent e) {
+                                       card.setBackground(Color.WHITE);
+                                       card.setBorder(BorderFactory.createCompoundBorder(
+                                               BorderFactory.createLineBorder(new Color(220, 220, 220)),
+                                               BorderFactory.createEmptyBorder(10, 12, 10, 12)
+                                       ));
+                                   }
+                                   
+                                   // Click to load appointment details in the box details
+                                   public void mouseClicked(MouseEvent e) {
+                                       // Update payment details box
+                                       payDetailsLabel.setText("Payment Details — " + app[0]);
+                                       cusValue.setText(app[1]);
+                                       dateValue.setText(app[2]);
+                                       timeValue.setText(app[3]);
+                                       serviceValue.setText(app[4]);
+                                       techValue.setText(app[5]);
+                                       
+                                       // Load price from prices.txt
+                                       String price = FileManager.getPriceFromFile(app[4]);
+                                       totalValue.setText("RM " + price);
+                                       
+                                       // Store selected appointment
+                                       selectedApp[0] = app[0]; // Appointment ID
+                                       selectedApp[1] = app[1]; // Customer Name
+                                       selectedApp[2] = app[2]; // Date
+                                       selectedApp[3] = app[3]; // Time
+                                       selectedApp[4] = app[4]; // Service
+                                       selectedApp[5] = app[5]; // Technician
+                                   }
                                 });
                                 
                                 appListPanel.add(card);
                                 appListPanel.add(Box.createVerticalStrut(8));
                             }
+
                                 
                         
                     // Divider
@@ -277,6 +309,8 @@ public class CollectPayment extends JFrame{
                             totalValue.setForeground(new Color(218, 87, 0));
                             detailBox.add(totalValue); 
                             
+                            
+                            
                         
                         // Payment Method Label
                         JLabel methodLabel = new JLabel("Payment Method");
@@ -353,8 +387,55 @@ public class CollectPayment extends JFrame{
          
          // Confirm Button
          confirmBtn.addActionListener(e -> {
+            // Validate appointment is selected
+            if (selectedApp[0] == null) {
+                JOptionPane.showMessageDialog(this, 
+                        "Please select an appointment first!",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Get selected payment method
+            String paymentMethod;
+            if (cashBtn.getBackground().equals(new Color(255, 248, 245))) {
+                paymentMethod = "Cash";
+            }
+            else {
+                paymentMethod = "Card";
+            }
+            
+            // Get price
+            String price = FileManager.getPriceFromFile(selectedApp[4]);
+            
+            // Auto generate Receipt ID
+            String receiptId = FileManager.generateNextId("receipts.txt", "R");
+            
+            // Save receipt to receipts.txt
+            String receiptLine = receiptId + "|" + selectedApp[0] + "|" +
+                    selectedApp[1] + "|" + selectedApp[4] + "|" + selectedApp[5]
+                    + "|" + selectedApp[2] + "|" + selectedApp[3] + "|" + 
+                    paymentMethod + "|" + price;
+            
+            FileManager.appendToFile("receipts.txt", receiptLine);
+            
+            // Update appointment status to Paid in appointment.txt
+            java.util.List<String> appLines = FileManager.readFile("appointments.txt");
+            for (int i = 0; i < appLines.size(); i++) {
+                String[] parts = appLines.get(i).split("\\|");
+                
+                if (parts[0].equals(selectedApp[0])) {
+                    parts[10] = "Paid";
+                    appLines.set(i, String.join("|", parts));
+                    break;
+                }
+            }
+            FileManager.writeFile("appointments.txt", appLines);
+            
+            // Open Receipt Frame with data
             dispose();
-            new Receipt();
+            new Receipt(receiptId, selectedApp[0], selectedApp[1], selectedApp[4],
+                    selectedApp[5], selectedApp[2], selectedApp[3], paymentMethod, price);
          });
                 
         

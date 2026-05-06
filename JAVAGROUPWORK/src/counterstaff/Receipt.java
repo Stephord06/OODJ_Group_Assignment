@@ -8,7 +8,9 @@ import java.util.*;
 
 public class Receipt extends JFrame{
     
-    public Receipt() {
+    public Receipt(String receiptId, String appointmentId, String customerName,
+            String serviceType, String techName, String date,
+            String timeSlot, String paymentMethod, String totalPaid) {
         setTitle("APU - Automotive Service Centre | Receipt");
         setSize(1100, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -108,7 +110,7 @@ public class Receipt extends JFrame{
                             recIdLabel.setForeground(new Color(180, 180, 180));
                             rowsPanel.add(recIdLabel);
 
-                            JLabel recIdValue = new JLabel("R001"); // auto generated later
+                            JLabel recIdValue = new JLabel(receiptId); // auto generated later
                             recIdValue.setFont(new Font("Arial", Font.BOLD, 13));
                             recIdValue.setForeground(Color.WHITE);
                             recIdValue.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -120,7 +122,7 @@ public class Receipt extends JFrame{
                             appIdLabel.setForeground(new Color(180, 180, 180));
                             rowsPanel.add(appIdLabel);
 
-                            JLabel appIdValue = new JLabel("A001"); // load from txt later
+                            JLabel appIdValue = new JLabel(appointmentId); // load from txt later
                             appIdValue.setFont(new Font("Arial", Font.BOLD, 13));
                             appIdValue.setForeground(Color.WHITE);
                             appIdValue.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -132,7 +134,7 @@ public class Receipt extends JFrame{
                             recCusLabel.setForeground(new Color(180, 180, 180));
                             rowsPanel.add(recCusLabel);
 
-                            JLabel recCusValue = new JLabel("Ahmad Razif"); // load from txt later
+                            JLabel recCusValue = new JLabel(customerName); // load from txt later
                             recCusValue.setFont(new Font("Arial", Font.BOLD, 13));
                             recCusValue.setForeground(Color.WHITE);
                             recCusValue.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -144,7 +146,7 @@ public class Receipt extends JFrame{
                             recServiceLabel.setForeground(new Color(180, 180, 180));
                             rowsPanel.add(recServiceLabel);
 
-                            JLabel recServiceValue = new JLabel("Normal Service"); // load from txt later
+                            JLabel recServiceValue = new JLabel(serviceType); // load from txt later
                             recServiceValue.setFont(new Font("Arial", Font.BOLD, 13));
                             recServiceValue.setForeground(Color.WHITE);
                             recServiceValue.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -156,7 +158,7 @@ public class Receipt extends JFrame{
                             recTechLabel.setForeground(new Color(180, 180, 180));
                             rowsPanel.add(recTechLabel);
 
-                            JLabel recTechValue = new JLabel("T001 - Ali Hassan"); // load from txt later
+                            JLabel recTechValue = new JLabel(techName); // load from txt later
                             recTechValue.setFont(new Font("Arial", Font.BOLD, 13));
                             recTechValue.setForeground(Color.WHITE);
                             recTechValue.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -168,7 +170,7 @@ public class Receipt extends JFrame{
                             recDateLabel.setForeground(new Color(180, 180, 180));
                             rowsPanel.add(recDateLabel);
 
-                            JLabel recDateValue = new JLabel("24-04-2026"); // load from txt later
+                            JLabel recDateValue = new JLabel(date); // load from txt later
                             recDateValue.setFont(new Font("Arial", Font.BOLD, 13));
                             recDateValue.setForeground(Color.WHITE);
                             recDateValue.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -180,7 +182,7 @@ public class Receipt extends JFrame{
                             recTimeLabel.setForeground(new Color(180, 180, 180));
                             rowsPanel.add(recTimeLabel);
 
-                            JLabel recTimeValue = new JLabel("09:00 AM"); // load from txt later
+                            JLabel recTimeValue = new JLabel(timeSlot); // load from txt later
                             recTimeValue.setFont(new Font("Arial", Font.BOLD, 13));
                             recTimeValue.setForeground(Color.WHITE);
                             recTimeValue.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -192,7 +194,7 @@ public class Receipt extends JFrame{
                             recPayLabel.setForeground(new Color(180, 180, 180));
                             rowsPanel.add(recPayLabel);
 
-                            JLabel recPayValue = new JLabel("Cash"); // load from txt later
+                            JLabel recPayValue = new JLabel(paymentMethod);
                             recPayValue.setFont(new Font("Arial", Font.BOLD, 13));
                             recPayValue.setForeground(Color.WHITE);
                             recPayValue.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -223,7 +225,7 @@ public class Receipt extends JFrame{
                         totalPaidLabel.setFont(new Font("Arial", Font.BOLD, 16));
                         totalPaidLabel.setForeground(new Color(218, 87, 0));
 
-                        JLabel totalPaidValue = new JLabel("RM 50.00"); // load from txt later
+                        JLabel totalPaidValue = new JLabel("RM " + totalPaid); // load from txt later
                         totalPaidValue.setFont(new Font("Arial", Font.BOLD, 16));
                         totalPaidValue.setForeground(new Color(218, 87, 0));
                         totalPaidValue.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -290,6 +292,8 @@ public class Receipt extends JFrame{
     
     
     public static void main(String[] args) {
-        new Receipt();
+        // dummy data for testing
+        new Receipt("R001", "A001", "Ahmad Razif", "Normal Service",
+                "T001 - Ali Hassan", "16-05-2026", "09:00 AM", "Cash", "200.00");
     }
 }
