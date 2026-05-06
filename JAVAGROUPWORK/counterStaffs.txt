@@ -1,1 +1,3 @@
 S001|Lee Han Ming|012-1234567|leeming@email.com|abc123456
+S002|Muhammad|0122222|muhammad@gmail.com|11111
+S003|Justin|0155555|justin@gmail.com|111111

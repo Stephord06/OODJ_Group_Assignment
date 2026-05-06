@@ -227,7 +227,7 @@ public class AnalyzedReport {
             String line;
             
             while ((line = br.readLine()) != null){
-                String[] parts = line.split(",");
+                String[] parts = line.split("\\|");
                 if(column < parts.length && parts[5].equals(month) && parts[6].equals(service))   //  find the specific month and service 
                 {
                     results.add(Integer.parseInt(parts[column]));

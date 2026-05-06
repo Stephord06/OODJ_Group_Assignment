@@ -28,15 +28,15 @@ public class ModifyRoles extends IdGeneretor{
     
     private String updID;
     private String updName;
-    private String updRole;
-    private String updEmail;
     private String updPhone;
+    private String updEmail;
+    private String updPass;
     
     private JComboBox rolesBox;
     private int selectedrow = 0;
     private JTable ViewTable;
     private DefaultTableModel model;
-    private final String[] columns = {"ID", "Name", "Role", "Email", "PhoneNumber"};;
+    private final String[] columns = {"ID", "Name", "PhoneNumber", "Email", "Password"};;
     private boolean confirmFile = true ;
     
     
@@ -151,9 +151,9 @@ public class ModifyRoles extends IdGeneretor{
                 if (e.getClickCount() == 1){
                     updID = ViewTable.getValueAt(selectedrow, 0).toString();
                     updName = ViewTable.getValueAt(selectedrow, 1).toString();
-                    updRole = ViewTable.getValueAt(selectedrow, 2).toString();
+                    updPhone = ViewTable.getValueAt(selectedrow, 2).toString();
                     updEmail = ViewTable.getValueAt(selectedrow, 3).toString();
-                    updPhone = ViewTable.getValueAt(selectedrow, 4).toString();
+                    updPass = ViewTable.getValueAt(selectedrow, 4).toString();
                 }
             } 
         });
@@ -296,16 +296,16 @@ public class ModifyRoles extends IdGeneretor{
     //Roles comboBox return specific file
     public String returnFile(String role){
         if(role == "CounterStaff"){
-            return "CounterStaff.txt";
+            return "counterStaffs.txt";
         }
         else if(role == "Manager"){
-            return "Manager.txt";
+            return "managers.txt";
         }
         else if(role == "Technician"){
-            return "Technician.txt";
+            return "technicians.txt";
         }
         else{
-            return "Customer.txt";
+            return "customers.txt";
         }
             
     }
@@ -323,7 +323,7 @@ public class ModifyRoles extends IdGeneretor{
             model.setRowCount(0);
             
             while ((line = br.readLine()) != null) {
-                String[] body = line.split(",");
+                String[] body = line.split("\\|");
                 ViewTableData.add(body);
                 model.addRow(body);
             }
@@ -341,7 +341,7 @@ public class ModifyRoles extends IdGeneretor{
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             
             for (String[] data : ViewTableData){
-                    String body = String.join(",", data);
+                    String body = String.join("|", data);
                     bw.write(body);
                     bw.newLine();
             }
@@ -381,17 +381,17 @@ public class ModifyRoles extends IdGeneretor{
         JTextField nameField = new JTextField(updName);
         updmainpanel.add(nameField);
 
-        updmainpanel.add(new JLabel("Role:", SwingConstants.LEFT));
-        JTextField roleField = new JTextField(updRole);
-        updmainpanel.add(roleField);
+        updmainpanel.add(new JLabel("Phone Number:", SwingConstants.LEFT));
+        JTextField phoneField = new JTextField(updPhone);
+        updmainpanel.add(phoneField);
 
         updmainpanel.add(new JLabel("Email:", SwingConstants.LEFT));
         JTextField emailField = new JTextField(updEmail);
         updmainpanel.add(emailField);
 
-        updmainpanel.add(new JLabel("Phone Number:", SwingConstants.LEFT));
-        JTextField phoneField = new JTextField(updPhone);
-        updmainpanel.add(phoneField);
+        updmainpanel.add(new JLabel("Password:", SwingConstants.LEFT));
+        JTextField passField = new JTextField(updPass);
+        updmainpanel.add(passField);
         
         
          //createbtn event
@@ -400,9 +400,9 @@ public class ModifyRoles extends IdGeneretor{
         public void actionPerformed(ActionEvent e) {
 
             ViewTable.setValueAt(nameField.getText(), row, 1);
-            ViewTable.setValueAt(roleField.getText(), row, 2);
+            ViewTable.setValueAt(phoneField.getText(), row, 2);
             ViewTable.setValueAt(emailField.getText(), row, 3);
-            ViewTable.setValueAt (phoneField.getText(), row, 4);
+            ViewTable.setValueAt (passField.getText(), row, 4);
             JOptionPane.showMessageDialog(null, "Record updated!");
             }
 
@@ -459,17 +459,17 @@ public class ModifyRoles extends IdGeneretor{
         JTextField nameField = new JTextField();
         crtmainpanel.add(nameField);
 
-        crtmainpanel.add(new JLabel("Role:", SwingConstants.LEFT));
-         JTextField roleField = new JTextField();
-        crtmainpanel.add(roleField);
+        crtmainpanel.add(new JLabel("Phone Number:", SwingConstants.LEFT));
+         JTextField phoneField = new JTextField();
+        crtmainpanel.add(phoneField);
 
         crtmainpanel.add(new JLabel("Email:", SwingConstants.LEFT));
         JTextField emailField = new JTextField();
         crtmainpanel.add(emailField);
 
-        crtmainpanel.add(new JLabel("Phone Number:", SwingConstants.LEFT));
-        JTextField phoneField = new JTextField();
-        crtmainpanel.add(phoneField);
+        crtmainpanel.add(new JLabel("Password:", SwingConstants.LEFT));
+        JTextField passField = new JTextField();
+        crtmainpanel.add(passField);
 
         
         //createbtn event
@@ -480,7 +480,7 @@ public class ModifyRoles extends IdGeneretor{
             String file = returnFile(rolesBox.getSelectedItem().toString());
             String id = IdAutoGenerate(file, ViewTableData.size());
             
-            String[] newrow = {id,nameField.getText(),roleField.getText(),emailField.getText(),phoneField.getText()};
+            String[] newrow = {id,nameField.getText(),phoneField.getText(),emailField.getText(),passField.getText()};
             ViewTableData.add(newrow);
             model.addRow(newrow);
             }

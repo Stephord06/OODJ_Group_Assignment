@@ -12,17 +12,17 @@ public class IdGeneretor {
   
     public String IdAutoGenerate(String file, int getRow){
         
-        if(file.startsWith("Co")){
-            return "S" + (getRow + 1);   
+        if(file.startsWith("co")){
+            return String.format("%s%03d", "S", getRow + 1);   
         }
-        else if(file.startsWith("C")){
-            return "C" + (getRow + 1);
+        else if(file.startsWith("c")){
+            return String.format("%s%03d", "C", getRow + 1);
         }
-        else if(file.startsWith("M")){
-            return "M" + (getRow + 1);
+        else if(file.startsWith("m")){
+            return String.format("%s%03d", "M", getRow + 1);
         }
-        else if(file.startsWith("T")){
-            return "T" + (getRow + 1);
+        else if(file.startsWith("t")){
+            return String.format("%s%03d", "T", getRow + 1);
         }    
         return "";
     }
