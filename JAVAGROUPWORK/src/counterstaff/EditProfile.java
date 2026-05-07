@@ -62,13 +62,13 @@ public class EditProfile extends JFrame {
                
                 // CounterStaff ID - auto generated, non-editable
                 // Staff ID row
-                JLabel idLabel = new JLabel("Staff ID  (auto-generated)");
+                JLabel idLabel = new JLabel("Staff ID  (non-editable)");
                 idLabel.setFont(new Font("Arial", Font.BOLD, 15));
                 idLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
                 bodyPanel.add(idLabel);
                 bodyPanel.add(Box.createVerticalStrut(6));
 
-                JTextField idField = new JTextField("S001"); //auto generated later
+                JTextField idField = new JTextField("S001"); //load from login later
                 idField.setFont(new Font("Arial", Font.PLAIN, 15));
                 idField.setBackground(new Color(245, 245, 245));
                 idField.setForeground(Color.GRAY);
@@ -80,40 +80,87 @@ public class EditProfile extends JFrame {
                 ));
                 idField.setAlignmentX(Component.LEFT_ALIGNMENT);
                 bodyPanel.add(idField);
-                bodyPanel.add(Box.createVerticalStrut(20));
+                bodyPanel.add(Box.createVerticalStrut(18));
 
-                
-                // Customer Name
-                JLabel nameLabel = new JLabel("Username");
-                nameLabel.setFont(new Font("Arial", Font.BOLD, 15));
-                nameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-                bodyPanel.add(nameLabel);
+                    // Load email and contact from counterStaffs.txt
+                    java.util.List<String> staffLines = FileManager.readFile("counterStaffs.txt");
+                    String currentEmail = "";
+                    String currentPhone = "";
+                    for (String line : staffLines) {
+                        String[] parts = line.split("\\|");
+                        if (parts[0].equals("S001")) { // load from loginpage later
+                            currentEmail = parts[3];
+                            currentPhone = parts[2];
+                            break;
+                        }
+                    }
+                        
+                // Email
+                JLabel emailLabel = new JLabel("Email");
+                emailLabel.setFont(new Font("Arial", Font.BOLD, 15));
+                emailLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                bodyPanel.add(emailLabel);
                 bodyPanel.add(Box.createVerticalStrut(6));
                 
-                JTextField nameField = new JTextField("Han Ming"); // read from txt later
-                nameField.setFont(new Font("Arial", Font.PLAIN, 15));
-                nameField.setForeground(Color.BLACK);
-                nameField.setMaximumSize(new Dimension(550, 35));
-                nameField.setBorder(BorderFactory.createCompoundBorder(
+                JTextField emailField = new JTextField(currentEmail); 
+                emailField.setFont(new Font("Arial", Font.PLAIN, 15));
+                emailField.setForeground(Color.BLACK);
+                emailField.setMaximumSize(new Dimension(550, 35));
+                emailField.setBorder(BorderFactory.createCompoundBorder(
                         BorderFactory.createLineBorder(new Color(204, 204, 204)),
                         BorderFactory.createEmptyBorder(6, 10, 6, 10)
                 ));
-                nameField.setAlignmentX(Component.LEFT_ALIGNMENT);
-                bodyPanel.add(nameField);
-                bodyPanel.add(Box.createVerticalStrut(20));
+                emailField.setAlignmentX(Component.LEFT_ALIGNMENT);
+                bodyPanel.add(emailField);
+                bodyPanel.add(Box.createVerticalStrut(18));
                     // Focus Listener
-                    nameField.addFocusListener(new FocusAdapter(){
+                    emailField.addFocusListener(new FocusAdapter(){
                         public void focusGained(FocusEvent e) {
-                            if(nameField.getText().equals("Enter a username")) {
-                                nameField.setText("");
-                                nameField.setForeground(Color.BLACK);
+                            if(emailField.getText().equals("Enter email address")) {
+                                emailField.setText("");
+                                emailField.setForeground(Color.BLACK);
                             }
                         }
                         
                         public void focusLost(FocusEvent e) {
-                            if(nameField.getText().isEmpty()) {
-                                nameField.setText("Enter a username");
-                                nameField.setForeground(Color.GRAY);
+                            if(emailField.getText().isEmpty()) {
+                                emailField.setText("Enter email address");
+                                emailField.setForeground(Color.GRAY);
+                            }
+                        }
+                    });
+                
+                // Phone Number
+                JLabel phoneLabel = new JLabel("Phone Number");
+                phoneLabel.setFont(new Font("Arial", Font.BOLD, 15));
+                phoneLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                bodyPanel.add(phoneLabel);
+                bodyPanel.add(Box.createVerticalStrut(6));
+                
+                JTextField phoneField = new JTextField(currentPhone); 
+                phoneField.setFont(new Font("Arial", Font.PLAIN, 15));
+                phoneField.setForeground(Color.BLACK);
+                phoneField.setMaximumSize(new Dimension(550, 35));
+                phoneField.setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createLineBorder(new Color(204, 204, 204)),
+                        BorderFactory.createEmptyBorder(6, 10, 6, 10)
+                ));
+                phoneField.setAlignmentX(Component.LEFT_ALIGNMENT);
+                bodyPanel.add(phoneField);
+                bodyPanel.add(Box.createVerticalStrut(18));
+                    // Focus Listener
+                    phoneField.addFocusListener(new FocusAdapter(){
+                        public void focusGained(FocusEvent e) {
+                            if(phoneField.getText().equals("Enter phone number")) {
+                                phoneField.setText("");
+                                phoneField.setForeground(Color.BLACK);
+                            }
+                        }
+                        
+                        public void focusLost(FocusEvent e) {
+                            if(phoneField.getText().isEmpty()) {
+                                phoneField.setText("Enter phone number");
+                                phoneField.setForeground(Color.GRAY);
                             }
                         }
                     });
@@ -136,7 +183,7 @@ public class EditProfile extends JFrame {
                         BorderFactory.createEmptyBorder(6, 10, 6, 10)
                 ));
                 bodyPanel.add(oldPassField);
-                bodyPanel.add(Box.createVerticalStrut(20));
+                bodyPanel.add(Box.createVerticalStrut(18));
                     // Focus Listener
                     oldPassField.addFocusListener(new FocusAdapter(){
                         public void focusGained(FocusEvent e) {
@@ -176,7 +223,7 @@ public class EditProfile extends JFrame {
                         BorderFactory.createEmptyBorder(6, 10, 6, 10)
                 ));
                 bodyPanel.add(newPassField);
-                bodyPanel.add(Box.createVerticalStrut(20));
+                bodyPanel.add(Box.createVerticalStrut(18));
                     // Focus Listener
                     newPassField.addFocusListener(new FocusAdapter(){
                         public void focusGained(FocusEvent e) {
@@ -217,7 +264,7 @@ public class EditProfile extends JFrame {
                         BorderFactory.createEmptyBorder(6, 10, 6, 10)
                 ));
                 bodyPanel.add(conPassField);
-                bodyPanel.add(Box.createVerticalStrut(30));
+                bodyPanel.add(Box.createVerticalStrut(25));
                     // Focus Listener
                     conPassField.addFocusListener(new FocusAdapter(){
                         public void focusGained(FocusEvent e) {
@@ -270,10 +317,82 @@ public class EditProfile extends JFrame {
         // Action Listeners
         
         saveButton.addActionListener(e -> {
-            //TODO: validate and save to txt later
-            JOptionPane.showMessageDialog(this, "Profile updated successfully!");
-            dispose();
-            new StaffDashboard();
+            // Get all values
+            String staffId = "S001"; // Will be brought in from Login.java
+            String newEmail = emailField.getText().trim();
+            String newPhone = phoneField.getText().trim();
+            String oldPass = new String(oldPassField.getPassword()).trim();
+            String newPass = new String(newPassField.getPassword()).trim();
+            String conPass = new String(conPassField.getPassword()).trim();
+            
+            // Validation
+                // Check empty fields
+                if ((newEmail.isEmpty() || newEmail.equals("Enter email address")) ||
+                    (newPhone.isEmpty() || newPhone.equals("Enter phone number"))) {
+                    JOptionPane.showMessageDialog(this,
+                            "Please fill in all fields!",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                // Check if old password is correct
+                java.util.List<String> lines = FileManager.readFile("counterStaffs.txt");
+                String currentPassword = "";
+                for (String line : lines) {
+                    String[] parts = line.split("\\|");
+                    if (parts[0].equals(staffId)) {
+                        currentPassword = parts[4];
+                        break;
+                    }
+                }
+                
+                if (!oldPass.equals(currentPassword)) {
+                    JOptionPane.showMessageDialog(this, 
+                            "Old password is incorrect!",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                // Check if new password and confirm new password matches, and are not equal "Enter new password"
+                if (!newPass.equals(conPass)) {
+                    JOptionPane.showMessageDialog(this, 
+                            "New password and confirm password do not match!",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                if (newPass.equals("Enter new password" )||
+                        conPass.equals("Enter new password")) {
+                    JOptionPane.showMessageDialog(this, 
+                            "please enter new password!",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                // Update file counterStaffs.txt
+                for (int i = 0; i < lines.size(); i++) {
+                    String[] parts = lines.get(i).split("\\|");
+                    if (parts[0].equals(staffId)) {
+                        // Keep id and name, update email, contact and password
+                        lines.set(i, staffId + "|" + parts[1] + "|" + newPhone +
+                                "|" + newEmail + "|" + newPass);
+                        break;
+                    }
+                }
+                
+                FileManager.writeFile("counterStaffs.txt", lines);
+                
+                JOptionPane.showMessageDialog(this, 
+                        "Profile updated successfully!",
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
+                
+                dispose();
+                new StaffDashboard();
         });
         
         backButton.addActionListener(e -> {
