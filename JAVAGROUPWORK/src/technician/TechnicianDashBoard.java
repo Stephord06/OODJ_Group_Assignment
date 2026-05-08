@@ -8,13 +8,25 @@ package technician;
  *
  * @author wongj
  */
+import GeneralTools.User;
 import GeneralTools.Login;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TechnicianDashBoard {
+    
+    private User currentUser;
+    
+    /*
+    * @param user
+    */
+    
+    public TechnicianDashBoard(User user){
+        this.currentUser = user;
+    }
     
     // UI Interface Design:
     public void TechDashBoard(){
@@ -25,7 +37,8 @@ public class TechnicianDashBoard {
         dash.setLayout(null);
         
         // Set Label
-        JLabel label1 = new JLabel("Welcome to Technician Dash Board");
+        JLabel label1 = new JLabel("Welcome " + currentUser.getName() +
+                                    "! (" + currentUser.getID() + ")");
         
         label1.setBounds(20,50,350,30);
         
@@ -111,7 +124,7 @@ public class TechnicianDashBoard {
         LogOut.setFont(new Font("Times New Roman", Font.BOLD, 18));
         
         // Display Frame and objects
-        dash.setVisible(true);
+        
         dash.add(label1);
         dash.add(ViewProfile);
         dash.add(EditProfile);
@@ -119,11 +132,11 @@ public class TechnicianDashBoard {
         dash.add(ProvideFeedbacks);
         dash.add(UpdateAppointment);
         dash.add(LogOut);
-        
+        dash.setVisible(true);
     }
     
     public static void main(String [] args){
-        new TechnicianDashBoard().TechDashBoard();
+        
     }
     // Logic Programming
     

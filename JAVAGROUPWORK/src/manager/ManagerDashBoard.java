@@ -7,6 +7,7 @@
 package manager;
 
 import GeneralTools.Login;
+import GeneralTools.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,14 +15,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ManagerDashBoard {
-
-    private static String name;
-    private static String password;
+    
+    private User currentUser;
     
 
-    public ManagerDashBoard(String name, String password) {
-        this.name = name;
-        this.password = password;
+    public ManagerDashBoard(User user) {
+        this.currentUser = user;
+
     }
     
     public ManagerDashBoard(){
@@ -55,7 +55,7 @@ public class ManagerDashBoard {
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
         // Greeting label
-        JLabel greeting = new JLabel("Welcome to the Manager Dashboard, " + this.name);
+        JLabel greeting = new JLabel("Welcome to the Manager Dashboard, " + currentUser.getName());
         greeting.setFont(new Font("Arial", Font.BOLD, 18));
         greeting.setAlignmentX(Component.CENTER_ALIGNMENT); // center horizontally
         container.add(greeting);
@@ -159,15 +159,15 @@ public class ManagerDashBoard {
     }
 
     public static void main(String[] args) {
-        new ManagerDashBoard("Alice", "pass123").DashBoardUI();
+        
     }
     
     public String getName(){
-        return this.name;
+        return currentUser.getName();
     }
     
     public String getPassword(){
-        return this.password;
+        return currentUser.getPassword();
     }
     
     

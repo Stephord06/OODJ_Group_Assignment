@@ -1,5 +1,8 @@
 package counterstaff;
 
+import GeneralTools.User;
+import GeneralTools.Login;
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -7,7 +10,11 @@ import java.awt.event.*;
 
 public class StaffDashboard extends JFrame {
     
-    public StaffDashboard() {
+    private User currentUser;
+    
+    public StaffDashboard(User user) {
+        this.currentUser = user;
+        
         setTitle("APU - Automotive Service Centre | Counter Staff Dashboard");
         setSize(1100, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,7 +41,7 @@ public class StaffDashboard extends JFrame {
                 headerPanel.add(headerLeftPanel, BorderLayout.WEST);
                 
                 //Label
-                JLabel welcomeLabel = new JLabel("Welcome back, NAME!");
+                JLabel welcomeLabel = new JLabel("Welcome back, " + currentUser.getName() + "!");
                 welcomeLabel.setFont(new Font("Arial", Font.BOLD, 30));
                 welcomeLabel.setForeground(new Color(218, 87, 0));
                 headerLeftPanel.add(welcomeLabel);
@@ -263,6 +270,7 @@ public class StaffDashboard extends JFrame {
                     JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
                     dispose();
+                    new Login().LoginPage();
                 }
             });
             
@@ -271,6 +279,6 @@ public class StaffDashboard extends JFrame {
     }
     
     public static void main(String[] args){        
-        new StaffDashboard();
+
     }
 }

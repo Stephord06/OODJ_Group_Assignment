@@ -8,6 +8,10 @@ package technician;
  *
  * @author wongj
  */
+
+import GeneralTools.User;
+import GeneralTools.Login;
+
 import javax.swing.*;
 import java.awt.*;
 
