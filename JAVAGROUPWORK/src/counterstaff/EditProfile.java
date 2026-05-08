@@ -326,17 +326,17 @@ public class EditProfile extends JFrame {
             String conPass = new String(conPassField.getPassword()).trim();
             
             // Validation
-                // Check empty fields
+                // Check whether email and phone is empty
                 if ((newEmail.isEmpty() || newEmail.equals("Enter email address")) ||
                     (newPhone.isEmpty() || newPhone.equals("Enter phone number"))) {
                     JOptionPane.showMessageDialog(this,
-                            "Please fill in all fields!",
+                            "Please fill in email and phone number!",
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 
-                // Check if old password is correct
+                // Load data from counterStaffs.txt
                 java.util.List<String> lines = FileManager.readFile("counterStaffs.txt");
                 String currentPassword = "";
                 for (String line : lines) {
@@ -347,30 +347,33 @@ public class EditProfile extends JFrame {
                     }
                 }
                 
-                if (!oldPass.equals(currentPassword)) {
-                    JOptionPane.showMessageDialog(this, 
-                            "Old password is incorrect!",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+                // Determine whether change password or keep current one
+                boolean ChangePassword = !newPass.isEmpty() && !newPass.equals("Enter new password");
                 
-                // Check if new password and confirm new password matches, and are not equal "Enter new password"
-                if (!newPass.equals(conPass)) {
-                    JOptionPane.showMessageDialog(this, 
-                            "New password and confirm password do not match!",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
+                String finalPassword = "";
+                if (ChangePassword) {
+                    // Check whether old password is correct
+                    if (!oldPass.equals(currentPassword)) {
+                        JOptionPane.showMessageDialog(this,
+                                "Old password is incorrect!",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    // Check if new password and confirm new password matches, and are not equal "Enter new password"
+                    if (!newPass.equals(conPass)) {
+                        JOptionPane.showMessageDialog(this,
+                                "New password and confirm password do not match!",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    finalPassword = newPass;
                 }
-                
-                if (newPass.equals("Enter new password" )||
-                        conPass.equals("Enter new password")) {
-                    JOptionPane.showMessageDialog(this, 
-                            "please enter new password!",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
+                else {
+                    // Keeping the current password, no password check needed
+                    finalPassword = currentPassword;
                 }
                 
                 // Update file counterStaffs.txt
@@ -379,7 +382,7 @@ public class EditProfile extends JFrame {
                     if (parts[0].equals(staffId)) {
                         // Keep id and name, update email, contact and password
                         lines.set(i, staffId + "|" + parts[1] + "|" + newPhone +
-                                "|" + newEmail + "|" + newPass);
+                                "|" + newEmail + "|" + finalPassword);
                         break;
                     }
                 }
