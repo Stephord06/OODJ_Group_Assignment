@@ -370,7 +370,7 @@ public class CreateAppointment extends JFrame{
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            else if (selectedTech == null || selectedTech.equals("-- Select a time slot first --")) {
+            else if (selectedTech == null || selectedTech.equals("-- Select time slot first --")) {
                 JOptionPane.showMessageDialog(this, 
                         "Please select a technician!",
                         "Error",
