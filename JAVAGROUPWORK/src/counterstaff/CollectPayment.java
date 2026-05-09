@@ -5,10 +5,15 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
+import GeneralTools.User;
 
 public class CollectPayment extends JFrame{
     
-    public CollectPayment() {
+    private User currentUser;
+    
+    public CollectPayment(User user) {
+        this.currentUser = user;
+        
         setTitle("APU - Automotive Service Centre | Collect Payment");
         setSize(1100, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -363,7 +368,7 @@ public class CollectPayment extends JFrame{
         // Action Listeners
         backButton.addActionListener(e -> {
             dispose();
-            new StaffDashboard();
+            new StaffDashboard(currentUser);
         });
         
          // Toggle between Cash and Card
@@ -434,7 +439,7 @@ public class CollectPayment extends JFrame{
             
             // Open Receipt Frame with data
             dispose();
-            new Receipt(receiptId, selectedApp[0], selectedApp[1], selectedApp[4],
+            new Receipt(currentUser, receiptId, selectedApp[0], selectedApp[1], selectedApp[4],
                     selectedApp[5], selectedApp[2], selectedApp[3], paymentMethod, price);
          });
                 
@@ -443,6 +448,6 @@ public class CollectPayment extends JFrame{
     }
     
     public static void main(String[] args) {
-        new CollectPayment();
+        
     }
 }

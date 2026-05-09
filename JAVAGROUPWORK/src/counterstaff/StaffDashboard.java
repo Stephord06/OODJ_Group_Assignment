@@ -267,22 +267,22 @@ public class StaffDashboard extends JFrame {
             // Action Listeners for Quick Action Buttons
             manageCustomersBtn.addActionListener(e -> {
                 dispose();
-                new ManageCustomer();
+                new ManageCustomer(currentUser);
             });
             
             createAppointmentBtn.addActionListener(e -> {
                 dispose();
-                new CreateAppointment();
+                new CreateAppointment(currentUser);
             });
             
             collectPaymentBtn.addActionListener(e -> {
                 dispose();
-                new CollectPayment();
+                new CollectPayment(currentUser);
             });
             
             editProfileBtn.addActionListener(e -> {
                 dispose();
-                new EditProfile();
+                new EditProfile(currentUser);
             });
             
             logoutButton.addActionListener(e -> {

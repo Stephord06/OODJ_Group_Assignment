@@ -1,6 +1,7 @@
 
 package counterstaff;
 
+import GeneralTools.User;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -9,7 +10,11 @@ import javax.swing.table.DefaultTableModel;
 
 public class ManageCustomer extends JFrame {
     
-    public ManageCustomer(){
+    private User currentUser;
+    
+    public ManageCustomer(User user){
+        this.currentUser = user;
+        
         setTitle("APU - Automotive Service Centre | Manage Customers");
         setSize(1100, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -189,7 +194,7 @@ public class ManageCustomer extends JFrame {
             // Action Listeners
             backButton.addActionListener(e -> {
                 dispose();
-                new StaffDashboard();
+                new StaffDashboard(currentUser);
             });
                 
               //Search button
@@ -235,7 +240,7 @@ public class ManageCustomer extends JFrame {
               
             addButton.addActionListener(e ->{
                 dispose();
-                new AddCustomer();
+                new AddCustomer(currentUser);
             });
                 
             editButton.addActionListener(e -> {
@@ -246,7 +251,7 @@ public class ManageCustomer extends JFrame {
                 String customerEmail = (String) tableModel.getValueAt(selectedRow, 3);
                 
                 dispose();
-                new EditCustomer(customerId, customerName, customerContact, customerEmail);
+                new EditCustomer(currentUser, customerId, customerName, customerContact, customerEmail);
             });
                 
             delButton.addActionListener(e -> {
@@ -297,7 +302,7 @@ public class ManageCustomer extends JFrame {
     }
     
     public static void main(String[] args){
-        new ManageCustomer();
+        
     }
 }
 
