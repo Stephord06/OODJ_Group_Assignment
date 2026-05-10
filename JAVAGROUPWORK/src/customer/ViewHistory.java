@@ -143,7 +143,38 @@ public class ViewHistory {
     }
     
     private JScrollPane priceHistoryPanel(){
-        return new JScrollPane();
+        
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(Color.GRAY);
+        panel.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(200, 200, 200), 1, true),
+            BorderFactory.createEmptyBorder(12, 14, 12, 14)
+        ));
+        
+        if(receiptsData.isEmpty()){
+            JLabel noData = new JLabel("No payment history found.");
+            noData.setFont(new Font("SansSerif", Font.BOLD, 18));
+            noData.setForeground(Color.WHITE);
+            noData.setAlignmentX(Component.CENTER_ALIGNMENT);  // center the label
+            panel.add(Box.createVerticalGlue());   // push to center vertically
+            panel.add(noData);
+            panel.add(Box.createVerticalGlue());   // push to center vertically
+            
+        } 
+        else{
+            for(String[] receipt : receiptsData){
+                panel.add(priceHistoryCard(receipt[0],receipt[1],receipt[2],receipt[3],receipt[4],receipt[5]
+                        ,receipt[6],receipt[7],receipt[8]));
+                panel.add(Box.createVerticalStrut(10));
+           }
+        }
+        
+        JScrollPane sp = new JScrollPane(panel);
+        
+        return sp;
+        
+        
     }
     
     private JScrollPane serviceHistoryPanel(){
@@ -187,6 +218,46 @@ public class ViewHistory {
         
     }
     
+    private JPanel priceHistoryCard(String receiptId, String appointmentId, String name, String service
+            , String technicianId, String date, String time, String payment, String amount){
+        
+        JPanel panel = new JPanel(new BorderLayout(0,20));
+        panel.setBackground(Color.WHITE);
+        panel.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(180, 180, 180), 1, true),   // create border for the center panel;
+            BorderFactory.createEmptyBorder(12, 14, 12, 14)
+        ));
+        
+         // Header row
+        JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        header.setBackground(Color.WHITE);
+        
+        JLabel idLabel = new JLabel(receiptId);             //appointment id
+        idLabel.setFont(new Font("SansSerif", Font.BOLD, 18));   
+        
+        header.add(idLabel);
+        
+        // receipts detail
+        JPanel fields = new JPanel(new GridLayout(4,2));
+        
+        fields.setBackground(Color.WHITE);
+        
+        
+        fields.add(makeField("Payment ID", receiptId));
+        fields.add(makeField("Appointment ID", appointmentId));
+        fields.add(makeField("Customer Name", name));
+        fields.add(makeField("Service Type", service));
+        fields.add(makeField("Technician Id/Name", technicianId));
+        fields.add(makeField("Payment Date", date));
+        fields.add(makeField("Payment Method", payment));
+        fields.add(makeField("Payment Amount", amount));
+        
+        panel.add(header, BorderLayout.NORTH);
+        panel.add(fields, BorderLayout.CENTER);
+        
+        return panel;
+    }
+    
     private JPanel serviceHistoryCard(String appointmentId , String technicianId
             , String counterId, String service, String amount, String date, String startTime, String endTime, String status){
         
@@ -226,15 +297,18 @@ public class ViewHistory {
         badge.setOpaque(true);                  //paint its background color , turn color instead of transparent
         
         if (status.equals("Completed")) {
-            badge.setBackground(new Color(59, 109, 17));
-            badge.setForeground(new Color(234, 243, 222));
+            badge.setBackground(Color.GREEN);
+            badge.setForeground(Color.WHITE);
         } 
-        else 
+        else if(status.equals("Paid")) 
         {
-            badge.setBackground(new Color(24, 95, 165));
-            badge.setForeground(new Color(230, 241, 251));
+            badge.setBackground(new Color(88, 28, 135));
+            badge.setForeground(new Color(243, 232, 255));
         }
-        
+        else{
+            badge.setBackground(new Color(146, 64, 14));
+            badge.setForeground(new Color(254, 243, 199));
+        }
         //add to header
         header.add(titleLeftPanel, BorderLayout.WEST);
         header.add(badge , BorderLayout.EAST);
@@ -264,13 +338,13 @@ public class ViewHistory {
     
     
     private JPanel makeField(String label, String value) {
-        JPanel p = new JPanel(new GridLayout(2,1));
-        p.setBackground(new Color(245, 245, 245));
-        p.setBorder(BorderFactory.createCompoundBorder(
+        JPanel panel = new JPanel(new GridLayout(2,1));
+        panel.setBackground(new Color(245, 245, 245));
+        panel.setBorder(BorderFactory.createCompoundBorder(
         BorderFactory.createLineBorder(new Color(210, 210, 210), 1),
         BorderFactory.createEmptyBorder(8, 12, 8, 12)
         ));
-        p.setPreferredSize(new Dimension(200, 70));  // fixed card size
+        panel.setPreferredSize(new Dimension(200, 70));  // fixed card size
         
         
         JLabel lbl = new JLabel(label);
@@ -279,9 +353,9 @@ public class ViewHistory {
         JLabel val = new JLabel(value);
         val.setFont(new Font("Arial", Font.BOLD, 16));
         
-        p.add(lbl);
-        p.add(val);
-        return p;
+        panel.add(lbl);
+        panel.add(val);
+        return panel;
     
     }
     
