@@ -130,7 +130,29 @@ public class StaffDashboard extends JFrame {
                     editProfileBtn.setVerticalAlignment(SwingConstants.TOP);
                     editProfileBtn.setMargin(new Insets(12, 12, 0, 0));
                     actCardsPanel.add(editProfileBtn);
-                    
+            
+            // Load stats from files
+            java.util.List<String> appLines = FileManager.readFile("appointments.txt");
+            java.util.List<String> receiptLines = FileManager.readFile("receipts.txt");
+            java.util.List<String> customerLines = FileManager.readFile("customers.txt");
+            
+            // Calculate the data for each card
+            int totalAppointments = appLines.size();
+            int pendingPayment = 0;
+            double totalRevenue = 0;
+            int totalCustomers = customerLines.size();
+            
+            for (String line : appLines) {
+                String[] parts = line.split("\\|");
+                if (parts[10].equals("Completed")) {
+                    pendingPayment ++;
+                }
+            }
+            
+            for (String line : receiptLines) {
+                String[] parts = line.split("\\|");
+                totalRevenue += Double.parseDouble(parts[8]);
+            }
             
             // Stats Panel (holds 4 stat cards)
             JPanel statsPanel = new JPanel();
@@ -159,10 +181,10 @@ public class StaffDashboard extends JFrame {
                 statsPanel.add(totalRevenueCard);
                 
                 // Stat Card 4 - Available Technicians
-                JPanel availableTechCard = new JPanel();
-                availableTechCard.setLayout(new BorderLayout());
-                availableTechCard.setBackground(new Color(58, 58, 58));
-                statsPanel.add(availableTechCard);
+                JPanel totalCustomerCard = new JPanel();
+                totalCustomerCard.setLayout(new BorderLayout());
+                totalCustomerCard.setBackground(new Color(58, 58, 58));
+                statsPanel.add(totalCustomerCard);
                 
                 //Label
                     // Stat Card 1 content - Total Appointments
@@ -172,15 +194,15 @@ public class StaffDashboard extends JFrame {
                     totalAppTitle.setBorder(BorderFactory.createEmptyBorder(12, 12, 0, 0));
                     totalAppointmentsCard.add(totalAppTitle, BorderLayout.NORTH);
                     
-                    JLabel totalAppValue = new JLabel("0");
+                    JLabel totalAppValue = new JLabel(String.valueOf(totalAppointments));
                     totalAppValue.setFont(new Font("Arial", Font.BOLD, 48));
                     totalAppValue.setForeground(Color.WHITE);
                     totalAppValue.setBorder(BorderFactory.createEmptyBorder(0, 12, 12, 0));
                     totalAppointmentsCard.add(totalAppValue, BorderLayout.CENTER);
                     
-                    JLabel totalAppSub = new JLabel("+ 0 modified");
+                    JLabel totalAppSub = new JLabel("<html>across<br>all customers</html>");
                     totalAppSub.setFont(new Font("Arial", Font.BOLD, 16));
-                    totalAppSub.setForeground(new Color(153, 255, 109));
+                    totalAppSub.setForeground(new Color(172, 172, 172));
                     totalAppSub.setBorder(BorderFactory.createEmptyBorder(0, 12, 12, 0));
                     totalAppointmentsCard.add(totalAppSub, BorderLayout.SOUTH);
                     
@@ -191,7 +213,7 @@ public class StaffDashboard extends JFrame {
                     pendingPayTitle.setBorder(BorderFactory.createEmptyBorder(12, 12, 0, 0));
                     pendingPaymentCard.add(pendingPayTitle, BorderLayout.NORTH);
                     
-                    JLabel pendingPayValue = new JLabel("0");
+                    JLabel pendingPayValue = new JLabel(String.valueOf(pendingPayment));
                     pendingPayValue.setFont(new Font("Arial", Font.BOLD, 48));
                     pendingPayValue.setForeground(Color.WHITE);
                     pendingPayValue.setBorder(BorderFactory.createEmptyBorder(0, 12, 0, 0));
@@ -210,57 +232,57 @@ public class StaffDashboard extends JFrame {
                     totalRevTitle.setBorder(BorderFactory.createEmptyBorder(12, 12, 0, 0));
                     totalRevenueCard.add(totalRevTitle, BorderLayout.NORTH);
                     
-                    JLabel totalRevValue = new JLabel("RM 0");
-                    totalRevValue.setFont(new Font("Arial", Font.BOLD, 37));
+                    JLabel totalRevValue = new JLabel("RM " + (int)totalRevenue);
+                    totalRevValue.setFont(new Font("Arial", Font.BOLD, 32));
                     totalRevValue.setForeground(Color.WHITE);
                     totalRevValue.setBorder(BorderFactory.createEmptyBorder(0, 12, 0, 0));
                     totalRevenueCard.add(totalRevValue, BorderLayout.CENTER);
                     
-                    JLabel totalRevSub = new JLabel("<html>0 receipts<br>issued</html>");
+                    JLabel totalRevSub = new JLabel("<html>" + receiptLines.size() + " receipts<br>issued</html>");
                     totalRevSub.setFont(new Font("Arial", Font.BOLD, 15));
                     totalRevSub.setForeground(new Color(153, 255, 109));
                     totalRevSub.setBorder(BorderFactory.createEmptyBorder(0, 12, 12, 0));
                     totalRevenueCard.add(totalRevSub, BorderLayout.SOUTH);
                     
                     // Stat Card 4 content - Available Technicians
-                    JLabel availTechTitle = new JLabel("<html>Available<br>Technicians</html>");
-                    availTechTitle.setFont(new Font("Arial", Font.BOLD, 16));
-                    availTechTitle.setForeground(new Color(230, 224, 224));
-                    availTechTitle.setBorder(BorderFactory.createEmptyBorder(12, 12, 0, 0));
-                    availableTechCard.add(availTechTitle, BorderLayout.NORTH);
+                    JLabel totalCusTitle = new JLabel("<html>Total<br>Customers</html>");
+                    totalCusTitle.setFont(new Font("Arial", Font.BOLD, 16));
+                    totalCusTitle.setForeground(new Color(230, 224, 224));
+                    totalCusTitle.setBorder(BorderFactory.createEmptyBorder(12, 12, 0, 0));
+                    totalCustomerCard.add(totalCusTitle, BorderLayout.NORTH);
                     
-                    JLabel availTechValue = new JLabel("0 / 0");
+                    JLabel availTechValue = new JLabel(String.valueOf(totalCustomers));
                     availTechValue.setFont(new Font("Arial", Font.BOLD, 48));
                     availTechValue.setForeground(Color.WHITE);
                     availTechValue.setBorder(BorderFactory.createEmptyBorder(0, 12, 0, 0));
-                    availableTechCard.add(availTechValue, BorderLayout.CENTER);
+                    totalCustomerCard.add(availTechValue, BorderLayout.CENTER);
                     
-                    JLabel availTechSub = new JLabel("<html>0 currently<br>assigned</html>");
-                    availTechSub.setFont(new Font("Arial", Font.BOLD, 15));
-                    availTechSub.setForeground(new Color(172, 172, 172));
-                    availTechSub.setBorder(BorderFactory.createEmptyBorder(0, 12, 12, 0));
-                    availableTechCard.add(availTechSub, BorderLayout.SOUTH);
+                    JLabel totalCusSub = new JLabel("<html>registered<br>customer</html>");
+                    totalCusSub.setFont(new Font("Arial", Font.BOLD, 15));
+                    totalCusSub.setForeground(new Color(172, 172, 172));
+                    totalCusSub.setBorder(BorderFactory.createEmptyBorder(0, 12, 12, 0));
+                    totalCustomerCard.add(totalCusSub, BorderLayout.SOUTH);
             
             
             // Action Listeners for Quick Action Buttons
             manageCustomersBtn.addActionListener(e -> {
                 dispose();
-                new ManageCustomer();
+                new ManageCustomer(currentUser);
             });
             
             createAppointmentBtn.addActionListener(e -> {
                 dispose();
-                new CreateAppointment();
+                new CreateAppointment(currentUser);
             });
             
             collectPaymentBtn.addActionListener(e -> {
                 dispose();
-                new CollectPayment();
+                new CollectPayment(currentUser);
             });
             
             editProfileBtn.addActionListener(e -> {
                 dispose();
-                new EditProfile();
+                new EditProfile(currentUser);
             });
             
             logoutButton.addActionListener(e -> {

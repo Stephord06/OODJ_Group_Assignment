@@ -17,7 +17,13 @@ import java.awt.*;
 
 public class Profile {
     
+    User currentUser;
+    
+    public Profile(User currentUser){
+        this.currentUser = currentUser;
+    }
     public void Profile(){
+        
         // UI Interface Design
         
         // JFrame
@@ -34,11 +40,11 @@ public class Profile {
         JLabel label4 = new JLabel("Contact Number:");
         JLabel label5 = new JLabel("Email:");
         
-        JLabel lbl_staffID = new JLabel("*ID*");
-        JLabel lbl_username = new JLabel("*Name*");
-        JLabel lbl_role = new JLabel("*role*");
-        JLabel lbl_contactNum = new JLabel("*Contact*");
-        JLabel lbl_email = new JLabel("*Email*");
+        JLabel lbl_staffID = new JLabel(currentUser.getID());
+        JLabel lbl_username = new JLabel(currentUser.getName());
+        JLabel lbl_role = new JLabel(currentUser.getRole());
+        JLabel lbl_contactNum = new JLabel(currentUser.getContact());
+        JLabel lbl_email = new JLabel(currentUser.getEmail());
         
         title.setBounds(25,25,200,50);
         
@@ -62,8 +68,7 @@ public class Profile {
         
         btn_finish.addActionListener(e -> {
             profile.dispose();
-            TechnicianDashBoard tdb = new TechnicianDashBoard();
-            tdb.TechDashBoard();
+            new TechnicianDashBoard(currentUser).TechDashBoard();
         });
         
         // JPanel
@@ -107,6 +112,5 @@ public class Profile {
     }
     
     public static void main(String[] args){
-        new Profile().Profile();
     }
 }

@@ -19,17 +19,20 @@ import java.awt.event.ActionListener;
 public class TechnicianDashBoard {
     
     private User currentUser;
+    private String username;
+    private String password;
     
     /*
     * @param user
     */
     
-    public TechnicianDashBoard(User user){
-        this.currentUser = user;
+    public TechnicianDashBoard(User currentUser){
+        this.currentUser = currentUser;
     }
     
     // UI Interface Design:
     public void TechDashBoard(){
+        
         
         // Set Frame 
         JFrame dash = new JFrame("Technician Dash Board");
@@ -37,8 +40,7 @@ public class TechnicianDashBoard {
         dash.setLayout(null);
         
         // Set Label
-        JLabel label1 = new JLabel("Welcome " + currentUser.getName() +
-                                    "! (" + currentUser.getID() + ")");
+        JLabel label1 = new JLabel("Welcome back, " + currentUser.getName() + "!");
         
         label1.setBounds(20,50,350,30);
         
@@ -63,9 +65,8 @@ public class TechnicianDashBoard {
         ViewProfile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dash.setVisible(false);
-                Profile vf = new Profile();
-                vf.Profile();
+                dash.dispose();
+                new Profile(currentUser).Profile();
             }
         });
         

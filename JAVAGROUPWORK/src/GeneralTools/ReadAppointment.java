@@ -22,13 +22,13 @@ public class ReadAppointment {
     // Parameters
     protected String appointID, customerID, technicianID, staffID, serviceType,
             date, timeStart, timeEnd, 
-            comments, feedback, status;
+            comments, feedback, statusDescription;
     
     // Constructors
     public ReadAppointment(String appointID, String customerID, 
             String technicianID, String staffID, String serviceType, 
             String date, String timeStart, String timeEnd, 
-            String comments, String feedback, String status){
+            String comments, String feedback, String statusDescription){
         
         this.appointID = appointID;
         this.customerID = customerID;
@@ -40,9 +40,14 @@ public class ReadAppointment {
         this.timeEnd = timeEnd;
         this.comments = comments;
         this.feedback = feedback;
-        this.status = status;
+        this.statusDescription = statusDescription;
     }
     
+    public String getAppointID(){
+        return appointID;
+    }
+    
+    public
     public List<ReadAppointment> readAppointments(){
         List<ReadAppointment> appointmentList = new ArrayList<>();
         
@@ -99,4 +104,6 @@ public class ReadAppointment {
         
         return appointmentList;
     }
+    
+    
 }

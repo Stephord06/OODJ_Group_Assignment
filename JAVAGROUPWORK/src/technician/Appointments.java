@@ -56,8 +56,8 @@ public class Appointments {
             @Override
             public void actionPerformed(ActionEvent e){
                 frame.dispose();
-                TechnicianDashBoard tdb = new TechnicianDashBoard();
-                tdb.TechDashBoard();
+                //TechnicianDashBoard tdb = new TechnicianDashBoard();
+                //tdb.TechDashBoard();
             }
         });
         

@@ -8,6 +8,8 @@ package technician;
  *
  * @author wongj
  */
+import GeneralTools.User;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,8 +57,7 @@ public class ProfileEdit {
         
         btn_cancel.addActionListener(e -> {
             profileEdit.dispose();
-            TechnicianDashBoard tdb = new TechnicianDashBoard();
-            tdb.TechDashBoard();
+            
         });
         
         // JPanel Setting

@@ -273,7 +273,7 @@ public class Login extends JFrame implements ActionListener{
         
         switch (role){
             case "Counter Staff":
-               new StaffDashboard(username, password);
+               new StaffDashboard(matchedUser);
                break;
 
             case "Customer":

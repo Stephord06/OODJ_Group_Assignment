@@ -17,18 +17,16 @@ import java.awt.event.ActionListener;
 public class ManagerDashBoard {
     
     private User currentUser;
-    
+    private String username;
+    private String password;
 
-    public ManagerDashBoard(User user) {
-        this.currentUser = user;
-
-    }
-    
-    public ManagerDashBoard(){
-        
+    public ManagerDashBoard(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public void DashBoardUI() {
+        
         // Frame
         JFrame frame = new JFrame("Manager Dash Board");
         frame.setLayout(new BorderLayout());
@@ -55,7 +53,7 @@ public class ManagerDashBoard {
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
         // Greeting label
-        JLabel greeting = new JLabel("Welcome to the Manager Dashboard, " + currentUser.getName());
+        JLabel greeting = new JLabel("Welcome to the Manager Dashboard, " + username);
         greeting.setFont(new Font("Arial", Font.BOLD, 18));
         greeting.setAlignmentX(Component.CENTER_ALIGNMENT); // center horizontally
         container.add(greeting);
