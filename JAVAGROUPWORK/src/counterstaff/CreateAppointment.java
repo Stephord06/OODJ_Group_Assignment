@@ -5,11 +5,16 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
+import GeneralTools.User;
 
 
 public class CreateAppointment extends JFrame{
     
-    public CreateAppointment() {
+    private User currentUser;
+    
+    public CreateAppointment(User user) {
+        this.currentUser = user;
+        
         setTitle("APU - Automotive Service Centre | Create Appointment");
         setSize(1100, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -327,7 +332,7 @@ public class CreateAppointment extends JFrame{
         // Action Listeners
         backButton.addActionListener(e -> {
             dispose();
-            new StaffDashboard();
+            new StaffDashboard(currentUser);
         });
         
         confirmButton.addActionListener(e -> {
@@ -439,12 +444,12 @@ public class CreateAppointment extends JFrame{
                     JOptionPane.INFORMATION_MESSAGE);
             
             dispose();
-            new StaffDashboard();
+            new StaffDashboard(currentUser);
         });
         
         cancelButton.addActionListener(e -> {
             dispose();
-            new StaffDashboard();
+            new StaffDashboard(currentUser);
         });
         
           // Enable time slot only when all 3 dd-mm-yyyy dropdowns are selected
@@ -590,6 +595,6 @@ public class CreateAppointment extends JFrame{
     }
     
     public static void main(String[] args) {
-        new CreateAppointment();
+        
     }
 }

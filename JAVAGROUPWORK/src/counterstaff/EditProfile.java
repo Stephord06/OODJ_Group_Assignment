@@ -5,10 +5,15 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
+import GeneralTools.User;
 
 public class EditProfile extends JFrame {
     
-    public EditProfile() {
+    private User currentUser;
+    
+    public EditProfile(User user) {
+        this.currentUser = user;
+        
         setTitle("APU - Automotive Service Centre | Edit Profile");
         setSize(1100, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,7 +73,7 @@ public class EditProfile extends JFrame {
                 bodyPanel.add(idLabel);
                 bodyPanel.add(Box.createVerticalStrut(6));
 
-                JTextField idField = new JTextField("S001"); //load from login later
+                JTextField idField = new JTextField(currentUser.getID()); //load from login
                 idField.setFont(new Font("Arial", Font.PLAIN, 15));
                 idField.setBackground(new Color(245, 245, 245));
                 idField.setForeground(Color.GRAY);
@@ -88,7 +93,7 @@ public class EditProfile extends JFrame {
                     String currentPhone = "";
                     for (String line : staffLines) {
                         String[] parts = line.split("\\|");
-                        if (parts[0].equals("S001")) { // load from loginpage later
+                        if (parts[0].equals(currentUser.getID())) { // load from loginpage
                             currentEmail = parts[3];
                             currentPhone = parts[2];
                             break;
@@ -318,7 +323,7 @@ public class EditProfile extends JFrame {
         
         saveButton.addActionListener(e -> {
             // Get all values
-            String staffId = "S001"; // Will be brought in from Login.java
+            String staffId = currentUser.getID(); // Brought in from Login.java
             String newEmail = emailField.getText().trim();
             String newPhone = phoneField.getText().trim();
             String oldPass = new String(oldPassField.getPassword()).trim();
@@ -326,17 +331,17 @@ public class EditProfile extends JFrame {
             String conPass = new String(conPassField.getPassword()).trim();
             
             // Validation
-                // Check empty fields
+                // Check whether email and phone is empty
                 if ((newEmail.isEmpty() || newEmail.equals("Enter email address")) ||
                     (newPhone.isEmpty() || newPhone.equals("Enter phone number"))) {
                     JOptionPane.showMessageDialog(this,
-                            "Please fill in all fields!",
+                            "Please fill in email and phone number!",
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 
-                // Check if old password is correct
+                // Load data from counterStaffs.txt
                 java.util.List<String> lines = FileManager.readFile("counterStaffs.txt");
                 String currentPassword = "";
                 for (String line : lines) {
@@ -347,30 +352,33 @@ public class EditProfile extends JFrame {
                     }
                 }
                 
-                if (!oldPass.equals(currentPassword)) {
-                    JOptionPane.showMessageDialog(this, 
-                            "Old password is incorrect!",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+                // Determine whether change password or keep current one
+                boolean ChangePassword = !newPass.isEmpty() && !newPass.equals("Enter new password");
                 
-                // Check if new password and confirm new password matches, and are not equal "Enter new password"
-                if (!newPass.equals(conPass)) {
-                    JOptionPane.showMessageDialog(this, 
-                            "New password and confirm password do not match!",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
+                String finalPassword = "";
+                if (ChangePassword) {
+                    // Check whether old password is correct
+                    if (!oldPass.equals(currentPassword)) {
+                        JOptionPane.showMessageDialog(this,
+                                "Old password is incorrect!",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    // Check if new password and confirm new password matches, and are not equal "Enter new password"
+                    if (!newPass.equals(conPass)) {
+                        JOptionPane.showMessageDialog(this,
+                                "New password and confirm password do not match!",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    finalPassword = newPass;
                 }
-                
-                if (newPass.equals("Enter new password" )||
-                        conPass.equals("Enter new password")) {
-                    JOptionPane.showMessageDialog(this, 
-                            "please enter new password!",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
+                else {
+                    // Keeping the current password, no password check needed
+                    finalPassword = currentPassword;
                 }
                 
                 // Update file counterStaffs.txt
@@ -379,7 +387,7 @@ public class EditProfile extends JFrame {
                     if (parts[0].equals(staffId)) {
                         // Keep id and name, update email, contact and password
                         lines.set(i, staffId + "|" + parts[1] + "|" + newPhone +
-                                "|" + newEmail + "|" + newPass);
+                                "|" + newEmail + "|" + finalPassword);
                         break;
                     }
                 }
@@ -392,23 +400,23 @@ public class EditProfile extends JFrame {
                         JOptionPane.INFORMATION_MESSAGE);
                 
                 dispose();
-                new StaffDashboard();
+                new StaffDashboard(currentUser);
         });
         
         backButton.addActionListener(e -> {
             dispose();
-            new StaffDashboard();
+            new StaffDashboard(currentUser);
         });
         
         cancelButton.addActionListener(e -> {
             dispose();
-            new StaffDashboard();
+            new StaffDashboard(currentUser);
         });
         
         setVisible(true);
     }
     
     public static void main(String[] args) {
-        new EditProfile();
+        
     }
 }

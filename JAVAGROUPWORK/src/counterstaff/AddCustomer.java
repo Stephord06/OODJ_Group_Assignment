@@ -4,11 +4,16 @@ package counterstaff;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import GeneralTools.User;
 
 
 public class AddCustomer extends JFrame {
     
-    public AddCustomer() {
+    private User currentUser;
+    
+    public AddCustomer(User user) {
+        this.currentUser = user;
+        
         setTitle("APU - Automotive Service Centre | Add Customer");
         setSize(1100, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -218,12 +223,12 @@ public class AddCustomer extends JFrame {
         // Action Listeners
         backButton.addActionListener(e -> {
             dispose();
-            new ManageCustomer();
+            new ManageCustomer(currentUser);
         });
         
         cancelButton.addActionListener(e -> {
             dispose();
-            new ManageCustomer();
+            new ManageCustomer(currentUser);
         });
         
         saveButton.addActionListener(e -> {
@@ -257,7 +262,7 @@ public class AddCustomer extends JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
             
             dispose();
-            new ManageCustomer();
+            new ManageCustomer(currentUser);
             
         });
         
@@ -266,6 +271,6 @@ public class AddCustomer extends JFrame {
     }
     
     public static void main(String[] args) {
-        new AddCustomer();
+        
     }
 }

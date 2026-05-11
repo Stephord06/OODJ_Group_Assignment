@@ -5,12 +5,17 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
+import GeneralTools.User;
 
 public class Receipt extends JFrame{
     
-    public Receipt(String receiptId, String appointmentId, String customerName,
+    private User currentUser;
+    
+    public Receipt(User user, String receiptId, String appointmentId, String customerName,
             String serviceType, String techName, String date,
             String timeSlot, String paymentMethod, String totalPaid) {
+        this.currentUser = user;
+        
         setTitle("APU - Automotive Service Centre | Receipt");
         setSize(1100, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -276,12 +281,12 @@ public class Receipt extends JFrame{
         // Action Listeners      
         dashBtn.addActionListener(e -> {
             dispose();
-            new StaffDashboard();
+            new StaffDashboard(currentUser);
         });
         
         newAppBtn.addActionListener(e -> {
             dispose();
-            new CreateAppointment();
+            new CreateAppointment(currentUser);
         });
                 
                     
@@ -292,8 +297,6 @@ public class Receipt extends JFrame{
     
     
     public static void main(String[] args) {
-        // dummy data for testing
-        new Receipt("R001", "A001", "Ahmad Razif", "Normal Service",
-                "T001 - Ali Hassan", "16-05-2026", "09:00 AM", "Cash", "200.00");
+
     }
 }

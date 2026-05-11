@@ -78,9 +78,9 @@ public class AnalyzedReport {
         //add component insdie the indicator
 
         indicator.add(makeCard("Total Revenue", "RM 0"));
-        indicator.add(makeCard("Appointments", "0"));
-        indicator.add(makeCard("Completed", "0"));
-        indicator.add(makeCard("Avg Feedback Score", "0 / 5"));
+        indicator.add(makeCard("Totap Appointments", "0"));
+        indicator.add(makeCard("Total Paid Appointments", "0"));
+        indicator.add(makeCard("Total Customer Comments", "0 / 5"));
 
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -109,9 +109,9 @@ public class AnalyzedReport {
 
                 // Add updated cards
                 indicator.add(makeCard("Total Revenue", "RM " + TotalRevenue()));
-                indicator.add(makeCard("Appointments", TotalAppointments()));
-                indicator.add(makeCard("Completed", TotalCompleteAppointments()));
-                indicator.add(makeCard("Avg Feedback Score", AvgFeedBackScore() + " / 5"));
+                indicator.add(makeCard("Totap Appointments", TotalAppointments()));
+                indicator.add(makeCard("Total Paid Appointments", TotalPaidAppointments()));
+                indicator.add(makeCard("Total Customer Comments", TotalCustomerComments()));
 
                 // Refresh the panel
                 indicator.revalidate();
@@ -157,92 +157,71 @@ public class AnalyzedReport {
         return panel ;
     }
     
-    private String TotalRevenue(){ 
-         
-        List<Integer> lines = readfile(2, monthBox.getSelectedItem().toString(), serviceBox.getSelectedItem().toString(), ""); // change the column and file name
-        int count = lines.size();
-        int total = 0;
-        int column;
-        
-        for(int i = 0 ; i < count ; i++){
-             column = lines.get(i);
-             total = column + total;
-             
+    private String TotalRevenue() {
+        List<Double> lines = readfile(8, 3, serviceBox.getSelectedItem().toString(), "receipts.txt");
+        double total = 0;
+        for (double value : lines) {
+            total += value;
         }
-        return String.valueOf(total);
+        return String.format("%.2f", total);
     }
     
-    private String TotalAppointments(){
-        
-        List<Integer> lines = readfile(3, monthBox.getSelectedItem().toString(), serviceBox.getSelectedItem().toString(), ""); // change the column and file name
-        int count = lines.size();
-        int total = 0;
-        int column;
-        
-        for(int i = 0 ; i < count ; i++){
-             column = lines.get(i);
-             total = column + total;
-             
-        }
-        return String.valueOf(total);
+    private String TotalAppointments() {
+        return String.valueOf(countRows(4, 4, serviceBox.getSelectedItem().toString(), "appointments.txt"));
     }
     
-    private String TotalCompleteAppointments(){
-        
-        List<Integer> lines = readfile(4, monthBox.getSelectedItem().toString(), serviceBox.getSelectedItem().toString(), ""); // change the column and file name
-        int count = lines.size();
-        int total = 0;
-        int column;
-        
-        for(int i = 0 ; i < count ; i++){
-             column = lines.get(i);
-             total = column + total;
-             
-        }
-        return String.valueOf(total);
+    private String TotalPaidAppointments() {
+        return String.valueOf(countRows(3, 3, serviceBox.getSelectedItem().toString(), "receipts.txt"));
     }
     
-    private String AvgFeedBackScore(){
-        List<Integer> lines = readfile(4, monthBox.getSelectedItem().toString(), serviceBox.getSelectedItem().toString(), ""); // change the column and file name
-        int count = lines.size();
-        double total = 0.00;
-        double column;
-        
-        for(int i = 0 ; i < count ; i++){
-             column = lines.get(i);
-             total = column + total;
-        }
-        
-        double result = total;
-        
-        double avg = result / count;
-        
-        return String.valueOf(avg);
+    private String TotalCustomerComments() {
+        return String.valueOf(countRows(9,4, serviceBox.getSelectedItem().toString(), "appointments.txt"));
     }
     
-    public List<Integer> readfile(int column, String month , String service , String file ){
-        List<Integer> results = new ArrayList<>();
-        try{
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
-            
-            while ((line = br.readLine()) != null){
-                String[] parts = line.split("\\|");
-                if(column < parts.length && parts[5].equals(month) && parts[6].equals(service))   //  find the specific month and service 
-                {
-                    results.add(Integer.parseInt(parts[column]));
-                }
-                else if(column < parts.length && parts[5].equals(month) && service.equals("All"))
-                {
-                    results.add(Integer.parseInt(parts[column]));
+    public List<Double> readfile(int column, int serviceColumn, String service, String file) {
+    List<Double> results = new ArrayList<>();
+    try {
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] parts = line.split("\\|");
+            if (column < parts.length && !(parts[column].equals("-"))) 
+            {
+                boolean serviceMatch = service.equals("All") || parts[serviceColumn].equals(service);
+                if (serviceMatch) {
+                    results.add(Double.parseDouble(parts[column]));
                 }
             }
-            br.close();
         }
-        
-        catch(IOException e){
+        br.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return results;
     }
+    
+    public int countRows(int column,int serviceColumn, String service, String file) {
+    int count = 0;
+    try {
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] parts = line.split("\\|");
+            if (serviceColumn < parts.length  && !(parts[column].equals("-")))
+            {
+                boolean serviceMatch = service.equals("All") || parts[serviceColumn].equals(service);
+                if (serviceMatch ) { 
+                    count++;
+                }
+            }
+        }
+        br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    
+    
 }
