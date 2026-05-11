@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package customer;
-import GeneralTools.Login;
+import GeneralTools.*;
 
 import javax.swing.event.*;
 import javax.swing.*;
@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author User
  */
-public class CustomerDashBoard {
+public class CustomerDashBoard extends User implements Standard_Method {
     
     private String name;
     private String id;
@@ -27,14 +27,14 @@ public class CustomerDashBoard {
     
     private final List<String> nameId = new ArrayList<>();
     
-    public CustomerDashBoard(String identify, String password){
-        customerNameId(identify, password , "customers.txt");
-        this.name = nameId.get(1);
-        this.id = nameId.get(0);
-        this.password = password;
+    public CustomerDashBoard(){
+        this.name = super.getName();
+        this.id = super.getID();
+        this.password = super.getPassword();
     }
     
-    public void CustomerDashBoardUI(){
+    @Override
+    public void UI(){
         Frame = new JFrame();
         Frame.setTitle("Customer Dash Board");
         Frame.setSize(1100, 700);
@@ -140,8 +140,8 @@ public class CustomerDashBoard {
             @Override
             public void actionPerformed(ActionEvent e){
                 Frame.dispose();
-                EditProfile ep = new EditProfile(id,name,password);
-                ep.EditProfileUI();
+                EditProfile ep = new EditProfile();
+                ep.UI();
             }
             
         });
@@ -181,7 +181,7 @@ public class CustomerDashBoard {
     
     
     public static void main(String[] args){
-        new CustomerDashBoard("Raj Kumar", "password789").CustomerDashBoardUI();
+        
     }
     
     

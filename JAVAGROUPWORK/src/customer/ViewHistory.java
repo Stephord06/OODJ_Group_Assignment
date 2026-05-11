@@ -109,8 +109,8 @@ public class ViewHistory {
             @Override
             public void actionPerformed(ActionEvent e){
                 Frame.dispose();
-                CustomerDashBoard back = new CustomerDashBoard(id, password);
-                back.CustomerDashBoardUI();
+                CustomerDashBoard back = new CustomerDashBoard();
+                back.UI();
             }
         });
         
