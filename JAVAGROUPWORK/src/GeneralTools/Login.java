@@ -186,7 +186,7 @@ public class Login extends JFrame implements ActionListener{
         System.out.println("isIDFormat: " + isIDFormat + "\n");
         
         if (isIDFormat){
-            // 按 ID 搜索对应文件
+            
             List<User> userList = User.loadFromFile(filePath, role);
             System.out.println("userList size: " + userList.size());
         
@@ -265,21 +265,26 @@ public class Login extends JFrame implements ActionListener{
         return null;
     }
     
-    public void DisplayDashboard(User user){
-        switch (user.getRole()){
+    public void DisplayDashboard(User matchedUser){
+        
+        String username = matchedUser.getName();
+        String password = matchedUser.getPassword();
+        String role = matchedUser.getRole();
+        
+        switch (role){
             case "Counter Staff":
-               new StaffDashboard(user);
+               new StaffDashboard(username, password);
                break;
 
             case "Customer":
                 break;
                 
             case "Manager":
-                new ManagerDashBoard(user).DashBoardUI();
+                new ManagerDashBoard(username, password).DashBoardUI();
                 break;
                 
             case "Technician": 
-                new TechnicianDashBoard(user).TechDashBoard();
+                new TechnicianDashBoard(matchedUser).TechDashBoard();
                 break;
         }
     }
