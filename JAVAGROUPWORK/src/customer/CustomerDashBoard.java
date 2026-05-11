@@ -150,8 +150,8 @@ public class CustomerDashBoard extends User implements Standard_Method {
             @Override
             public void actionPerformed(ActionEvent e){
                 Frame.dispose();
-                ViewHistory vh = new ViewHistory(id,name,password);
-                vh.ViewHistoryUI();
+                ViewHistory vh = new ViewHistory();
+                vh.UI();
             }
         });
         

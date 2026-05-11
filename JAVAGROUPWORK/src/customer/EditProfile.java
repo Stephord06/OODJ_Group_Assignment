@@ -34,9 +34,9 @@ public class EditProfile extends CustomerDashBoard {
     private JTextField passwordText;
     
     public EditProfile(){
-        this.id = getID();
-        this.name = getName();
-        this.password = getPassword();
+        this.id = super.getID();
+        this.name = super.getName();
+        this.password = super.getPassword();
     }
     
     @Override

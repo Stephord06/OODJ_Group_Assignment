@@ -14,7 +14,7 @@ import java.io.*;
  *
  * @author User
  */
-public class ViewHistory {
+public class ViewHistory extends CustomerDashBoard{
     
     private String id;
     private String name;
@@ -25,17 +25,18 @@ public class ViewHistory {
     private List<String[]> appointmentsData = new ArrayList<>();
     private List<String[]> receiptsData = new ArrayList<>();
     
-    public ViewHistory(String id, String name, String password){
+    public ViewHistory(){
         
-        this.id = id;
-        this.name = name;
-        this.password = password;
+        this.id = super.getID();
+        this.name = super.getName();
+        this.password = super.getPassword();
         readAppointmentsData("appointments.txt");
         readReceiptsData("receipts.txt");
         
     }
     
-    public void ViewHistoryUI(){
+    @Override
+    public void UI(){
         Frame = new JFrame();
         Frame.setTitle("View Service History and Payment History");
         Frame.setSize(1100, 700);
