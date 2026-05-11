@@ -19,7 +19,9 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author User
  */
-public class ModifyRoles extends IdGeneretor{
+public class ModifyRoles extends IdGeneretor implements ManagerStandard_Method{
+    
+    private String name;
     
     private JFrame Frame;
     
@@ -41,11 +43,12 @@ public class ModifyRoles extends IdGeneretor{
     
     
     
-    public ModifyRoles(){
-        
+    public ModifyRoles(String name){
+        this.name = name;
     }
     
-    public void ModifyRolesUI(){
+    @Override
+    public void UI(){
         Frame = new JFrame("ModifyRoles");
         Frame.setLayout(new BorderLayout(10,10));
         Frame.setSize(800,500);
@@ -265,8 +268,8 @@ public class ModifyRoles extends IdGeneretor{
         @Override
         public void actionPerformed(ActionEvent e) {
             Frame.dispose(); // close this window
-            ManagerDashBoard back = new ManagerDashBoard();
-            back.DashBoardUI();
+            ManagerDashBoard back = new ManagerDashBoard(name);
+            back.UI();
             }
         });
           

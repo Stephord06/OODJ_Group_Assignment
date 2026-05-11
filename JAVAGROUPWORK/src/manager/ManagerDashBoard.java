@@ -6,26 +6,30 @@
 
 package manager;
 
-import GeneralTools.Login;
-import GeneralTools.User;
+import GeneralTools.*;
+
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ManagerDashBoard {
+public class ManagerDashBoard extends User implements ManagerStandard_Method {
     
-    private User currentUser;
     private String username;
-    private String password;
 
-    public ManagerDashBoard(String username, String password) {
+
+    public ManagerDashBoard(User matchUser) {
+        super(matchUser.getID(),matchUser.getName(),matchUser.getPassword());
+        this.username = getName();
+    }
+    
+    public ManagerDashBoard(String username ){
         this.username = username;
-        this.password = password;
     }
 
-    public void DashBoardUI() {
+    @Override
+    public void UI() {
         
         // Frame
         JFrame frame = new JFrame("Manager Dash Board");
@@ -116,8 +120,8 @@ public class ManagerDashBoard {
            public void actionPerformed(ActionEvent e) {
                frame.dispose();
 
-               ModifyRoles mr = new ModifyRoles();
-               mr.ModifyRolesUI();
+               ModifyRoles mr = new ModifyRoles(username);
+               mr.UI();
                }
            });
 
@@ -126,8 +130,8 @@ public class ManagerDashBoard {
           public void actionPerformed(ActionEvent e) {
               frame.dispose();
 
-              SetPrices sp = new SetPrices();
-              sp.SetPricesUI();
+              SetPrices sp = new SetPrices(username);
+              sp.UI();
               }
           });
 
@@ -136,8 +140,8 @@ public class ManagerDashBoard {
             public void actionPerformed(ActionEvent e){
                 frame.dispose();
 
-                AnalyzedReport ar = new AnalyzedReport();
-                ar.AnalyzedReportUI();
+                AnalyzedReport ar = new AnalyzedReport(username);
+                ar.UI();
             }
         });
 
@@ -146,8 +150,8 @@ public class ManagerDashBoard {
             public void actionPerformed(ActionEvent e){
                 frame.dispose();
 
-                ViewComment vr = new ViewComment();
-                vr.ViewCommentUI();
+                ViewComment vr = new ViewComment(username);
+                vr.UI();
             }
         });
          
@@ -155,21 +159,5 @@ public class ManagerDashBoard {
         
          
     }
-
-    public static void main(String[] args) {
-        
-    }
-    
-    public String getName(){
-        return currentUser.getName();
-    }
-    
-    public String getPassword(){
-        return currentUser.getPassword();
-    }
-    
-    
-    
     
 }
-

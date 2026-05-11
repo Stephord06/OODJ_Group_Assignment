@@ -8,7 +8,7 @@ package customer;
  *
  * @author User
  */
-public interface Standard_Method {
+public interface CustomerStandard_Method {
 
     
     public void UI();

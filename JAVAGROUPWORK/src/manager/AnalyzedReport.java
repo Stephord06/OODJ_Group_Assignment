@@ -10,16 +10,23 @@ import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 
-public class AnalyzedReport {
+public class AnalyzedReport implements ManagerStandard_Method{
     
-
+    private String name;
+    
     private JFrame Frame;
     private List<String[]> DataList = new ArrayList<>();
     
     private JComboBox<String> monthBox;
     private JComboBox<String> serviceBox;
     
-    public void AnalyzedReportUI(){
+    public  AnalyzedReport(String name){
+        this.name = name;
+    }
+
+    @Override
+    public void UI(){
+        
         Frame = new JFrame("AnalyzedReport");
         Frame.setSize(800,500);
         Frame.setLayout(new BorderLayout());
@@ -122,8 +129,8 @@ public class AnalyzedReport {
             @Override
             public void actionPerformed(ActionEvent e){
                 Frame.dispose();
-                ManagerDashBoard md = new ManagerDashBoard();
-                md.DashBoardUI();
+                ManagerDashBoard md = new ManagerDashBoard(name);
+                md.UI();
             }
         });
 

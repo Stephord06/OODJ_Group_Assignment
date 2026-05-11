@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import technician.TechnicianDashBoard;
 import counterstaff.StaffDashboard;
 import manager.ManagerDashBoard;
+import customer.*;
 
 public class Login extends JFrame implements ActionListener{
     
@@ -277,10 +278,12 @@ public class Login extends JFrame implements ActionListener{
                break;
 
             case "Customer":
+                CustomerDashBoard dashboard = new CustomerDashBoard(matchedUser);
+                dashboard.UI();
                 break;
                 
             case "Manager":
-                new ManagerDashBoard(username, password).DashBoardUI();
+                new ManagerDashBoard(matchedUser).UI();
                 break;
                 
             case "Technician": 

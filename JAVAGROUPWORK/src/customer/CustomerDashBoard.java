@@ -17,7 +17,8 @@ import java.util.List;
  *
  * @author User
  */
-public class CustomerDashBoard extends User implements Standard_Method {
+public class CustomerDashBoard extends User implements CustomerStandard_Method {
+    
     
     private String name;
     private String id;
@@ -27,10 +28,18 @@ public class CustomerDashBoard extends User implements Standard_Method {
     
     private final List<String> nameId = new ArrayList<>();
     
-    public CustomerDashBoard(){
-        this.name = super.getName();
-        this.id = super.getID();
-        this.password = super.getPassword();
+    public CustomerDashBoard(User matchUser){
+        super(matchUser.getID(), matchUser.getName(), matchUser.getPassword());
+          
+        this.id = getID();
+        this.name = getName();
+        this.password = getPassword();
+    }
+    
+    public CustomerDashBoard(String id, String name, String password){
+        this.id = id;
+        this.name = name;
+        this.password = password;
     }
     
     @Override
@@ -140,7 +149,7 @@ public class CustomerDashBoard extends User implements Standard_Method {
             @Override
             public void actionPerformed(ActionEvent e){
                 Frame.dispose();
-                EditProfile ep = new EditProfile();
+                EditProfile ep = new EditProfile(id, name, password);
                 ep.UI();
             }
             
@@ -150,7 +159,7 @@ public class CustomerDashBoard extends User implements Standard_Method {
             @Override
             public void actionPerformed(ActionEvent e){
                 Frame.dispose();
-                ViewHistory vh = new ViewHistory();
+                ViewHistory vh = new ViewHistory(id, name, password);
                 vh.UI();
             }
         });

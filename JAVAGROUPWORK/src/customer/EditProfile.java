@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author User
  */
-public class EditProfile extends CustomerDashBoard {
+public class EditProfile  implements CustomerStandard_Method {
     
     private JFrame Frame;
     
@@ -33,10 +33,11 @@ public class EditProfile extends CustomerDashBoard {
     private JTextField emailText;
     private JTextField passwordText;
     
-    public EditProfile(){
-        this.id = super.getID();
-        this.name = super.getName();
-        this.password = super.getPassword();
+    public EditProfile(String id, String name, String password){
+
+        this.id = id;
+        this.name = name;
+        this.password = password;
     }
     
     @Override
@@ -192,7 +193,7 @@ public class EditProfile extends CustomerDashBoard {
             @Override
             public void actionPerformed(ActionEvent e){
                 Frame.dispose();
-                CustomerDashBoard back = new CustomerDashBoard();
+                CustomerDashBoard back = new CustomerDashBoard(id, name, password);
                 back.UI();
             }
         });

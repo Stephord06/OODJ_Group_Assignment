@@ -14,7 +14,7 @@ import java.io.*;
  *
  * @author User
  */
-public class ViewHistory extends CustomerDashBoard{
+public class ViewHistory implements CustomerStandard_Method{
     
     private String id;
     private String name;
@@ -25,11 +25,11 @@ public class ViewHistory extends CustomerDashBoard{
     private List<String[]> appointmentsData = new ArrayList<>();
     private List<String[]> receiptsData = new ArrayList<>();
     
-    public ViewHistory(){
+    public ViewHistory(String id, String name, String password){
         
-        this.id = super.getID();
-        this.name = super.getName();
-        this.password = super.getPassword();
+        this.id = id ;
+        this.name = name;
+        this.password = password;
         readAppointmentsData("appointments.txt");
         readReceiptsData("receipts.txt");
         
@@ -110,7 +110,7 @@ public class ViewHistory extends CustomerDashBoard{
             @Override
             public void actionPerformed(ActionEvent e){
                 Frame.dispose();
-                CustomerDashBoard back = new CustomerDashBoard();
+                CustomerDashBoard back = new CustomerDashBoard(id, name, password);
                 back.UI();
             }
         });

@@ -44,6 +44,12 @@ public class User {
         this.role = role;
     }
     
+    public User(String userID, String userName, String password ){       //constructor for Manager and Customer purpose
+        this.userID = userID;
+        this.userName = userName;
+        this.password = password;
+    }
+    
     public User(){
     
     }

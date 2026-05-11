@@ -16,7 +16,9 @@ import java.util.List;
  *
  * @author User
  */
-public class ViewComment {
+public class ViewComment implements ManagerStandard_Method {
+    
+    private String name;
     
     private  ArrayList<String> id = new ArrayList<>();
     private JFrame Frame;
@@ -25,7 +27,12 @@ public class ViewComment {
     private JScrollPane scrollPane;
     private JTextField search;
     
-    public void ViewCommentUI(){
+    public ViewComment(String name){
+        this.name = name;
+    }
+    
+    @Override
+    public void UI(){
         Frame = new JFrame();
         Frame.setSize(800, 500);
         Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,8 +118,8 @@ public class ViewComment {
         @Override
         public void actionPerformed(ActionEvent e) {
             Frame.dispose(); 
-            ManagerDashBoard back = new ManagerDashBoard();
-            back.DashBoardUI();
+            ManagerDashBoard back = new ManagerDashBoard(name);
+            back.UI();
             }
         });
         
