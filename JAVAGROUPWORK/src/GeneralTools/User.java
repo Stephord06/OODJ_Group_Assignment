@@ -44,6 +44,10 @@ public class User {
         this.role = role;
     }
     
+    public User(){
+    
+    }
+    
     // Methods
     public String getID(){
         return userID;
