@@ -16,22 +16,28 @@ import java.util.List;
  *
  * @author User
  */
-public class ViewComment implements ManagerStandard_Method {
+public class ViewComment  {
     
+    private Manager manager;
+    
+    private String id;
     private String name;
+    private String password;
     
-    private  ArrayList<String> id = new ArrayList<>();
+    private  ArrayList<String> idList = new ArrayList<>();
     private JFrame Frame;
     
     private JPanel mainPanel;
     private JScrollPane scrollPane;
     private JTextField search;
     
-    public ViewComment(String name){
-        this.name = name;
+    public ViewComment(Manager manager){
+        this.id = manager.getID();
+        this.name = manager.getName();
+        this.password = manager.getPassword();
     }
     
-    @Override
+
     public void UI(){
         Frame = new JFrame();
         Frame.setSize(800, 500);
@@ -118,7 +124,7 @@ public class ViewComment implements ManagerStandard_Method {
         @Override
         public void actionPerformed(ActionEvent e) {
             Frame.dispose(); 
-            ManagerDashBoard back = new ManagerDashBoard(name);
+            ManagerDashBoard back = new ManagerDashBoard(manager);
             back.UI();
             }
         });
@@ -142,7 +148,7 @@ public class ViewComment implements ManagerStandard_Method {
            while ((line = br.readLine()) != null){
                String[] parts = line.split("\\|");
                
-               this.id.add(parts[0]);
+               this.idList.add(parts[0]);
                
                 if (parts.length >= 10) {   
                     if(id.isEmpty()){

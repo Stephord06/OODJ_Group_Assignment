@@ -10,9 +10,13 @@ import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 
-public class AnalyzedReport implements ManagerStandard_Method{
+public class AnalyzedReport {
     
+    private Manager manager;
+    
+    private String id;
     private String name;
+    private String password;
     
     private JFrame Frame;
     private List<String[]> DataList = new ArrayList<>();
@@ -20,11 +24,14 @@ public class AnalyzedReport implements ManagerStandard_Method{
     private JComboBox<String> monthBox;
     private JComboBox<String> serviceBox;
     
-    public  AnalyzedReport(String name){
-        this.name = name;
+    public  AnalyzedReport(Manager manager){
+        this.manager = manager;
+        this.id = manager.getID();
+        this.name = manager.getName();
+        this.password = manager.getPassword();
     }
 
-    @Override
+
     public void UI(){
         
         Frame = new JFrame("AnalyzedReport");
@@ -56,7 +63,7 @@ public class AnalyzedReport implements ManagerStandard_Method{
         String[] months = {"January","February","March","April","May","June","July","August"
                 ,"September","Octorber","November","December"};
 
-        String[] services = {"All","Normal","Major"};
+        String[] services = {"All","Normal Service","Major Service"};
         monthBox = new JComboBox<>(months);
         serviceBox = new JComboBox<>(services);
 
@@ -87,7 +94,7 @@ public class AnalyzedReport implements ManagerStandard_Method{
         indicator.add(makeCard("Total Revenue", "RM 0"));
         indicator.add(makeCard("Totap Appointments", "0"));
         indicator.add(makeCard("Total Paid Appointments", "0"));
-        indicator.add(makeCard("Total Customer Comments", "0 / 5"));
+        indicator.add(makeCard("Total Comments", "0 / 5"));
 
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -116,9 +123,9 @@ public class AnalyzedReport implements ManagerStandard_Method{
 
                 // Add updated cards
                 indicator.add(makeCard("Total Revenue", "RM " + TotalRevenue()));
-                indicator.add(makeCard("Totap Appointments", TotalAppointments()));
+                indicator.add(makeCard("Total Appointments", TotalAppointments()));
                 indicator.add(makeCard("Total Paid Appointments", TotalPaidAppointments()));
-                indicator.add(makeCard("Total Customer Comments", TotalCustomerComments()));
+                indicator.add(makeCard("Total Comments", TotalCustomerComments()));
 
                 // Refresh the panel
                 indicator.revalidate();
@@ -129,7 +136,7 @@ public class AnalyzedReport implements ManagerStandard_Method{
             @Override
             public void actionPerformed(ActionEvent e){
                 Frame.dispose();
-                ManagerDashBoard md = new ManagerDashBoard(name);
+                ManagerDashBoard md = new ManagerDashBoard(manager);
                 md.UI();
             }
         });

@@ -14,9 +14,13 @@ import java.util.Properties;
 import java.io.FileNotFoundException;
 
 
-public class SetPrices implements ManagerStandard_Method{
+public class SetPrices {
     
+    private Manager manager;
+    
+    private String id;
     private String name;
+    private String password;
     
     
     private JPanel shortpanel;
@@ -33,11 +37,13 @@ public class SetPrices implements ManagerStandard_Method{
     private String readshortprice;
     private String readlongprice;
     
-    public SetPrices(String name){
-        this.name = name;
+    public SetPrices(Manager manager){
+        this.id = manager.getID();
+        this.name = manager.getName();
+        this.password = manager.getPassword();
     }
     
-    @Override
+
     public void UI(){
         JFrame Frame = new JFrame("SetPrices");
         Frame.setSize(800, 500);
@@ -243,7 +249,7 @@ public class SetPrices implements ManagerStandard_Method{
         @Override
         public void actionPerformed(ActionEvent e) {
             Frame.dispose(); // close this window
-            ManagerDashBoard back = new ManagerDashBoard(name);
+            ManagerDashBoard back = new ManagerDashBoard(manager);
             back.UI();
             }
         });

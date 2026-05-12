@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 import technician.TechnicianDashBoard;
 import counterstaff.StaffDashboard;
-import manager.ManagerDashBoard;
+import manager.*;
 import customer.*;
 
 public class Login extends JFrame implements ActionListener{
@@ -283,7 +283,11 @@ public class Login extends JFrame implements ActionListener{
                 break;
                 
             case "Manager":
-                new ManagerDashBoard(matchedUser).UI();
+                Manager mgr = new Manager(matchedUser.getID(),
+                                  matchedUser.getName(),
+                                  matchedUser.getPassword());
+                ManagerDashBoard mdb = new ManagerDashBoard(mgr);
+                mdb.UI();
                 break;
                 
             case "Technician": 

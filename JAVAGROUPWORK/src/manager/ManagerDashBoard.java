@@ -14,19 +14,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ManagerDashBoard extends User implements ManagerStandard_Method {
+public class ManagerDashBoard implements ManagerStandard_Method {
     
-    private String username;
+    private String id;
+    private String name;
+    private String password;
+    
+    
+    private Manager manager;
 
-
-    public ManagerDashBoard(User matchUser) {
-        super(matchUser.getID(),matchUser.getName(),matchUser.getPassword());
-        this.username = getName();
+    public ManagerDashBoard(Manager manager) {
+        this.manager = manager;
+        this.id = manager.getID();
+        this.name = manager.getName();
+        this.password = manager.getPassword();
     }
     
-    public ManagerDashBoard(String username ){
-        this.username = username;
-    }
 
     @Override
     public void UI() {
@@ -57,7 +60,7 @@ public class ManagerDashBoard extends User implements ManagerStandard_Method {
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
         // Greeting label
-        JLabel greeting = new JLabel("Welcome to the Manager Dashboard, " + username);
+        JLabel greeting = new JLabel("Welcome to the Manager Dashboard, " + this.name);
         greeting.setFont(new Font("Arial", Font.BOLD, 18));
         greeting.setAlignmentX(Component.CENTER_ALIGNMENT); // center horizontally
         container.add(greeting);
@@ -119,29 +122,26 @@ public class ManagerDashBoard extends User implements ManagerStandard_Method {
            @Override
            public void actionPerformed(ActionEvent e) {
                frame.dispose();
-
-               ModifyRoles mr = new ModifyRoles(username);
-               mr.UI();
+               manager.modifyRoles();   
+               
                }
-           });
+        });
 
         SetPrices.addActionListener(new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent e) {
               frame.dispose();
 
-              SetPrices sp = new SetPrices(username);
-              sp.UI();
-              }
-          });
+              manager.setPrices(); 
+            }
+        });
 
         AnalyzedReport.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
                 frame.dispose();
 
-                AnalyzedReport ar = new AnalyzedReport(username);
-                ar.UI();
+                manager.analyzeReport();
             }
         });
 
@@ -150,8 +150,7 @@ public class ManagerDashBoard extends User implements ManagerStandard_Method {
             public void actionPerformed(ActionEvent e){
                 frame.dispose();
 
-                ViewComment vr = new ViewComment(username);
-                vr.UI();
+                manager.viewComments();
             }
         });
          

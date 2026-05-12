@@ -19,9 +19,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author User
  */
-public class ModifyRoles extends IdGeneretor implements ManagerStandard_Method{
+public class ModifyRoles {
+    
+    
+    private Manager manager;
     
     private String name;
+    private String id;
+    private String password;
     
     private JFrame Frame;
     
@@ -43,11 +48,15 @@ public class ModifyRoles extends IdGeneretor implements ManagerStandard_Method{
     
     
     
-    public ModifyRoles(String name){
-        this.name = name;
+    public ModifyRoles(Manager manager){
+        this.manager = manager;
+        this.id = manager.getID();
+        this.name = manager.getName();
+        this.password = manager.getPassword();
     }
     
-    @Override
+    
+    
     public void UI(){
         Frame = new JFrame("ModifyRoles");
         Frame.setLayout(new BorderLayout(10,10));
@@ -268,7 +277,7 @@ public class ModifyRoles extends IdGeneretor implements ManagerStandard_Method{
         @Override
         public void actionPerformed(ActionEvent e) {
             Frame.dispose(); // close this window
-            ManagerDashBoard back = new ManagerDashBoard(name);
+            ManagerDashBoard back = new ManagerDashBoard(manager);
             back.UI();
             }
         });
@@ -510,7 +519,22 @@ public class ModifyRoles extends IdGeneretor implements ManagerStandard_Method{
 
     }
     
-    
+    public String IdAutoGenerate(String file, int getRow){
+        
+        if(file.startsWith("co")){
+            return String.format("%s%03d", "S", getRow + 1);   
+        }
+        else if(file.startsWith("c")){
+            return String.format("%s%03d", "C", getRow + 1);
+        }
+        else if(file.startsWith("m")){
+            return String.format("%s%03d", "M", getRow + 1);
+        }
+        else if(file.startsWith("t")){
+            return String.format("%s%03d", "T", getRow + 1);
+        }    
+        return "";
+    }
     
     
 
