@@ -8,6 +8,6 @@ package GeneralTools;
  *
  * @author wongj
  */
-public class ReadCustomerProfile {
+public class ReadCustomer {
     
 }

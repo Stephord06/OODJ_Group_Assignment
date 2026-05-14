@@ -10,4 +10,7 @@ package technician;
  */
 public class Feedbacks {
     
+    public void FeedbackPage(){
+        
+    }
 }

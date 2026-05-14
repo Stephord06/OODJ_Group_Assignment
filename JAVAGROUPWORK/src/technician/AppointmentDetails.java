@@ -29,11 +29,11 @@ public class AppointmentDetails {
         // Jlabel Settings
         JLabel title = new JLabel("Appointment Details");
         JLabel label1 = new JLabel("Appointment ID:");
-        JLabel label2 = new JLabel("Customer Name:");
-        JLabel label3 = new JLabel("Appointment Date:");
-        JLabel label4 = new JLabel("Description:");
+        JLabel label2 = new JLabel("Customer ID/Name:");
+        JLabel label3 = new JLabel("Reservation Date:");
+        JLabel label4 = new JLabel("Service Type:");
         JLabel label5 = new JLabel("Comment:");
-        JLabel label6 = new JLabel("Staff Name:");
+        JLabel label6 = new JLabel("Staff ID/Name:");
         
         // used to display the information from txt file
         JLabel lbl_appointID = new JLabel("*ID*");

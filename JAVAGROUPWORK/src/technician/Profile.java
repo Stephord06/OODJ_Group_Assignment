@@ -9,18 +9,18 @@ package technician;
  * @author wongj
  */
 
-import GeneralTools.User;
-import GeneralTools.Login;
+import GeneralTools.*;
+import technician.Technician;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Profile {
     
-    User currentUser;
+    Technician currentTechnician;
     
-    public Profile(User currentUser){
-        this.currentUser = currentUser;
+    public Profile(Technician currentTechnician){
+        this.currentTechnician = currentTechnician;
     }
     public void Profile(){
         
@@ -40,11 +40,11 @@ public class Profile {
         JLabel label4 = new JLabel("Contact Number:");
         JLabel label5 = new JLabel("Email:");
         
-        JLabel lbl_staffID = new JLabel(currentUser.getID());
-        JLabel lbl_username = new JLabel(currentUser.getName());
-        JLabel lbl_role = new JLabel(currentUser.getRole());
-        JLabel lbl_contactNum = new JLabel(currentUser.getContact());
-        JLabel lbl_email = new JLabel(currentUser.getEmail());
+        JLabel lbl_staffID = new JLabel(currentTechnician.getID());
+        JLabel lbl_username = new JLabel(currentTechnician.getName());
+        JLabel lbl_role = new JLabel(currentTechnician.getRole());
+        JLabel lbl_contactNum = new JLabel(currentTechnician.getContact());
+        JLabel lbl_email = new JLabel(currentTechnician.getEmail());
         
         title.setBounds(25,25,200,50);
         
@@ -68,7 +68,7 @@ public class Profile {
         
         btn_finish.addActionListener(e -> {
             profile.dispose();
-            new TechnicianDashBoard(currentUser).TechDashBoard();
+            new TechnicianDashBoard(currentTechnician).TechDashBoard();
         });
         
         // JPanel
