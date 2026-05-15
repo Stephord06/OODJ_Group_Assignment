@@ -277,8 +277,7 @@ public class ModifyRoles {
         @Override
         public void actionPerformed(ActionEvent e) {
             Frame.dispose(); // close this window
-            ManagerDashBoard back = new ManagerDashBoard(manager);
-            back.UI();
+            manager.managerDashBoard();
             }
         });
           

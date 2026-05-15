@@ -18,6 +18,11 @@ public class Manager extends User {
         
     }
     
+    public void managerDashBoard(){
+        ManagerDashBoard mdb = new ManagerDashBoard(this);
+        mdb.UI();
+    }
+    
     
     public void modifyRoles() {
         ModifyRoles mr = new ModifyRoles(this);
@@ -40,6 +45,8 @@ public class Manager extends User {
     }
     
 }    
+
+
     
   
     

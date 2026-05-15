@@ -136,8 +136,7 @@ public class AnalyzedReport {
             @Override
             public void actionPerformed(ActionEvent e){
                 Frame.dispose();
-                ManagerDashBoard md = new ManagerDashBoard(manager);
-                md.UI();
+                manager.managerDashBoard();
             }
         });
 

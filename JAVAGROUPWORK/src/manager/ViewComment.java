@@ -32,6 +32,7 @@ public class ViewComment  {
     private JTextField search;
     
     public ViewComment(Manager manager){
+        this.manager = manager;
         this.id = manager.getID();
         this.name = manager.getName();
         this.password = manager.getPassword();
@@ -124,8 +125,7 @@ public class ViewComment  {
         @Override
         public void actionPerformed(ActionEvent e) {
             Frame.dispose(); 
-            ManagerDashBoard back = new ManagerDashBoard(manager);
-            back.UI();
+            manager.managerDashBoard();
             }
         });
         
