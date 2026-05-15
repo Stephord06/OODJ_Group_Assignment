@@ -99,8 +99,8 @@ public class User {
                 
                 if (data.length >= 5)
                 {
-                    userlist.add(new User(              // Get the Data and input into the List with the format
-                        data[0].trim(),                         // [userID, userName, contactNum, email, password]
+                    userlist.add(new User(              // Get the Data and input into the List with the format:
+                        data[0].trim(),                 // [userID, userName, contactNum, email, password]
                         data[1].trim(),
                         data[2].trim(),
                         data[3].trim(),

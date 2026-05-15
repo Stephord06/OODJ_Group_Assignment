@@ -18,16 +18,10 @@ import java.awt.event.ActionListener;
 
 public class TechnicianDashBoard {
     
-    private User currentUser;
-    private String username;
-    private String password;
+    private Technician currentTechnician;
     
-    /*
-    * @param user
-    */
-    
-    public TechnicianDashBoard(User currentUser){
-        this.currentUser = currentUser;
+    public TechnicianDashBoard(Technician currentTechnician){
+        this.currentTechnician = currentTechnician;
     }
     
     // UI Interface Design:
@@ -40,7 +34,7 @@ public class TechnicianDashBoard {
         dash.setLayout(null);
         
         // Set Label
-        JLabel label1 = new JLabel("Welcome back, " + currentUser.getName() + "!");
+        JLabel label1 = new JLabel("Welcome back, " + currentTechnician.getName() + "!");
         
         label1.setBounds(20,50,350,30);
         
@@ -66,7 +60,7 @@ public class TechnicianDashBoard {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dash.dispose();
-                new Profile(currentUser).Profile();
+                new technician.Profile();
             }
         });
         
@@ -101,7 +95,7 @@ public class TechnicianDashBoard {
             @Override
             public void actionPerformed(ActionEvent e){
                 dash.setVisible(false);
-                AppointmentTable at = new AppointmentTable();
+                AppointmentTable at = new AppointmentTable(this);
                 at.AppointRecordTable();
             }
         });

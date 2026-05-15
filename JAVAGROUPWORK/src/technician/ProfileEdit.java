@@ -8,7 +8,7 @@ package technician;
  *
  * @author wongj
  */
-import GeneralTools.User;
+import GeneralTools.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,6 +17,12 @@ import javax.swing.*;
 
 
 public class ProfileEdit {
+    
+    private Technician currentTechnician;
+    
+    public ProfileEdit(Technician currentTechnician){
+        this.currentTechnician = currentTechnician;
+    }
     
     public void EditPage(){
         
@@ -70,24 +76,25 @@ public class ProfileEdit {
         // JLabel Setting
         
         JLabel title = new JLabel("Modify Personal Profile");
-        JLabel label1 = new JLabel("Username:");
-        JLabel label2 = new JLabel("Contact Number:");
-        JLabel label3 = new JLabel("Email:");
+        JLabel label1 = new JLabel("Contact Number:");
+        JLabel label2 = new JLabel("Email:");
+        JLabel label3 = new JLabel("Password:");
         
         title.setBounds(50,25,300,50);
         label1.setBounds(25,75,120,30);
         label2.setBounds(25,115,150,30);
         label3.setBounds(25,155,120,30);
         
+        
         // JTextField Setting
         
-        JTextField txt_username = new JTextField();
-        JTextField txt_contact = new JTextField();
-        JTextField txt_email = new JTextField();
+        JTextField txt_contact = new JTextField(currentTechnician.getContact());
+        JTextField txt_email = new JTextField(currentTechnician.getEmail());
+        JTextField txt_password = new JTextField(currentTechnician.getPassword());
         
-        txt_username.setBounds(200,75,275,30);
-        txt_contact.setBounds(200,115,275,30);
-        txt_email.setBounds(200,155,275,30);
+        txt_contact.setBounds(200,75,275,30);
+        txt_email.setBounds(200,115,275,30);
+        txt_password.setBounds(200,155,275,30);
         
         // Font Setting
         
@@ -95,7 +102,7 @@ public class ProfileEdit {
         label1.setFont(new Font("Times New Roman", Font.PLAIN, 18));
         label2.setFont(new Font("Times New Roman", Font.PLAIN, 18));
         label3.setFont(new Font("Times New Roman", Font.PLAIN, 18));
-        txt_username.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+        txt_password.setFont(new Font("Times New Roman", Font.PLAIN, 18));
         txt_contact.setFont(new Font("Times New Roman", Font.PLAIN, 18));
         txt_email.setFont(new Font("Times New Roman", Font.PLAIN, 18));
         
@@ -103,21 +110,21 @@ public class ProfileEdit {
         btn_cancel.setFont(new Font("Times New Roman", Font.BOLD, 20));
         
         // Display Objects and Frame
-        
-        profileEdit.setVisible(true);
+                
         profileEdit.add(title);
         profileEdit.add(panel);
         panel.add(label1);
         panel.add(label2);
         panel.add(label3);
-        panel.add(txt_username);
+        panel.add(txt_password);
         panel.add(txt_contact);
         panel.add(txt_email);
         panel.add(btn_update);
         panel.add(btn_cancel);
+        profileEdit.setVisible(true);
     }
     
     public static void main(String[] args){
-        new ProfileEdit().EditPage();
+        
     }
 }

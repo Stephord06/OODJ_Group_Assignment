@@ -17,7 +17,7 @@ import java.awt.*;
         
 public class ReadAppointment {
     // FileName Needs
-    private static final String filePath = "appointments.txt";
+    private static final String filePath = "appointments.txt";          // The file to read and provide data
     
     // Parameters
     protected String appointID, customerID, technicianID, staffID, serviceType,
@@ -47,8 +47,47 @@ public class ReadAppointment {
         return appointID;
     }
     
-    public
-    public List<ReadAppointment> readAppointments(){
+    public String getCustomerID(){
+        return customerID;
+    }
+    
+    public String getTechnicianID(){
+        return technicianID;
+    }
+    
+    public String getstaffID(){
+        return staffID;
+    }
+    
+    public String getServiceType(){
+        return serviceType;
+    }
+    
+    public String getDate(){
+        return date;
+    }
+    
+    public String getTimeStart(){
+        return timeStart;
+    }
+    
+    public String getTimeEnd(){
+        return timeEnd;
+    }
+    
+    public String getCustomerComment(){
+        return comments;
+    }
+    
+    public String getTechnicianFeedback(){
+        return feedback;
+    }
+    
+    public String getStatusDescription(){
+        return statusDescription;
+    }
+    
+    public static List<ReadAppointment> readAppointments(){
         List<ReadAppointment> appointmentList = new ArrayList<>();
         
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))){
@@ -61,19 +100,19 @@ public class ReadAppointment {
             
                 String[] data = line.split("\\|");
             
-                if (data.length == 14){
-                    ReadAppointment appt = new ReadAppointment(
-                            data[0].trim(),
-                            data[1].trim(),
-                            data[2].trim(),
-                            data[3].trim(),
-                            data[4].trim(),
-                            data[5].trim(),
-                            data[6].trim(),
-                            data[7].trim(),
-                            data[8].trim(),
-                            data[9].trim(),
-                            data[10].trim()
+                if (data.length == 11){
+                    ReadAppointment appt = new ReadAppointment(             // Store the data from appointment into a list
+                            data[0].trim(),                                 // data: appointmentID
+                            data[1].trim(),                                 // data: customerID
+                            data[2].trim(),                                 // data: technicianID
+                            data[3].trim(),                                 // data: staffID
+                            data[4].trim(),                                 // data: serviceType 
+                            data[5].trim(),                                 // data: date
+                            data[6].trim(),                                 // data: timeStart
+                            data[7].trim(),                                 // data: timeEnd
+                            data[8].trim(),                                 // data: customer comment
+                            data[9].trim(),                                 // data: technician feedback
+                            data[10].trim()                                 // data: appointment status
                     );
                     appointmentList.add(appt);
                     

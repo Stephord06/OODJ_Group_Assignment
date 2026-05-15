@@ -16,8 +16,8 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.ArrayList;
 
-import technician.TechnicianDashBoard;
-import counterstaff.StaffDashboard;
+import technician.*;
+import counterstaff.*;
 import manager.*;
 import customer.*;
 
@@ -199,7 +199,7 @@ public class Login extends JFrame implements ActionListener{
                 }
             }
         } else {
-            // 按名字搜索所有文件
+            
             System.out.println("Searching by name: " + inputID + "\n");
             matchedUser = searchByName(inputID);
         }
@@ -290,7 +290,11 @@ public class Login extends JFrame implements ActionListener{
                 break;
                 
             case "Technician": 
-                new TechnicianDashBoard(matchedUser).TechDashBoard();
+                
+                Technician tech = new Technician(matchedUser);
+                tech.EnterClassMessage();
+                TechnicianDashBoard tdb = new TechnicianDashBoard(tech);
+                tdb.TechDashBoard();
                 break;
         }
     }
