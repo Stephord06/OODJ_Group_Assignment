@@ -58,8 +58,4 @@ public class Technician extends User{
         pfe.EditPage();
     }
     
-    public void Feedbacks(){
-        Feedbacks fdb = new Feedbacks(this);
-        fdb.FeedbackPage();
-    }
 }
