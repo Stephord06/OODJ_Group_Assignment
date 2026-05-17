@@ -60,7 +60,8 @@ public class TechnicianDashBoard {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dash.dispose();
-                new technician.Profile();
+                Profile pf = new Profile(currentTechnician);
+                pf.Profile();
             }
         });
         
@@ -68,7 +69,7 @@ public class TechnicianDashBoard {
             @Override
             public void actionPerformed(ActionEvent e){
                 dash.setVisible(false);
-                ProfileEdit pe = new ProfileEdit();
+                ProfileEdit pe = new ProfileEdit(currentTechnician);
                 pe.EditPage();
             }
         });
@@ -77,7 +78,7 @@ public class TechnicianDashBoard {
             @Override
             public void actionPerformed(ActionEvent e){
                 dash.setVisible(false);
-                Appointments ap = new Appointments();
+                Appointments ap = new Appointments(currentTechnician);
                 ap.AppointList();
             }
         });
@@ -86,7 +87,8 @@ public class TechnicianDashBoard {
             @Override
             public void actionPerformed(ActionEvent e){
                 dash.setVisible(false);
-                Feedbacks fbs = new Feedbacks();
+                Feedbacks fbs = new Feedbacks(currentTechnician);
+                fbs.FeedbackPage();
                 
             }
         });
@@ -95,7 +97,7 @@ public class TechnicianDashBoard {
             @Override
             public void actionPerformed(ActionEvent e){
                 dash.setVisible(false);
-                AppointmentTable at = new AppointmentTable(this);
+                AppointmentTable at = new AppointmentTable(currentTechnician);
                 at.AppointRecordTable();
             }
         });

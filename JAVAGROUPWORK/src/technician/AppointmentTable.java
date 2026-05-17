@@ -100,7 +100,7 @@ public class AppointmentTable {
                         tableModel.setValueAt(newStatus, selectedRow, 9);
                         JOptionPane.showMessageDialog(frame,
                                                       "Status updated to: " + newStatus,
-                                                      "Update Sucessful",
+                                                      "Update Successful",
                                                       JOptionPane.INFORMATION_MESSAGE);
                     }
                     else{
@@ -123,7 +123,7 @@ public class AppointmentTable {
         btn_cancel.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                
+                table.clearSelection();
             }
         });
         
@@ -176,7 +176,7 @@ public class AppointmentTable {
         });
         
         // Column Width Setting
-        int[] colWidth = {130, 110, 180, 120, 100, 100, 140};
+        int[] colWidth = {120, 100, 160, 90, 130, 120, 100, 100, 100, 100};
         
             // Set for loop to count the fixed width of the table and get the column information and size, etc. into JTable
         for (int i = 0; i < colWidth.length; i++){
@@ -198,13 +198,14 @@ public class AppointmentTable {
             }
         };
         
-        for(int i = 0; i < 6; i++){
+        for(int i = 0; i < columnName.length; i++){
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
         
         // Scroll Panel Setting into JTable
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        scrollPane.setBounds(20,70,940,360);
         scrollPane.getViewport().setBackground(new Color(236, 245, 253));
         
         
@@ -272,7 +273,7 @@ public class AppointmentTable {
                 return u.getName();
             }
         }
-        return "Unkown";
+        return "Unknown";
     }
     
     private boolean updateStatusInFile(String targetAppointID, String newStatus){

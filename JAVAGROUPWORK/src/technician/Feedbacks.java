@@ -10,6 +10,17 @@ package technician;
  */
 public class Feedbacks {
     
+    Technician currentTeechnician;
+    
+    private String currentTechnicianID;
+    
+    
+    public Feedbacks(Technician currentTechnician){
+        this.currentTeechnician = currentTechnician;
+    }
+    
+    
+    // UI Design
     public void FeedbackPage(){
         
     }

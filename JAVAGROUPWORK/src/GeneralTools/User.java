@@ -18,12 +18,12 @@ import javax.swing.*;
 public class User {
     
     // Parameters
-    private String userID;
-    private String userName;
-    private String contactNum;
-    private String email;
-    private String password;
-    private String role;
+    protected String userID;
+    protected String userName;
+    protected String contactNum;
+    protected String email;
+    protected String password;
+    protected String role;
     
     /**
      *@param userID
