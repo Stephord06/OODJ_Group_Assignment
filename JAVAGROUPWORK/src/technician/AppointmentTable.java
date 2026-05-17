@@ -51,7 +51,7 @@ public class AppointmentTable {
         
         // Label Setting
         JLabel title = new JLabel("Appointment Record Table");
-        title.setBounds(0,20,844,36);
+        title.setBounds(0,20,844,40);
         title.setFont(new Font("Times New Roman", Font.BOLD, 30));
         title.setBorder(BorderFactory.createEmptyBorder(28, 0, 16, 0));
         title.setForeground(new Color(40, 40, 40));
@@ -123,7 +123,10 @@ public class AppointmentTable {
         btn_cancel.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                table.clearSelection();
+                frame.dispose();
+                TechnicianDashBoard tdb = new TechnicianDashBoard(currentTechnician);
+                tdb.TechDashBoard();
+                
             }
         });
         

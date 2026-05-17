@@ -42,7 +42,6 @@ public class TechnicianDashBoard {
         JButton ViewProfile = new JButton("View Personal Profile");
         JButton EditProfile = new JButton("Edit Personal Profile");
         JButton CheckAppointment = new JButton("View & Check Appointment Details");
-        JButton ProvideFeedbacks = new JButton("Provide Appointment Feedbacks");
         JButton UpdateAppointment = new JButton("Update Appointment");
         JButton LogOut = new JButton("Log Out");
         
@@ -50,9 +49,9 @@ public class TechnicianDashBoard {
         ViewProfile.setBounds(20,90,350,30);
         EditProfile.setBounds(20,130,350,30);
         CheckAppointment.setBounds(20,170,350,30);
-        ProvideFeedbacks.setBounds(20,210,350,30);
-        UpdateAppointment.setBounds(20,250,350,30);
-        LogOut.setBounds(20,290,350,30);
+        UpdateAppointment.setBounds(20,210,350,30);
+        LogOut.setBounds(20,250,350,30);
+        
                 
         
         // Set the Action Events for JButtons
@@ -83,15 +82,6 @@ public class TechnicianDashBoard {
             }
         });
         
-        ProvideFeedbacks.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                dash.setVisible(false);
-                Feedbacks fbs = new Feedbacks(currentTechnician);
-                fbs.FeedbackPage();
-                
-            }
-        });
         
         UpdateAppointment.addActionListener(new ActionListener(){
             @Override
@@ -116,7 +106,6 @@ public class TechnicianDashBoard {
         ViewProfile.setFont(new Font("Times New Roman", Font.BOLD, 18));
         EditProfile.setFont(new Font("Times New Roman", Font.BOLD, 18));
         CheckAppointment.setFont(new Font("Times New Roman", Font.BOLD, 18));
-        ProvideFeedbacks.setFont(new Font("Times New Roman", Font.BOLD, 18));
         UpdateAppointment.setFont(new Font("Times New Roman", Font.BOLD, 18));
         LogOut.setFont(new Font("Times New Roman", Font.BOLD, 18));
         
@@ -126,7 +115,6 @@ public class TechnicianDashBoard {
         dash.add(ViewProfile);
         dash.add(EditProfile);
         dash.add(CheckAppointment);
-        dash.add(ProvideFeedbacks);
         dash.add(UpdateAppointment);
         dash.add(LogOut);
         dash.setVisible(true);
