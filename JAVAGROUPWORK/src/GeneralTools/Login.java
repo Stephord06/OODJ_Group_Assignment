@@ -286,8 +286,7 @@ public class Login extends JFrame implements ActionListener{
                 Manager mgr = new Manager(matchedUser.getID(),
                                   matchedUser.getName(),
                                   matchedUser.getPassword());
-                ManagerDashBoard mdb = new ManagerDashBoard(mgr);
-                mdb.UI();
+                mgr.managerDashBoard();
                 break;
                 
             case "Technician": 

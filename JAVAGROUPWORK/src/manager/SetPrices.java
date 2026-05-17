@@ -38,6 +38,7 @@ public class SetPrices {
     private String readlongprice;
     
     public SetPrices(Manager manager){
+        this.manager = manager;
         this.id = manager.getID();
         this.name = manager.getName();
         this.password = manager.getPassword();
@@ -249,8 +250,7 @@ public class SetPrices {
         @Override
         public void actionPerformed(ActionEvent e) {
             Frame.dispose(); // close this window
-            ManagerDashBoard back = new ManagerDashBoard(manager);
-            back.UI();
+            manager.managerDashBoard();
             }
         });
         

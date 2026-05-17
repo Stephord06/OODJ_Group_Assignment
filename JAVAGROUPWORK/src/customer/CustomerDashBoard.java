@@ -164,6 +164,24 @@ public class CustomerDashBoard extends User implements CustomerStandard_Method {
             }
         });
         
+        feedbackBtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Frame.dispose();
+                ViewFeedback vf = new ViewFeedback(id, name, password);
+                vf.UI();
+            }
+        });
+        
+        commentsBtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Frame.dispose();
+                ProvideComment pc = new ProvideComment(id, name, password);
+                pc.UI();
+            }
+        });
+        
         
         
         //return back the panel to the frame
