@@ -9,26 +9,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProvideComment extends JFrame implements CustomerStandard_Method {
+public class ProvideComment extends JFrame {
     
+    private Customer Customer;
     private String id;
     private String name;
     private String password;
     
     private List<String[]> appointmentsData = new ArrayList<>();
     
-    public ProvideComment(String id, String name, String password) {
+    public ProvideComment(Customer customer) {
         
-        this.id = id;
-        this.name = name;
-        this.password = password;
+        this.Customer = customer;
+        this.id = customer.getID();
+        this.name = customer.getName();
+        this.password = customer.getPassword();
         readAppointmentsData("appointments.txt");
         
         
         }
     
 
-    @Override
+    
     public void UI() {
         setTitle("Comments for Counter Staff and Technician");
         setSize(1100, 700);
@@ -319,7 +321,7 @@ public class ProvideComment extends JFrame implements CustomerStandard_Method {
           // Back button event
           backBtn.addActionListener(e -> {
               dispose();
-              new CustomerDashBoard(id, name, password).UI();
+              new CustomerDashBoard(Customer).UI();
           });
           
           // Clear Button event
@@ -433,9 +435,7 @@ public class ProvideComment extends JFrame implements CustomerStandard_Method {
     }
     
     
-    public static void main(String[] args) {
-        new ProvideComment("C000", "Test", "1111").UI();
-    }
+
     
 }
     

@@ -10,7 +10,7 @@ import GeneralTools.*;
  *
  * @author User
  */
-public class Manager extends User {
+public class Manager extends User implements ManagerStandard_Method{
     
     
     public Manager(String id, String name, String password) {

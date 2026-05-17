@@ -41,6 +41,7 @@ public class ViewComment  {
 
     public void UI(){
         Frame = new JFrame();
+        Frame.setTitle("ViewComment");
         Frame.setSize(800, 500);
         Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Frame.setLocationRelativeTo(null);

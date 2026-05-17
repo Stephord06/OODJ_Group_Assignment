@@ -17,9 +17,10 @@ import java.util.List;
  *
  * @author User
  */
-public class CustomerDashBoard extends User implements CustomerStandard_Method {
+public class CustomerDashBoard {
     
     
+    private Customer Customer;
     private String name;
     private String id;
     private String password;
@@ -28,21 +29,15 @@ public class CustomerDashBoard extends User implements CustomerStandard_Method {
     
     private final List<String> nameId = new ArrayList<>();
     
-    public CustomerDashBoard(User matchUser){
-        super(matchUser.getID(), matchUser.getName(), matchUser.getPassword());
-          
-        this.id = getID();
-        this.name = getName();
-        this.password = getPassword();
+    public CustomerDashBoard(Customer customer){
+
+        this.Customer = customer;
+        this.id = customer.getID();
+        this.name = customer.getName();
+        this.password = customer.getPassword();
     }
     
-    public CustomerDashBoard(String id, String name, String password){
-        this.id = id;
-        this.name = name;
-        this.password = password;
-    }
-    
-    @Override
+
     public void UI(){
         Frame = new JFrame();
         Frame.setTitle("Customer Dash Board");
@@ -149,7 +144,7 @@ public class CustomerDashBoard extends User implements CustomerStandard_Method {
             @Override
             public void actionPerformed(ActionEvent e){
                 Frame.dispose();
-                EditProfile ep = new EditProfile(id, name, password);
+                EditProfile ep = new EditProfile(Customer);
                 ep.UI();
             }
             
@@ -159,7 +154,7 @@ public class CustomerDashBoard extends User implements CustomerStandard_Method {
             @Override
             public void actionPerformed(ActionEvent e){
                 Frame.dispose();
-                ViewHistory vh = new ViewHistory(id, name, password);
+                ViewHistory vh = new ViewHistory(Customer);
                 vh.UI();
             }
         });
@@ -168,7 +163,7 @@ public class CustomerDashBoard extends User implements CustomerStandard_Method {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Frame.dispose();
-                ViewFeedback vf = new ViewFeedback(id, name, password);
+                ViewFeedback vf = new ViewFeedback(Customer);
                 vf.UI();
             }
         });
@@ -177,7 +172,7 @@ public class CustomerDashBoard extends User implements CustomerStandard_Method {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Frame.dispose();
-                ProvideComment pc = new ProvideComment(id, name, password);
+                ProvideComment pc = new ProvideComment(Customer);
                 pc.UI();
             }
         });

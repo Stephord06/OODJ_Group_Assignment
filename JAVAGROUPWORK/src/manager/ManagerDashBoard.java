@@ -14,7 +14,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ManagerDashBoard implements ManagerStandard_Method {
+public class ManagerDashBoard {
     
     private String id;
     private String name;
@@ -31,7 +31,7 @@ public class ManagerDashBoard implements ManagerStandard_Method {
     }
     
 
-    @Override
+
     public void UI() {
         
         // Frame

@@ -278,8 +278,10 @@ public class Login extends JFrame implements ActionListener{
                break;
 
             case "Customer":
-                CustomerDashBoard dashboard = new CustomerDashBoard(matchedUser);
-                dashboard.UI();
+                Customer customer = new Customer(matchedUser.getID(),
+                                        matchedUser.getName(),
+                                        matchedUser.getPassword());
+                customer.customerDashBoard();
                 break;
                 
             case "Manager":

@@ -14,8 +14,9 @@ import java.io.*;
  *
  * @author User
  */
-public class ViewHistory implements CustomerStandard_Method{
+public class ViewHistory {
     
+    private Customer Customer;
     private String id;
     private String name;
     private String password;
@@ -25,17 +26,17 @@ public class ViewHistory implements CustomerStandard_Method{
     private List<String[]> appointmentsData = new ArrayList<>();
     private List<String[]> receiptsData = new ArrayList<>();
     
-    public ViewHistory(String id, String name, String password){
+    public ViewHistory(Customer customer){
         
-        this.id = id ;
-        this.name = name;
-        this.password = password;
+        this.Customer = customer;
+        this.id = customer.getID() ;
+        this.name = customer.getName();
+        this.password = customer.getPassword();
         readAppointmentsData("appointments.txt");
         readReceiptsData("receipts.txt");
         
     }
     
-    @Override
     public void UI(){
         Frame = new JFrame();
         Frame.setTitle("View Service History and Payment History");
@@ -110,7 +111,7 @@ public class ViewHistory implements CustomerStandard_Method{
             @Override
             public void actionPerformed(ActionEvent e){
                 Frame.dispose();
-                CustomerDashBoard back = new CustomerDashBoard(id, name, password);
+                CustomerDashBoard back = new CustomerDashBoard(Customer);
                 back.UI();
             }
         });
