@@ -50,9 +50,6 @@ public class User {
         this.password = password;
     }
     
-    public User(){
-    
-    }
     
     // Methods
     public String getID(){
@@ -83,7 +80,7 @@ public class User {
      *@param role
      *@return
      */        
-    
+            
     public static List <User> loadFromFile(String filePath, String role){
         
         List <User> userlist = new ArrayList<>();

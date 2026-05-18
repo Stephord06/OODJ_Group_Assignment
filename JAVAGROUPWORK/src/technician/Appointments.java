@@ -109,6 +109,10 @@ public class Appointments {
                 String appointID = selectedAppt.getAppointID();
                 String existingFeedback = selectedAppt.getTechnicianFeedback();
                 
+                System.out.println("==== OPEN FEEDBACK DIALOG ====");
+                System.out.println("AppointID: " + appointID);
+                System.out.println("ExistingFeedback: " + existingFeedback);
+                
                 JDialog feedbackDialog = new JDialog();
                 feedbackDialog.setTitle("Provide Feedback - " + appointID);
                 feedbackDialog.setSize(500, 400);
@@ -268,7 +272,8 @@ public class Appointments {
 
     private boolean writeFeedbackToFile(String targetAppointID, String feedbackText){
         String filePath = "appointments.txt";
-        StringBuilder sb = new StringBuilder();
+        List<String> lines = new ArrayList<>();
+        boolean found = false;
         
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))){
             String line;
@@ -276,19 +281,24 @@ public class Appointments {
             while((line = br.readLine()) != null){
                 
                 if ((line.trim().isEmpty())){
-                    sb.append("\n");
+                    lines.add(line);
                     continue;
                 }
                 
                 String[] data = line.split("\\|", -1);
                 
-                if (data.length == 11 && data[0].trim().equalsIgnoreCase(targetAppointID)){
-                    data[9] = feedbackText;
-                    sb.append(String.join("|", data)).append("\n");
+                if (data[0].trim().equalsIgnoreCase(targetAppointID)){
+                    if (data.length > 8){
+                        data[8] = feedbackText;
+                        found = true;
+                        System.out.println("Updated [ " + targetAppointID + " ] feedback: " + data[8]);
+                    }
+                    lines.add(String.join("|", data));
                 }
                 else{
-                    sb.append(line).append("\n");
+                    lines.add(line);
                 }
+                
             }
         }catch (IOException e){
             e.printStackTrace();
@@ -296,7 +306,12 @@ public class Appointments {
         }
         
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))){
-            bw.write(sb.toString());
+            for (int i = 0; i < lines.size(); i++){
+                bw.write(lines.get(i));
+                if (i < lines.size() - 1) {
+                    bw.newLine();
+                }
+            }
         }catch (IOException e){
             e.printStackTrace();
             return false;

@@ -28,7 +28,7 @@ public class ReadAppointment {
     public ReadAppointment(String appointID, String customerID, 
             String technicianID, String staffID, String serviceType, 
             String date, String timeStart, String timeEnd, 
-            String comments, String feedback, String statusDescription){
+            String feedback, String comments, String statusDescription){
         
         this.appointID = appointID;
         this.customerID = customerID;
@@ -38,8 +38,8 @@ public class ReadAppointment {
         this.date = date;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
-        this.comments = comments;
         this.feedback = feedback;
+        this.comments = comments;
         this.statusDescription = statusDescription;
     }
     
@@ -101,6 +101,11 @@ public class ReadAppointment {
                 String[] data = line.split("\\|");
             
                 if (data.length == 11){
+                    
+                    System.out.println("====== READING LINES ======");
+                    System.out.println("data[8]: " + data[8]);
+                    System.out.println("data[9]: " + data[9]);
+                    
                     ReadAppointment appt = new ReadAppointment(             // Store the data from appointment into a list
                             data[0].trim(),                                 // data: appointmentID
                             data[1].trim(),                                 // data: customerID
@@ -110,12 +115,14 @@ public class ReadAppointment {
                             data[5].trim(),                                 // data: date
                             data[6].trim(),                                 // data: timeStart
                             data[7].trim(),                                 // data: timeEnd
-                            data[8].trim(),                                 // data: customer comment
-                            data[9].trim(),                                 // data: technician feedback
+                            data[8].trim(),                                 // data: technician feedback
+                            data[9].trim(),                                 // data: customer comment
                             data[10].trim()                                 // data: appointment status
                     );
-                    appointmentList.add(appt);
                     
+                    System.out.println("GetFeedback: " + appt.getTechnicianFeedback());
+                    System.out.println("GetComment: " + appt.getCustomerComment());
+                    appointmentList.add(appt);
                 }
                 else{
                         System.out.println("File Reading Error: line " + line);

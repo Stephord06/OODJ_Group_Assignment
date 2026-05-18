@@ -27,6 +27,7 @@ public class TechnicianDashBoard {
     // UI Interface Design:
     public void TechDashBoard(){
         
+        System.out.println("ENTERED TO TECHNICIAN DASHBOARD");
         
         // Set Frame 
         JFrame dash = new JFrame("Technician Dash Board");

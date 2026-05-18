@@ -85,7 +85,7 @@ public class AppointmentTable {
                 String appointID = (String) tableModel.getValueAt(selectedRow, 0);
                 String currentStatus = (String) tableModel.getValueAt(selectedRow, 9);
                 
-                String[] statusOption = {"Pending", "In Progress", "Completed", "Paid", "Cancelled"};
+                String[] statusOption = {"Pending", "Completed"};
                 String newStatus = (String) JOptionPane.showInputDialog(
                                             frame,
                                             "Update status for Appointment: " + appointID,
