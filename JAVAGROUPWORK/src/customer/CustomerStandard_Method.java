@@ -10,7 +10,14 @@ package customer;
  */
 public interface CustomerStandard_Method {
 
-    
-    public void UI();
+   public void customerDashBoard();
+   
+   public void editProfile();
+   
+   public void provideComment();
+   
+   public void viewFeedback();
+   
+   public void viewHistory();
     
 }

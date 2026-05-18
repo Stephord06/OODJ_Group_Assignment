@@ -19,10 +19,11 @@ import java.util.List;
  *
  * @author User
  */
-public class EditProfile  implements CustomerStandard_Method {
+public class EditProfile   {
     
     private JFrame Frame;
     
+    private Customer Customer;
     private String id;
     private String name;
     private String password;
@@ -33,14 +34,15 @@ public class EditProfile  implements CustomerStandard_Method {
     private JTextField emailText;
     private JTextField passwordText;
     
-    public EditProfile(String id, String name, String password){
+    public EditProfile(Customer customer){
 
-        this.id = id;
-        this.name = name;
-        this.password = password;
+        this.Customer = customer;
+        this.id = customer.getID();
+        this.name = customer.getName();
+        this.password = customer.getPassword();
     }
     
-    @Override
+
     public void UI (){
         Frame = new JFrame();
         Frame.setTitle("Edit Profile");
@@ -193,7 +195,7 @@ public class EditProfile  implements CustomerStandard_Method {
             @Override
             public void actionPerformed(ActionEvent e){
                 Frame.dispose();
-                CustomerDashBoard back = new CustomerDashBoard(id, name, password);
+                CustomerDashBoard back = new CustomerDashBoard(Customer);
                 back.UI();
             }
         });

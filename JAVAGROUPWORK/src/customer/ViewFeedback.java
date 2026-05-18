@@ -9,25 +9,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ViewFeedback extends JFrame implements CustomerStandard_Method{
+public class ViewFeedback extends JFrame {
     
+    private Customer Customer;
     private String id;
     private String name;
     private String password;
     
     private List<String[]> appointmentsData = new ArrayList<>();
     
-    public ViewFeedback(String id, String name, String password) {
+    public ViewFeedback(Customer customer) {
         
-        this.id = id;
-        this.name = name;
-        this.password = password;
+        this.Customer = customer;
+        this.id = customer.getID();
+        this.name = customer.getName();
+        this.password = customer.getPassword();
         readAppointmentsData("appointments.txt");
         
     }
     
 
-    @Override
     public void UI() {
         setTitle("Feedbacks of Individual Appointment");
         setSize(1100, 700);
@@ -113,7 +114,7 @@ public class ViewFeedback extends JFrame implements CustomerStandard_Method{
           // Back button event
           backBtn.addActionListener(e -> {
               dispose();
-              new CustomerDashBoard(id, name, password).UI();
+              new CustomerDashBoard(Customer).UI();
           });
                     
             
@@ -277,8 +278,5 @@ public class ViewFeedback extends JFrame implements CustomerStandard_Method{
     }
     
     
-    public static void main(String[] args) {
-        new ViewFeedback("C000", "Test", "1111").UI();
-    }
-    
+
 }

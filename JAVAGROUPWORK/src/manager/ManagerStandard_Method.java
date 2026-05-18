@@ -9,5 +9,13 @@ package manager;
  * @author User
  */
 public interface ManagerStandard_Method {
-    public void UI();
+    public void managerDashBoard();
+    
+    public void modifyRoles();
+    
+    public void setPrices();
+    
+    public void analyzeReport();
+    
+    public void viewComments();
 }
