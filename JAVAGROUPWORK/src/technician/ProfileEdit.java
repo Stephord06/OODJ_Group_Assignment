@@ -31,6 +31,7 @@ public class ProfileEdit {
         
         profileEdit.setSize(600,600);
         profileEdit.setLayout(null);
+        profileEdit.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         // JButton Setting
         JButton btn_update = new JButton("Update Profile");
@@ -63,6 +64,8 @@ public class ProfileEdit {
         
         btn_cancel.addActionListener(e -> {
             profileEdit.dispose();
+            TechnicianDashBoard tdb = new TechnicianDashBoard(currentTechnician);
+            tdb.TechDashBoard();
             
         });
         

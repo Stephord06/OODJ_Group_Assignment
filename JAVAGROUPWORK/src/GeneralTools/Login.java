@@ -167,54 +167,56 @@ public class Login extends JFrame implements ActionListener{
             return;
         }
         
-        char label = inputID.charAt(0);
-        String filePath = resolveFilePath(label);
-        String role = resolveRole(label);
-        
-        // Debugging to ensure whether find the textfile and the related users
+        // 
         System.out.println("=== DEBUGGING START ===");
         System.out.println("inputID   : " + inputID);
-        System.out.println("filePath  : " + filePath);
-        System.out.println("role      : " + role);
         System.out.println("=== DEBUGGING END ===\n");
+        
+        User searchByID = searchByID(inputID);
+        User searchByName = searchByName(inputID);
+        
+        boolean isIDFormat = (searchByID != null);
+        boolean isNameFormat = (searchByName != null);
+        
+        System.out.println("IsIDFormat   : " + isIDFormat + 
+                            (isIDFormat ? " --> Found: " + searchByID.getID()  : " --> Not Found"));
+        
+        System.out.println("IsNameFormat   : " + isNameFormat + 
+                            (isNameFormat ? " --> Found: " + searchByName.getName()  : " --> Not Found"));
         
         User matchedUser = null;
         
-        boolean isIDFormat = (filePath != null)
-                            && (inputID.length() > 1)
-                            && Character.isDigit(inputID.charAt(1));
-                
-        System.out.println("isIDFormat: " + isIDFormat + "\n");
-        
-        if (isIDFormat){
+        if (isIDFormat && isNameFormat){
+            matchedUser = searchByID;
+            System.out.println("Both Found --> ID search used");
             
-            List<User> userList = User.loadFromFile(filePath, role);
-            System.out.println("userList size: " + userList.size());
-        
-            for (User user : userList){
-                System.out.println("Checking ID: " + user.getID());
-                if (user.getID().equalsIgnoreCase(inputID)){
-                    matchedUser = user;
-                    break;
-                }
-            }
-        } else {
-            
-            System.out.println("Searching by name: " + inputID + "\n");
-            matchedUser = searchByName(inputID);
         }
+        else if (isIDFormat){
+            matchedUser = searchByID;
+            System.out.println("ID match only --> Using ID search result");
         
-        System.out.println("matchUser: " + (matchedUser == null ? "null" : matchedUser.getID()));
+        }
+        else if (isNameFormat){
+            matchedUser = searchByName;
+            System.out.println("Username match only --> Using Username search result");
+        
+        }
+        else{
+            matchedUser = null;
+            System.out.println("No any match found");
+            
+        }
         
         // Display Error Message when the system cannot find the related user ID from the txt file
         if (matchedUser == null){
             JLabel error_message2 = new JLabel("Your account does not exist in this system......");
             error_message2.setFont(new Font("Times New Roman", Font.PLAIN, 14));
             JOptionPane.showMessageDialog(
-                null,
-                error_message2,
-                "Profile not Found",
-                JOptionPane.ERROR_MESSAGE);
+                                            null,
+                                            error_message2,
+                                            "Profile not Found",
+                                            JOptionPane.ERROR_MESSAGE);
+            
             return;
         }
         
@@ -222,10 +224,11 @@ public class Login extends JFrame implements ActionListener{
             JLabel error_message3 = new JLabel("Incorrect Password\nPlease Try Again......");
             error_message3.setFont(new Font("Times New Roman", Font.PLAIN, 14));
             JOptionPane.showMessageDialog(
-                null,
-                error_message3,
-                "Login Failed",
-                JOptionPane.ERROR_MESSAGE);
+                                            null,
+                                            error_message3,
+                                            "Login Failed",
+                                            JOptionPane.ERROR_MESSAGE);
+            
             return;
         }
         
@@ -252,10 +255,8 @@ public class Login extends JFrame implements ActionListener{
         };
         
         for (String[] file: allFiles){
-            String filePath = file[0];
-            String role = file[1];
             
-            List<User> userList = User.loadFromFile(filePath, role);
+            List<User> userList = User.loadFromFile(file[0], file[1]);
             
             for(User user : userList){
                 if (user.getName().equalsIgnoreCase(inputName)){
@@ -263,6 +264,30 @@ public class Login extends JFrame implements ActionListener{
                 }
             }
         }
+        return null;
+    }
+    
+    private User searchByID(String inputID){
+        String[][] allFiles ={
+            {"counterStaffs.txt", "Counter Staff"},
+            {"managers.txt", "Manager"},
+            {"customers.txt", "Customer"},
+            {"technicians.txt", "Technician"}
+        };
+        
+        for (String[] file: allFiles){
+            List<User> userList = User.loadFromFile(file[0], file[1]);
+            
+            for (User user : userList){
+                boolean isIDFormat = user.getID().equalsIgnoreCase(inputID);
+                
+                if (isIDFormat){
+                    return user;
+                }
+            }
+            
+        }
+        
         return null;
     }
     

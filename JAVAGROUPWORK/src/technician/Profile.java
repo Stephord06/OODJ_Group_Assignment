@@ -68,7 +68,9 @@ public class Profile {
         
         btn_finish.addActionListener(e -> {
             profile.dispose();
-            new TechnicianDashBoard(currentTechnician).TechDashBoard();
+            TechnicianDashBoard tdb = new TechnicianDashBoard(currentTechnician);
+            tdb.TechDashBoard();
+            
         });
         
         // JPanel

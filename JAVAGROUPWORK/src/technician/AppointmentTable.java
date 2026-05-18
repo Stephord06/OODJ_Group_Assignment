@@ -46,7 +46,7 @@ public class AppointmentTable {
         frame.setSize(980,580);
         frame.setLocationRelativeTo(null);
         frame.setBackground(Color.WHITE);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         
         // Label Setting
@@ -215,7 +215,7 @@ public class AppointmentTable {
         
         // Display Frame & Object
         frame.add(scrollPane);
-        frame.add(title, BorderLayout.NORTH);
+        frame.add(title);
         frame.add(btn_reload);
         frame.add(btn_update);
         frame.add(btn_cancel);
@@ -319,4 +319,3 @@ public class AppointmentTable {
 }
             
     
-

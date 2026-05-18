@@ -67,7 +67,7 @@ public class TechnicianDashBoard {
         EditProfile.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                dash.setVisible(false);
+                dash.dispose();
                 ProfileEdit pe = new ProfileEdit(currentTechnician);
                 pe.EditPage();
             }
@@ -76,7 +76,7 @@ public class TechnicianDashBoard {
         CheckAppointment.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                dash.setVisible(false);
+                dash.dispose();
                 Appointments ap = new Appointments(currentTechnician);
                 ap.AppointList();
             }
@@ -86,7 +86,7 @@ public class TechnicianDashBoard {
         UpdateAppointment.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                dash.setVisible(false);
+                dash.dispose();
                 AppointmentTable at = new AppointmentTable(currentTechnician);
                 at.AppointRecordTable();
             }

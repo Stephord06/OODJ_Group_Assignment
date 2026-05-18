@@ -67,7 +67,7 @@ public class Appointments {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedIndex = cmb_appointments.getSelectedIndex();
-                if (selectedIndex <= 0){
+            if (selectedIndex <= 0){
                     JOptionPane.showMessageDialog(frame,
                                                   "Please select an appointment",
                                                   "No Selection",
