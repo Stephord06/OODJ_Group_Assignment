@@ -293,8 +293,6 @@ public class Login extends JFrame implements ActionListener{
     
     public void DisplayDashboard(User matchedUser){
         
-        String username = matchedUser.getName();
-        String password = matchedUser.getPassword();
         String role = matchedUser.getRole();
         
         switch (role){

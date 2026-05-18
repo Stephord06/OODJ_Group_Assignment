@@ -32,6 +32,7 @@ public class TechnicianDashBoard {
         JFrame dash = new JFrame("Technician Dash Board");
         dash.setSize(500,600);
         dash.setLayout(null);
+        dash.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         // Set Label
         JLabel label1 = new JLabel("Welcome back, " + currentTechnician.getName() + "!");

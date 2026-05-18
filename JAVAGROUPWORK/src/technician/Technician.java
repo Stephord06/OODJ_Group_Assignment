@@ -30,7 +30,7 @@ public class Technician extends User{
     
     public void EnterClassMessage(){
         // To Ensure system may read users' inputs, then print out the message, and ensure the value of parameters come from Technician.java 
-        System.out.println("Entered to Technician.java");
+        System.out.println("Entered to Technician System\n");
         System.out.println("====== DEBUGGING START ======" + "\n" +
                            "User ID: " + this.getID()+ "\n" +
                            "User Name: " + this.getName() + "\n" +
