@@ -38,6 +38,11 @@ public class Technician extends User{
                            "======= DEBUGGING END =======\n");
     }
     
+    public void openDashboard(){
+        TechnicianDashBoard tdb = new TechnicianDashBoard(this);
+        tdb.TechDashBoard();
+    }
+    
     public void Appointments(){
         Appointments apd = new Appointments(this);
         apd.AppointList();

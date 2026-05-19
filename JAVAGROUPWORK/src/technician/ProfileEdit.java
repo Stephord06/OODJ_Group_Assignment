@@ -14,6 +14,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.io.*;
 
 
 public class ProfileEdit {
@@ -41,26 +44,6 @@ public class ProfileEdit {
         btn_cancel.setBounds(270,300,200,30);
         
         // Action Event Setting
-        
-        btn_update.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                JLabel message = new JLabel("Congratulations! Your Profile Has Been Updated Successfully!");
-                message.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-                JOptionPane.showMessageDialog(null,     
-                        message,        // Message Content
-                        "Update Status",        // Message Title
-                        JOptionPane.INFORMATION_MESSAGE);           // Message Type (Icons)
-                
-                JLabel message1 = new JLabel("Sorry. Your Profile Has Failed to Update");
-                message1.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-                JOptionPane.showMessageDialog(null, 
-                        message1, 
-                        "Update Status", 
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        });
         
         btn_cancel.addActionListener(e -> {
             profileEdit.dispose();
@@ -112,6 +95,61 @@ public class ProfileEdit {
         btn_update.setFont(new Font("Times New Roman", Font.BOLD, 20));
         btn_cancel.setFont(new Font("Times New Roman", Font.BOLD, 20));
         
+        btn_update.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                String inputPassword = txt_password.getText().trim();
+                String inputContact = txt_contact.getText().trim();
+                String inputEmail = txt_email.getText().trim();
+                
+                if (inputPassword.isEmpty()){
+                    JOptionPane.showMessageDialog(null,
+                                                  "The password should not be empty",
+                                                  "Password Error",
+                                                  JOptionPane.WARNING_MESSAGE);
+                    
+                    return;
+                }
+                
+                if (inputContact.isEmpty()){
+                    JOptionPane.showMessageDialog(null,
+                                                  "Contact number should not be empty",
+                                                  "Contact Number Error",
+                                                  JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                
+                if (inputEmail.isEmpty()){
+                    JOptionPane.showMessageDialog(null,
+                                                  "Contact number should not be empty",
+                                                  "Contact Number Error",
+                                                  JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                
+                boolean success = verifyAndUpdate(inputContact, inputEmail, inputPassword);
+                
+                if (success){
+                    
+                    currentTechnician.setContact(inputContact);
+                    currentTechnician.setEmail(inputEmail);
+                    currentTechnician.setPassword(inputPassword);
+                    
+                    JOptionPane.showMessageDialog(null,
+                                                  "Profile Updated Successfully",
+                                                  "Profile Update Status",
+                                                  JOptionPane.INFORMATION_MESSAGE);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null,
+                                                  "Failed to Update Profile",
+                                                  "Profile Update Status",
+                                                  JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        
         // Display Objects and Frame
                 
         profileEdit.add(title);
@@ -125,6 +163,100 @@ public class ProfileEdit {
         panel.add(btn_update);
         panel.add(btn_cancel);
         profileEdit.setVisible(true);
+    }
+    
+    private boolean verifyAndUpdate(String inputContact, String inputEmail, String inputPassword){
+        
+        if (!inputContact.matches("^[0-9]{10,11}$")){
+            JOptionPane.showMessageDialog(null,
+                                                  "Contact number must be 10-11 digits",
+                                                  "Format Error",
+                                                  JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        if (!inputEmail.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")){
+            JOptionPane.showMessageDialog(null,
+                                                  "Invalid email format (e.g abc@gmail.com)",
+                                                  "Format Error",
+                                                  JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        if (inputPassword.length() < 6){
+            JOptionPane.showMessageDialog(null,
+                                                  "Password must be at least 6 characters",
+                                                  "Format Error",
+                                                  JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        return writeToFile(inputContact, inputEmail, inputPassword);
+    }
+    
+    private boolean writeToFile(String newContact, String newEmail, String newPassword){
+        
+        String filePath = "technicians.txt";
+        List<String> lines = new ArrayList<>();
+        boolean found = false;
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))){
+            String line;
+            while ((line = br.readLine()) != null){
+                
+                if (line.trim().isEmpty()){
+                    lines.add(line);
+                    continue;
+                }
+                
+                String[] data = line.split("\\|", -1);
+                
+                
+                
+                if (data.length >= 5 && data[0].trim().equals(currentTechnician.getID())){
+                    data[2] = newContact;
+                    data[3] = newEmail;
+                    data[4] = newPassword;
+                    
+                    lines.add(String.join("|", data));
+                    found = true;
+                            
+                    System.out.println("==== DEBUGGING UPDATE PROFILE STATUS (START) ====");
+                    System.out.println("filePath: " + filePath);
+                    System.out.println("currentTechnician: " + currentTechnician.getID());
+                    System.out.println("==== DEBUGGING UPDATE PROFILE STATUS (END) ====\n");
+                    
+                }
+                else {
+                    lines.add(line);
+                }
+            }
+        }
+        catch (IOException e){
+            e.printStackTrace();
+            return false;
+        }
+        
+        if (!found){
+            System.out.println("Technician ID not found: " + currentTechnician.getID());
+            return false;
+        }
+        
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))){
+            for (int i = 0; i < lines.size(); i++){
+                bw.write(lines.get(i));
+                if (i < lines.size() - 1){
+                    bw.newLine();
+                }
+            }
+        }
+        catch (IOException e){
+            e.printStackTrace();
+            return false;
+        }
+        
+        System.out.println(lines);
+        return true;
     }
     
     public static void main(String[] args){

@@ -109,10 +109,6 @@ public class Appointments {
                 String appointID = selectedAppt.getAppointID();
                 String existingFeedback = selectedAppt.getTechnicianFeedback();
                 
-                System.out.println("==== OPEN FEEDBACK DIALOG ====");
-                System.out.println("AppointID: " + appointID);
-                System.out.println("ExistingFeedback: " + existingFeedback);
-                
                 JDialog feedbackDialog = new JDialog();
                 feedbackDialog.setTitle("Provide Feedback - " + appointID);
                 feedbackDialog.setSize(500, 400);

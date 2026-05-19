@@ -75,6 +75,19 @@ public class User {
     public String getRole(){
         return role;
     }
+    
+    public void setContact(String contactNum){
+        this.contactNum = contactNum;
+    }
+    
+    public void setPassword(String password){
+        this.password = password;
+    }
+    
+    public void setEmail(String email){
+        this.email = email;
+    }
+    
     /**
      *@param filePath
      *@param role
