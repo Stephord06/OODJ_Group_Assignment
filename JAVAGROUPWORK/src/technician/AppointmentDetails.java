@@ -51,7 +51,7 @@ public class AppointmentDetails{
         // UI Interface Design:
         // JFrame Settings
         JFrame appointDetails = new JFrame("Appointment Details");
-        appointDetails.setSize(800,800);
+        appointDetails.setSize(800,1000);
         appointDetails.setLayout(null);
         appointDetails.setLocationRelativeTo(null);
         appointDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -72,8 +72,10 @@ public class AppointmentDetails{
         JLabel lbl_cusName = new JLabel(appointment.getCustomerID() + " / " + customerName);
         JLabel lbl_appointDate = new JLabel(appointment.getDate());
         JLabel lbl_serviceType = new JLabel(appointment.getServiceType());
-        JLabel lbl_comment = new JLabel(
+        
+        JTextArea lbl_comment = new JTextArea(
                              appointment.getCustomerComment().equals("-") ? "No Comment" : appointment.getCustomerComment());
+        
         JLabel lbl_staffName = new JLabel(appointment.getstaffID() + " / " + staffName);
         JLabel lbl_time = new JLabel(appointment.getTimeStart() + " --> " + appointment.getTimeEnd());
         JLabel lbl_status = new JLabel(appointment.getStatusDescription());
@@ -87,7 +89,7 @@ public class AppointmentDetails{
         label5.setBounds(25,310,200,50);
         label6.setBounds(25,160,200,50);
         label7.setBounds(25,260,200,50);
-        label8.setBounds(25,360,200,50);
+        label8.setBounds(25,560,200,50);
         
         
         lbl_appointID.setBounds(230,10,200,50);
@@ -96,18 +98,30 @@ public class AppointmentDetails{
         lbl_staffName.setBounds(230,160,200,50);
         lbl_serviceType.setBounds(230,210,200,50);
         lbl_time.setBounds(230,260,200,50);
-        lbl_comment.setBounds(230,310,200,50);
-        lbl_status.setBounds(230,360,200,50);
+        
+        lbl_comment.setEditable(false);
+        lbl_comment.setLineWrap(true);
+        lbl_comment.setBounds(230,310,200,250);
+        
+        lbl_status.setBounds(230,560,200,50);
        
         // ---------------------------------------------------------------------------------------------
         // JButton Settings
         JButton btn_finish = new JButton("Finish Review");
-        btn_finish.setBounds(100,430,250,30);
+        btn_finish.setBounds(100,630,250,30);
         
+        
+        // JScrollPane
+        JScrollPane scrollPane = new JScrollPane(lbl_comment);
+        
+        scrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        scrollPane.setBounds(230,310,380,200);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         
         // JPanel Settings
         JPanel panel = new JPanel();
-        panel.setBounds(50,90,650,480);
+        panel.setBounds(50,90,650,680);
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         panel.setLayout(null);
         
@@ -143,7 +157,7 @@ public class AppointmentDetails{
         btn_finish.setFont(new Font("Times New Roman", Font.BOLD, 20));
         
         // Display objects
-        appointDetails.setVisible(true);
+        
         appointDetails.add(title);
         appointDetails.add(panel);
         panel.add(label1);
@@ -158,11 +172,12 @@ public class AppointmentDetails{
         panel.add(lbl_cusName);
         panel.add(lbl_appointDate);
         panel.add(lbl_serviceType);
-        panel.add(lbl_comment);
         panel.add(lbl_staffName);
         panel.add(lbl_status);
         panel.add(lbl_time);
         panel.add(btn_finish);
+        panel.add(scrollPane);
+        appointDetails.setVisible(true);
     } 
             
     
