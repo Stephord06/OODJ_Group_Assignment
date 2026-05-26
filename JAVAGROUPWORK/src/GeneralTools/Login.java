@@ -40,8 +40,9 @@ public class Login extends JFrame implements ActionListener{
         // Set Label
         JLabel title1 = new JLabel("Welcome");
         JLabel title2 = new JLabel("to");
-        JLabel title3 = new JLabel("XXXX");
-        JLabel title4 = new JLabel("System");
+        JLabel title3 = new JLabel("APU");
+        JLabel title4 = new JLabel("ASC");
+        JLabel title5 = new JLabel("System");
         
         JLabel label2 = new JLabel("Staff / Customer ID:");
         JLabel label3 = new JLabel("Password:");
@@ -50,6 +51,7 @@ public class Login extends JFrame implements ActionListener{
         title2.setBounds(30,120,200,50);
         title3.setBounds(30,170,200,50);
         title4.setBounds(30,220,200,50);
+        title5.setBounds(30,270,200,50);
         
         label2.setBounds(325,150,350,30);
         label3.setBounds(325,200,350,30);
@@ -83,11 +85,13 @@ public class Login extends JFrame implements ActionListener{
         title2.setFont(new Font("Times New Roman", Font.BOLD, 45));
         title3.setFont(new Font("Times New Roman", Font.BOLD, 45));
         title4.setFont(new Font("Times New Roman", Font.BOLD, 45));
+        title5.setFont(new Font("Times New Roman", Font.BOLD, 45));
         
         title1.setForeground(Color.WHITE);
         title2.setForeground(Color.WHITE);
         title3.setForeground(Color.WHITE);
         title4.setForeground(Color.WHITE);
+        title5.setForeground(Color.WHITE);
         
         label2.setFont(new Font("Times New Roman", Font.PLAIN, 18));
         label3.setFont(new Font("Times New Roman", Font.PLAIN, 18));
@@ -101,6 +105,7 @@ public class Login extends JFrame implements ActionListener{
         panel.add(title2);
         panel.add(title3);
         panel.add(title4);
+        panel.add(title5);
         
         add(label2);
         add(label3);
