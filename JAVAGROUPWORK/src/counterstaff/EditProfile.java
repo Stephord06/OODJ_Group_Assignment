@@ -9,10 +9,10 @@ import GeneralTools.User;
 
 public class EditProfile extends JFrame {
     
-    private User currentUser;
+    private User counterStaff;
     
-    public EditProfile(User user) {
-        this.currentUser = user;
+    public EditProfile(CounterStaff counterStaff) {
+        this.counterStaff = counterStaff;
         
         setTitle("APU - Automotive Service Centre | Edit Profile");
         setSize(1100, 700);
@@ -73,7 +73,7 @@ public class EditProfile extends JFrame {
                 bodyPanel.add(idLabel);
                 bodyPanel.add(Box.createVerticalStrut(6));
 
-                JTextField idField = new JTextField(currentUser.getID()); //load from login
+                JTextField idField = new JTextField(counterStaff.getID()); //load from login
                 idField.setFont(new Font("Arial", Font.PLAIN, 15));
                 idField.setBackground(new Color(245, 245, 245));
                 idField.setForeground(Color.GRAY);
@@ -93,7 +93,7 @@ public class EditProfile extends JFrame {
                     String currentPhone = "";
                     for (String line : staffLines) {
                         String[] parts = line.split("\\|");
-                        if (parts[0].equals(currentUser.getID())) { // load from loginpage
+                        if (parts[0].equals(counterStaff.getID())) { // load from loginpage
                             currentEmail = parts[3];
                             currentPhone = parts[2];
                             break;
@@ -323,7 +323,7 @@ public class EditProfile extends JFrame {
         
         saveButton.addActionListener(e -> {
             // Get all values
-            String staffId = currentUser.getID(); // Brought in from Login.java
+            String staffId = counterStaff.getID(); // Brought in from Login.java
             String newEmail = emailField.getText().trim();
             String newPhone = phoneField.getText().trim();
             String oldPass = new String(oldPassField.getPassword()).trim();
@@ -400,17 +400,17 @@ public class EditProfile extends JFrame {
                         JOptionPane.INFORMATION_MESSAGE);
                 
                 dispose();
-                new StaffDashboard(currentUser);
+                new StaffDashboard(counterStaff);
         });
         
         backButton.addActionListener(e -> {
             dispose();
-            new StaffDashboard(currentUser);
+            new StaffDashboard(counterStaff);
         });
         
         cancelButton.addActionListener(e -> {
             dispose();
-            new StaffDashboard(currentUser);
+            new StaffDashboard(counterStaff);
         });
         
         setVisible(true);

@@ -10,10 +10,10 @@ import javax.swing.table.DefaultTableModel;
 
 public class ManageCustomer extends JFrame {
     
-    private User currentUser;
+    private User counterStaff;
     
-    public ManageCustomer(User user){
-        this.currentUser = user;
+    public ManageCustomer(CounterStaff counterStaff){
+        this.counterStaff = counterStaff;
         
         setTitle("APU - Automotive Service Centre | Manage Customers");
         setSize(1100, 700);
@@ -194,7 +194,7 @@ public class ManageCustomer extends JFrame {
             // Action Listeners
             backButton.addActionListener(e -> {
                 dispose();
-                new StaffDashboard(currentUser);
+                new StaffDashboard(counterStaff);
             });
                 
               //Search button
@@ -240,7 +240,7 @@ public class ManageCustomer extends JFrame {
               
             addButton.addActionListener(e ->{
                 dispose();
-                new AddCustomer(currentUser);
+                new AddCustomer(counterStaff);
             });
                 
             editButton.addActionListener(e -> {
@@ -251,7 +251,7 @@ public class ManageCustomer extends JFrame {
                 String customerEmail = (String) tableModel.getValueAt(selectedRow, 3);
                 
                 dispose();
-                new EditCustomer(currentUser, customerId, customerName, customerContact, customerEmail);
+                new EditCustomer(counterStaff, customerId, customerName, customerContact, customerEmail);
             });
                 
             delButton.addActionListener(e -> {

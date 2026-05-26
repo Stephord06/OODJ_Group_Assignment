@@ -10,10 +10,10 @@ import java.awt.event.*;
 
 public class StaffDashboard extends JFrame {
     
-    private User currentUser;
+    private CounterStaff counterStaff;
     
-    public StaffDashboard(User user) {
-        this.currentUser = user;
+    public StaffDashboard(CounterStaff counterStaff) {
+        this.counterStaff = counterStaff;
         
         setTitle("APU - Automotive Service Centre | Counter Staff Dashboard");
         setSize(1100, 700);
@@ -41,7 +41,7 @@ public class StaffDashboard extends JFrame {
                 headerPanel.add(headerLeftPanel, BorderLayout.WEST);
                 
                 //Label
-                JLabel welcomeLabel = new JLabel("Welcome back, " + currentUser.getName() + "!");
+                JLabel welcomeLabel = new JLabel("Welcome back, " + counterStaff.getName() + "!");
                 welcomeLabel.setFont(new Font("Arial", Font.BOLD, 30));
                 welcomeLabel.setForeground(new Color(218, 87, 0));
                 headerLeftPanel.add(welcomeLabel);
@@ -267,22 +267,22 @@ public class StaffDashboard extends JFrame {
             // Action Listeners for Quick Action Buttons
             manageCustomersBtn.addActionListener(e -> {
                 dispose();
-                new ManageCustomer(currentUser);
+                new ManageCustomer(counterStaff);
             });
             
             createAppointmentBtn.addActionListener(e -> {
                 dispose();
-                new CreateAppointment(currentUser);
+                new CreateAppointment(counterStaff);
             });
             
             collectPaymentBtn.addActionListener(e -> {
                 dispose();
-                new CollectPayment(currentUser);
+                new CollectPayment(counterStaff);
             });
             
             editProfileBtn.addActionListener(e -> {
                 dispose();
-                new EditProfile(currentUser);
+                new EditProfile(counterStaff);
             });
             
             logoutButton.addActionListener(e -> {
@@ -301,6 +301,6 @@ public class StaffDashboard extends JFrame {
     }
     
     public static void main(String[] args){        
-
+        
     }
 }
