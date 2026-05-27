@@ -9,10 +9,10 @@ import GeneralTools.User;
 
 public class AddCustomer extends JFrame {
     
-    private User currentUser;
+    private User counterStaff;
     
-    public AddCustomer(User user) {
-        this.currentUser = user;
+    public AddCustomer(CounterStaff counterStaff) {
+        this.counterStaff = counterStaff;
         
         setTitle("APU - Automotive Service Centre | Add Customer");
         setSize(1100, 700);
@@ -223,12 +223,12 @@ public class AddCustomer extends JFrame {
         // Action Listeners
         backButton.addActionListener(e -> {
             dispose();
-            new ManageCustomer(currentUser);
+            new ManageCustomer(counterStaff);
         });
         
         cancelButton.addActionListener(e -> {
             dispose();
-            new ManageCustomer(currentUser);
+            new ManageCustomer(counterStaff);
         });
         
         saveButton.addActionListener(e -> {
@@ -262,7 +262,7 @@ public class AddCustomer extends JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
             
             dispose();
-            new ManageCustomer(currentUser);
+            new ManageCustomer(counterStaff);
             
         });
         

@@ -9,12 +9,12 @@ import GeneralTools.User;
 
 public class Receipt extends JFrame{
     
-    private User currentUser;
+    private User counterStaff;
     
-    public Receipt(User user, String receiptId, String appointmentId, String customerName,
+    public Receipt(CounterStaff counterStaff, String receiptId, String appointmentId, String customerName,
             String serviceType, String techName, String date,
             String timeSlot, String paymentMethod, String totalPaid) {
-        this.currentUser = user;
+        this.counterStaff = counterStaff;
         
         setTitle("APU - Automotive Service Centre | Receipt");
         setSize(1100, 700);
@@ -281,12 +281,12 @@ public class Receipt extends JFrame{
         // Action Listeners      
         dashBtn.addActionListener(e -> {
             dispose();
-            new StaffDashboard(currentUser);
+            new StaffDashboard(counterStaff);
         });
         
         newAppBtn.addActionListener(e -> {
             dispose();
-            new CreateAppointment(currentUser);
+            new CreateAppointment(counterStaff);
         });
                 
                     

@@ -10,10 +10,10 @@ import GeneralTools.User;
 
 public class CreateAppointment extends JFrame{
     
-    private User currentUser;
+    private User counterStaff;
     
-    public CreateAppointment(User user) {
-        this.currentUser = user;
+    public CreateAppointment(CounterStaff counterStaff) {
+        this.counterStaff = counterStaff;
         
         setTitle("APU - Automotive Service Centre | Create Appointment");
         setSize(1100, 700);
@@ -332,7 +332,7 @@ public class CreateAppointment extends JFrame{
         // Action Listeners
         backButton.addActionListener(e -> {
             dispose();
-            new StaffDashboard(currentUser);
+            new StaffDashboard(counterStaff);
         });
         
         confirmButton.addActionListener(e -> {
@@ -444,12 +444,12 @@ public class CreateAppointment extends JFrame{
                     JOptionPane.INFORMATION_MESSAGE);
             
             dispose();
-            new StaffDashboard(currentUser);
+            new StaffDashboard(counterStaff);
         });
         
         cancelButton.addActionListener(e -> {
             dispose();
-            new StaffDashboard(currentUser);
+            new StaffDashboard(counterStaff);
         });
         
           // Enable time slot only when all 3 dd-mm-yyyy dropdowns are selected

@@ -9,10 +9,10 @@ import GeneralTools.User;
 
 public class CollectPayment extends JFrame{
     
-    private User currentUser;
+    private CounterStaff counterStaff;
     
-    public CollectPayment(User user) {
-        this.currentUser = user;
+    public CollectPayment(CounterStaff counterStaff) {
+        this.counterStaff = counterStaff;
         
         setTitle("APU - Automotive Service Centre | Collect Payment");
         setSize(1100, 700);
@@ -368,7 +368,7 @@ public class CollectPayment extends JFrame{
         // Action Listeners
         backButton.addActionListener(e -> {
             dispose();
-            new StaffDashboard(currentUser);
+            new StaffDashboard(counterStaff);
         });
         
          // Toggle between Cash and Card
@@ -439,7 +439,7 @@ public class CollectPayment extends JFrame{
             
             // Open Receipt Frame with data
             dispose();
-            new Receipt(currentUser, receiptId, selectedApp[0], selectedApp[1], selectedApp[4],
+            new Receipt(counterStaff, receiptId, selectedApp[0], selectedApp[1], selectedApp[4],
                     selectedApp[5], selectedApp[2], selectedApp[3], paymentMethod, price);
          });
                 

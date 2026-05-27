@@ -10,10 +10,10 @@ import javax.swing.table.DefaultTableModel;
 
 public class ManageCustomer extends JFrame {
     
-    private User currentUser;
+    private User counterStaff;
     
-    public ManageCustomer(User user){
-        this.currentUser = user;
+    public ManageCustomer(CounterStaff counterStaff){
+        this.counterStaff = counterStaff;
         
         setTitle("APU - Automotive Service Centre | Manage Customers");
         setSize(1100, 700);
@@ -114,7 +114,13 @@ public class ManageCustomer extends JFrame {
                 String[] columns = {"Customer ID", "Name", "Contact Number", "Email"};
                 
                 // Load data from customers.txt
+                ArrayList<String[]> customerList = new ArrayList<>();
                 java.util.List<String> lines = FileManager.readFile("customers.txt");
+                
+                for (String line : lines) {
+                    String[] parts = line.split("\\|");
+                    customerList.add(parts);
+                }
                 
                 DefaultTableModel tableModel = new DefaultTableModel(columns, 0) {
                     public boolean isCellEditable(int row, int column) {
@@ -122,8 +128,7 @@ public class ManageCustomer extends JFrame {
                     }
                 };
                 
-                for (int i = 0; i < lines.size(); i++) {
-                    String[] parts = lines.get(i).split("\\|");
+                for (String[] parts : customerList) {
                     tableModel.addRow(new String[] {
                         parts[0], // Customer ID
                         parts[1], // Name
@@ -194,23 +199,31 @@ public class ManageCustomer extends JFrame {
             // Action Listeners
             backButton.addActionListener(e -> {
                 dispose();
-                new StaffDashboard(currentUser);
+                new StaffDashboard(counterStaff);
             });
                 
               //Search button
               searchButton.addActionListener(e -> {
-                 String query = searchField.getText().toLowerCase();
+                 String query = searchField.getText().trim().toLowerCase();
                  
                  // Clear the table
                  tableModel.setRowCount(0);
                  
                  // Reload from file and filter
+                 ArrayList<String[]> customerList2 = new ArrayList<>();
                  java.util.List<String> allLines = FileManager.readFile("customers.txt");
+                 
+                 for (String line : allLines) {
+                     String[] parts = line.split("\\|");
+                     // Make sure parts has all 4 required columns before adding into the list
+                     if (parts.length >= 4) {
+                        customerList2.add(parts);
+                     }
+                 }
                  
                  // If search field is empty or with a placeholder, reload all
                  if (query.isEmpty() || query.equals("search by name, email or phone...")) {
-                     for (String line : allLines) {
-                         String[] parts = line.split("\\|");
+                     for (String[] parts : customerList2) {
                          tableModel.addRow(new String[]{
                              parts[0], // Customer ID
                              parts[1], // Name
@@ -221,8 +234,7 @@ public class ManageCustomer extends JFrame {
                  }
                  else {
                      // Filter by query
-                     for (String line : allLines) {
-                         String[] parts = line.split("\\|");
+                     for (String[] parts : customerList2) {
                          if (parts[0].toLowerCase().contains(query)||
                              parts[1].toLowerCase().contains(query)||
                              parts[2].toLowerCase().contains(query)||
@@ -240,7 +252,7 @@ public class ManageCustomer extends JFrame {
               
             addButton.addActionListener(e ->{
                 dispose();
-                new AddCustomer(currentUser);
+                new AddCustomer(counterStaff);
             });
                 
             editButton.addActionListener(e -> {
@@ -251,7 +263,7 @@ public class ManageCustomer extends JFrame {
                 String customerEmail = (String) tableModel.getValueAt(selectedRow, 3);
                 
                 dispose();
-                new EditCustomer(currentUser, customerId, customerName, customerContact, customerEmail);
+                new EditCustomer(counterStaff, customerId, customerName, customerContact, customerEmail);
             });
                 
             delButton.addActionListener(e -> {
@@ -302,7 +314,9 @@ public class ManageCustomer extends JFrame {
     }
     
     public static void main(String[] args){
+        CounterStaff test = new CounterStaff("S000", "Test", "010-0000000", "test@gmail.com", "123");
         
+        new ManageCustomer(test);
     }
 }
 
