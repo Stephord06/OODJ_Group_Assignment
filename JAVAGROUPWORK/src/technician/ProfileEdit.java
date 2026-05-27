@@ -122,8 +122,8 @@ public class ProfileEdit {
                 
                 if (inputEmail.isEmpty()){
                     JOptionPane.showMessageDialog(null,
-                                                  "Contact number should not be empty",
-                                                  "Contact Number Error",
+                                                  "Email address should not be empty",
+                                                  "Email Error",
                                                   JOptionPane.WARNING_MESSAGE);
                     return;
                 }
