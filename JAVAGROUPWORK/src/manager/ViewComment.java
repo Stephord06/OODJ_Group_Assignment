@@ -24,7 +24,6 @@ public class ViewComment  {
     private String name;
     private String password;
     
-    private  ArrayList<String> idList = new ArrayList<>();
     private JFrame Frame;
     
     private JPanel mainPanel;
@@ -140,8 +139,6 @@ public class ViewComment  {
     public JScrollPane addCard(String File, String id){
         JPanel cardPanel = new JPanel();
         cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.Y_AXIS));
-        boolean found = false;
-        
         
         try(BufferedReader br = new BufferedReader(new FileReader(File))){ 
 
@@ -149,17 +146,14 @@ public class ViewComment  {
            while ((line = br.readLine()) != null){
                String[] parts = line.split("\\|");
                
-               this.idList.add(parts[0]);
                
                 if (parts.length >= 10) {   
                     if(id.isEmpty()){
                         cardPanel.add(CardMake(parts));
                     }
-                    else if(id.equals(parts[0]))
+                    else if(parts[0].contains(id))
                     {
                         cardPanel.add(CardMake(parts));
-                        break;
-                        
                     }
                 }
             }
@@ -230,7 +224,12 @@ public class ViewComment  {
             if (scrollPane != null) {
                 mainPanel.remove(scrollPane);
             }
+            
             String query = search.getText();
+            
+            if (query.equals("Search Appointnment")){
+                query = "";
+            }
 
             mainPanel.add(addCard("appointments.txt", query), BorderLayout.CENTER);
             mainPanel.revalidate();

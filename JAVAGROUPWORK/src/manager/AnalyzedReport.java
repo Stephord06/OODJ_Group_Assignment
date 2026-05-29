@@ -198,9 +198,11 @@ public class AnalyzedReport {
         String line;
         while ((line = br.readLine()) != null) {
             String[] parts = line.split("\\|");
+            // Validation - check service match before adding
             if (column < parts.length && !(parts[column].equals("-"))) 
             {
                 boolean serviceMatch = service.equals("All") || parts[serviceColumn].equals(service);
+                // Validation - check service match before adding
                 if (serviceMatch) {
                     results.add(Double.parseDouble(parts[column]));
                 }
@@ -220,8 +222,10 @@ public class AnalyzedReport {
         String line;
         while ((line = br.readLine()) != null) {
             String[] parts = line.split("\\|");
+            // Validation - check service match before adding
             if (serviceColumn < parts.length  && !(parts[column].equals("-")))
             {
+                // Validation - check service match before adding
                 boolean serviceMatch = service.equals("All") || parts[serviceColumn].equals(service);
                 if (serviceMatch ) { 
                     count++;

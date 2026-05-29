@@ -162,51 +162,6 @@ public class SetPrices {
         priceField2.setBorder(BorderFactory.createLineBorder(Color.cyan, 1, true));
         pricepanel2.add(priceField2);
         
-        //long session and short session textfield event
-        priceField1.getDocument().addDocumentListener(new DocumentListener(){
-            
-            @Override
-            public void insertUpdate(DocumentEvent e) 
-            { 
-                    
-                   
-            }
-            
-            
-            @Override
-            public void removeUpdate(DocumentEvent e) 
-            { 
-
-                
-            }
-            @Override
-            public void changedUpdate(DocumentEvent e) { /* Not used for plain text */ }
-  
-            
-        });
-        
-        priceField2.getDocument().addDocumentListener(new DocumentListener(){
-            
-            @Override
-            public void insertUpdate(DocumentEvent e) 
-            { 
-
-            }
-            
-            
-            @Override
-            public void removeUpdate(DocumentEvent e) 
-            { 
-
-                
-            }
-            @Override
-            public void changedUpdate(DocumentEvent e) { /* Not used for plain text */ }
-  
-            
-        });
-        
-        
         
         //gap between appointment and the back
         containerpanel.add(Box.createVerticalStrut(30));
@@ -296,34 +251,5 @@ public class SetPrices {
     
     
     
-    
-    public JPanel saved(){
-        JPanel panel = new JPanel();
-        panel.setBackground(new Color(34, 139, 34));
-        panel.setPreferredSize(new Dimension(80, 25));
-        panel.setBorder(BorderFactory.createLineBorder(new Color(0, 100, 0), 1, true)); 
-
-        JLabel text = new JLabel("Saved");
-        text.setFont(new Font("Arial", Font.BOLD, 11));
-        text.setForeground(Color.WHITE);
-
-        panel.add(text);
-
-        return panel;
-    }
-    
-    public JPanel unsaved(){
-        JPanel panel = new JPanel();
-        panel.setBackground(new Color(200, 50, 50)); 
-        panel.setBorder(BorderFactory.createLineBorder(new Color(150, 0, 0), 1, true)); 
-        JLabel text = new JLabel("Unsaved");
-        text.setFont(new Font("Arial", Font.BOLD, 11));
-        text.setForeground(Color.WHITE);
-
-        
-        panel.add(text);
-
-        return panel;
-    }
 
 }
